@@ -1,0 +1,612 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		246FBB962AF915EF00AFDD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBB952AF915EF00AFDD2E /* AppDelegate.swift */; };
+		246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBB972AF915EF00AFDD2E /* SceneDelegate.swift */; };
+		246FBB9A2AF915F000AFDD2E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBB992AF915EF00AFDD2E /* ViewController.swift */; };
+		246FBB9D2AF915F000AFDD2E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246FBB9B2AF915F000AFDD2E /* Main.storyboard */; };
+		246FBB9F2AF915F400AFDD2E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 246FBB9E2AF915F400AFDD2E /* Assets.xcassets */; };
+		246FBBA22AF915F400AFDD2E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 246FBBA02AF915F400AFDD2E /* LaunchScreen.storyboard */; };
+		246FBBAD2AF915F400AFDD2E /* MyNFTTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBAC2AF915F400AFDD2E /* MyNFTTrackerTests.swift */; };
+		246FBBB72AF915F400AFDD2E /* MyNFTTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBB62AF915F400AFDD2E /* MyNFTTrackerUITests.swift */; };
+		246FBBB92AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBB82AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		246FBBA92AF915F400AFDD2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 246FBB8A2AF915EF00AFDD2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 246FBB912AF915EF00AFDD2E;
+			remoteInfo = MyNFTTracker;
+		};
+		246FBBB32AF915F400AFDD2E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 246FBB8A2AF915EF00AFDD2E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 246FBB912AF915EF00AFDD2E;
+			remoteInfo = MyNFTTracker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyNFTTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		246FBB952AF915EF00AFDD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		246FBB972AF915EF00AFDD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		246FBB992AF915EF00AFDD2E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		246FBB9C2AF915F000AFDD2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		246FBB9E2AF915F400AFDD2E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		246FBBA12AF915F400AFDD2E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		246FBBA32AF915F400AFDD2E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		246FBBA82AF915F400AFDD2E /* MyNFTTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyNFTTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		246FBBAC2AF915F400AFDD2E /* MyNFTTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTTrackerTests.swift; sourceTree = "<group>"; };
+		246FBBB22AF915F400AFDD2E /* MyNFTTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyNFTTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		246FBBB62AF915F400AFDD2E /* MyNFTTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTTrackerUITests.swift; sourceTree = "<group>"; };
+		246FBBB82AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		246FBB8F2AF915EF00AFDD2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		246FBBA52AF915F400AFDD2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		246FBBAF2AF915F400AFDD2E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		246FBB892AF915EF00AFDD2E = {
+			isa = PBXGroup;
+			children = (
+				246FBB942AF915EF00AFDD2E /* MyNFTTracker */,
+				246FBBAB2AF915F400AFDD2E /* MyNFTTrackerTests */,
+				246FBBB52AF915F400AFDD2E /* MyNFTTrackerUITests */,
+				246FBB932AF915EF00AFDD2E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		246FBB932AF915EF00AFDD2E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */,
+				246FBBA82AF915F400AFDD2E /* MyNFTTrackerTests.xctest */,
+				246FBBB22AF915F400AFDD2E /* MyNFTTrackerUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		246FBB942AF915EF00AFDD2E /* MyNFTTracker */ = {
+			isa = PBXGroup;
+			children = (
+				246FBB952AF915EF00AFDD2E /* AppDelegate.swift */,
+				246FBB972AF915EF00AFDD2E /* SceneDelegate.swift */,
+				246FBB992AF915EF00AFDD2E /* ViewController.swift */,
+				246FBB9B2AF915F000AFDD2E /* Main.storyboard */,
+				246FBB9E2AF915F400AFDD2E /* Assets.xcassets */,
+				246FBBA02AF915F400AFDD2E /* LaunchScreen.storyboard */,
+				246FBBA32AF915F400AFDD2E /* Info.plist */,
+			);
+			path = MyNFTTracker;
+			sourceTree = "<group>";
+		};
+		246FBBAB2AF915F400AFDD2E /* MyNFTTrackerTests */ = {
+			isa = PBXGroup;
+			children = (
+				246FBBAC2AF915F400AFDD2E /* MyNFTTrackerTests.swift */,
+			);
+			path = MyNFTTrackerTests;
+			sourceTree = "<group>";
+		};
+		246FBBB52AF915F400AFDD2E /* MyNFTTrackerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				246FBBB62AF915F400AFDD2E /* MyNFTTrackerUITests.swift */,
+				246FBBB82AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift */,
+			);
+			path = MyNFTTrackerUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		246FBB912AF915EF00AFDD2E /* MyNFTTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 246FBBBC2AF915F400AFDD2E /* Build configuration list for PBXNativeTarget "MyNFTTracker" */;
+			buildPhases = (
+				246FBB8E2AF915EF00AFDD2E /* Sources */,
+				246FBB8F2AF915EF00AFDD2E /* Frameworks */,
+				246FBB902AF915EF00AFDD2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MyNFTTracker;
+			productName = MyNFTTracker;
+			productReference = 246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		246FBBA72AF915F400AFDD2E /* MyNFTTrackerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 246FBBBF2AF915F400AFDD2E /* Build configuration list for PBXNativeTarget "MyNFTTrackerTests" */;
+			buildPhases = (
+				246FBBA42AF915F400AFDD2E /* Sources */,
+				246FBBA52AF915F400AFDD2E /* Frameworks */,
+				246FBBA62AF915F400AFDD2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				246FBBAA2AF915F400AFDD2E /* PBXTargetDependency */,
+			);
+			name = MyNFTTrackerTests;
+			productName = MyNFTTrackerTests;
+			productReference = 246FBBA82AF915F400AFDD2E /* MyNFTTrackerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		246FBBB12AF915F400AFDD2E /* MyNFTTrackerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 246FBBC22AF915F400AFDD2E /* Build configuration list for PBXNativeTarget "MyNFTTrackerUITests" */;
+			buildPhases = (
+				246FBBAE2AF915F400AFDD2E /* Sources */,
+				246FBBAF2AF915F400AFDD2E /* Frameworks */,
+				246FBBB02AF915F400AFDD2E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				246FBBB42AF915F400AFDD2E /* PBXTargetDependency */,
+			);
+			name = MyNFTTrackerUITests;
+			productName = MyNFTTrackerUITests;
+			productReference = 246FBBB22AF915F400AFDD2E /* MyNFTTrackerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		246FBB8A2AF915EF00AFDD2E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					246FBB912AF915EF00AFDD2E = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					246FBBA72AF915F400AFDD2E = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 246FBB912AF915EF00AFDD2E;
+					};
+					246FBBB12AF915F400AFDD2E = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 246FBB912AF915EF00AFDD2E;
+					};
+				};
+			};
+			buildConfigurationList = 246FBB8D2AF915EF00AFDD2E /* Build configuration list for PBXProject "MyNFTTracker" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 246FBB892AF915EF00AFDD2E;
+			productRefGroup = 246FBB932AF915EF00AFDD2E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				246FBB912AF915EF00AFDD2E /* MyNFTTracker */,
+				246FBBA72AF915F400AFDD2E /* MyNFTTrackerTests */,
+				246FBBB12AF915F400AFDD2E /* MyNFTTrackerUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		246FBB902AF915EF00AFDD2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				246FBBA22AF915F400AFDD2E /* LaunchScreen.storyboard in Resources */,
+				246FBB9F2AF915F400AFDD2E /* Assets.xcassets in Resources */,
+				246FBB9D2AF915F000AFDD2E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		246FBBA62AF915F400AFDD2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		246FBBB02AF915F400AFDD2E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		246FBB8E2AF915EF00AFDD2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				246FBB9A2AF915F000AFDD2E /* ViewController.swift in Sources */,
+				246FBB962AF915EF00AFDD2E /* AppDelegate.swift in Sources */,
+				246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		246FBBA42AF915F400AFDD2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				246FBBAD2AF915F400AFDD2E /* MyNFTTrackerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		246FBBAE2AF915F400AFDD2E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				246FBBB92AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift in Sources */,
+				246FBBB72AF915F400AFDD2E /* MyNFTTrackerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		246FBBAA2AF915F400AFDD2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 246FBB912AF915EF00AFDD2E /* MyNFTTracker */;
+			targetProxy = 246FBBA92AF915F400AFDD2E /* PBXContainerItemProxy */;
+		};
+		246FBBB42AF915F400AFDD2E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 246FBB912AF915EF00AFDD2E /* MyNFTTracker */;
+			targetProxy = 246FBBB32AF915F400AFDD2E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		246FBB9B2AF915F000AFDD2E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				246FBB9C2AF915F000AFDD2E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		246FBBA02AF915F400AFDD2E /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				246FBBA12AF915F400AFDD2E /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		246FBBBA2AF915F400AFDD2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		246FBBBB2AF915F400AFDD2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		246FBBBD2AF915F400AFDD2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyNFTTracker/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		246FBBBE2AF915F400AFDD2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MyNFTTracker/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		246FBBC02AF915F400AFDD2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyNFTTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MyNFTTracker";
+			};
+			name = Debug;
+		};
+		246FBBC12AF915F400AFDD2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTrackerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyNFTTracker.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/MyNFTTracker";
+			};
+			name = Release;
+		};
+		246FBBC32AF915F400AFDD2E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTrackerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MyNFTTracker;
+			};
+			name = Debug;
+		};
+		246FBBC42AF915F400AFDD2E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTrackerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = MyNFTTracker;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		246FBB8D2AF915EF00AFDD2E /* Build configuration list for PBXProject "MyNFTTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				246FBBBA2AF915F400AFDD2E /* Debug */,
+				246FBBBB2AF915F400AFDD2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		246FBBBC2AF915F400AFDD2E /* Build configuration list for PBXNativeTarget "MyNFTTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				246FBBBD2AF915F400AFDD2E /* Debug */,
+				246FBBBE2AF915F400AFDD2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		246FBBBF2AF915F400AFDD2E /* Build configuration list for PBXNativeTarget "MyNFTTrackerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				246FBBC02AF915F400AFDD2E /* Debug */,
+				246FBBC12AF915F400AFDD2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		246FBBC22AF915F400AFDD2E /* Build configuration list for PBXNativeTarget "MyNFTTrackerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				246FBBC32AF915F400AFDD2E /* Debug */,
+				246FBBC42AF915F400AFDD2E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 246FBB8A2AF915EF00AFDD2E /* Project object */;
+}
