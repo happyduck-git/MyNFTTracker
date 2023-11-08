@@ -8,8 +8,22 @@
 import UIKit
 import SnapKit
 import Combine
+import metamask_ios_sdk
 
-final class LoginViewController: UIViewController {
+final class LoginViewController: BaseViewController {
+    
+    // Metamask
+    private let ethereum = MetaMaskSDK.shared.ethereum
+    private let dapp = Dapp(name: "MyNFTTracker", url: "https://my-nft-tracker.com")
+    
+    // Combine
+    private var bindings = Set<AnyCancellable>()
+    
+    // ViewModel
+    private var vm: LoginViewViewModel
+    
+    //MARK: - UI Properties
+    private let loadingVC = LoadingViewController()
     
     private let logo: UIImageView = {
         let imageView = UIImageView()
@@ -32,6 +46,18 @@ final class LoginViewController: UIViewController {
         return btn
     }()
     
+    //MARK: - Init
+    init(vm: LoginViewViewModel) {
+        self.vm = vm
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,11 +68,64 @@ final class LoginViewController: UIViewController {
         
         self.setUI()
         self.setLayout()
+        
+        self.bind()
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.loginButton.layer.cornerRadius = self.loginButton.frame.height / 2
+    }
+    
+}
+
+extension LoginViewController {
+    
+    private func bind() {
+        
+        self.loginButton.tapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+            
+                self.addChildViewController(self.loadingVC)
+                
+                ethereum.connect(self.dapp)?
+                    .sink(receiveCompletion: { [weak self] completion in
+                        guard let `self` = self else { return }
+                        
+                        switch completion {
+                        case let .failure(error):
+                            self.loadingVC.removeViewController()
+                            self.showWalletConnectiontFailedAlert()
+                            AppLogger.logger.error("Connection error: \(String(describing: error))")
+                            
+                        default: break
+                        }
+                    }, receiveValue: { result in
+                        self.loadingVC.removeViewController()
+                        AppLogger.logger.info("Connection result: \(String(describing: result))")
+                        self.saveWalletAddress(address: result as? String)
+                        self.vm.walletConnected = true
+                    }).store(in: &bindings)
+                
+            }
+            .store(in: &bindings)
+        
+        self.vm.$walletConnected
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] connected in
+                guard let `self` = self else { return }
+                
+                if connected {
+                    
+                    let vc = MainViewController(vm: MainViewViewModel())
+                    
+                    self.show(vc, sender: self)
+                }
+                
+            }.store(in: &bindings)
     }
     
 }
@@ -73,4 +152,20 @@ extension LoginViewController {
         
     }
 
+}
+
+// MARK: - Private
+extension LoginViewController {
+    
+    private func saveWalletAddress(address: String?) {
+        UserDefaults.standard.set(address, forKey: UserDefaultsConstants.walletAddress)
+    }
+    
+    private func showWalletConnectiontFailedAlert() {
+        self.showAlert(alertTitle: "지갑 연결 실패",
+                       alertMessage: "다시 한번 시도해주세요.",
+                       alertStyle: .alert,
+                       actionTitle1: "확인",
+                       actionStyle1: .cancel)
+    }
 }

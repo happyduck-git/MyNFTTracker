@@ -25,6 +25,18 @@
 		2463CF0F2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF0E2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift */; };
 		2463CF122AF941C8006AAE65 /* NFTModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF112AF941C8006AAE65 /* NFTModel.swift */; };
 		2463CF152AF942B5006AAE65 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 2463CF142AF942B5006AAE65 /* Nuke */; };
+		2463CF182AFA5AFE006AAE65 /* metamask-ios-sdk in Frameworks */ = {isa = PBXBuildFile; productRef = 2463CF172AFA5AFE006AAE65 /* metamask-ios-sdk */; };
+		2463CF1A2AFA5C10006AAE65 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF192AFA5C10006AAE65 /* UIButton+Extensions.swift */; };
+		2463CF1D2AFA5D59006AAE65 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF1C2AFA5D59006AAE65 /* LoadingViewController.swift */; };
+		2463CF1F2AFA5EF4006AAE65 /* AppLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF1E2AFA5EF4006AAE65 /* AppLogger.swift */; };
+		2463CF212AFA5F24006AAE65 /* UIViewContoller+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF202AFA5F24006AAE65 /* UIViewContoller+Extensions.swift */; };
+		2463CF232AFA5F8D006AAE65 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF222AFA5F8D006AAE65 /* Constants.swift */; };
+		2463CF252AFA5FEC006AAE65 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF242AFA5FEC006AAE65 /* BaseViewController.swift */; };
+		2463CF272AFA6276006AAE65 /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF262AFA6276006AAE65 /* UIControl+Extensions.swift */; };
+		2463CF2A2AFA667C006AAE65 /* AlchemyServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF292AFA667C006AAE65 /* AlchemyServiceManager.swift */; };
+		2463CF2C2AFA66C0006AAE65 /* NetworkServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF2B2AFA66C0006AAE65 /* NetworkServiceManager.swift */; };
+		2463CF2F2AFA68B4006AAE65 /* EnvironmentConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF2E2AFA68B4006AAE65 /* EnvironmentConfig.swift */; };
+		2463CF312AFBCCBA006AAE65 /* MainViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CF302AFBCCBA006AAE65 /* MainViewViewModel.swift */; };
 		246FBB962AF915EF00AFDD2E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBB952AF915EF00AFDD2E /* AppDelegate.swift */; };
 		246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBB972AF915EF00AFDD2E /* SceneDelegate.swift */; };
 		246FBB9A2AF915F000AFDD2E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBB992AF915EF00AFDD2E /* MainViewController.swift */; };
@@ -69,6 +81,18 @@
 		2463CF0C2AF94102006AAE65 /* NFTCardViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCardViewViewModel.swift; sourceTree = "<group>"; };
 		2463CF0E2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Extensions.swift"; sourceTree = "<group>"; };
 		2463CF112AF941C8006AAE65 /* NFTModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTModel.swift; sourceTree = "<group>"; };
+		2463CF192AFA5C10006AAE65 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
+		2463CF1C2AFA5D59006AAE65 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		2463CF1E2AFA5EF4006AAE65 /* AppLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLogger.swift; sourceTree = "<group>"; };
+		2463CF202AFA5F24006AAE65 /* UIViewContoller+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewContoller+Extensions.swift"; sourceTree = "<group>"; };
+		2463CF222AFA5F8D006AAE65 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2463CF242AFA5FEC006AAE65 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		2463CF262AFA6276006AAE65 /* UIControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
+		2463CF292AFA667C006AAE65 /* AlchemyServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlchemyServiceManager.swift; sourceTree = "<group>"; };
+		2463CF2B2AFA66C0006AAE65 /* NetworkServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceManager.swift; sourceTree = "<group>"; };
+		2463CF2D2AFA6891006AAE65 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		2463CF2E2AFA68B4006AAE65 /* EnvironmentConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentConfig.swift; sourceTree = "<group>"; };
+		2463CF302AFBCCBA006AAE65 /* MainViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewViewModel.swift; sourceTree = "<group>"; };
 		246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyNFTTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		246FBB952AF915EF00AFDD2E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		246FBB972AF915EF00AFDD2E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +114,7 @@
 			files = (
 				2463CEF62AF92B37006AAE65 /* SnapKit in Frameworks */,
 				2463CF152AF942B5006AAE65 /* Nuke in Frameworks */,
+				2463CF182AFA5AFE006AAE65 /* metamask-ios-sdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +151,9 @@
 				2463CEF12AF920F2006AAE65 /* UIImage+Extensions.swift */,
 				2463CEF72AF931FF006AAE65 /* UIView+Extensions.swift */,
 				2463CF0E2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift */,
+				2463CF192AFA5C10006AAE65 /* UIButton+Extensions.swift */,
+				2463CF202AFA5F24006AAE65 /* UIViewContoller+Extensions.swift */,
+				2463CF262AFA6276006AAE65 /* UIControl+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -152,6 +180,9 @@
 			children = (
 				2463CEEC2AF91FC9006AAE65 /* AppColors.swift */,
 				2463CF012AF9383C006AAE65 /* AppFonts.swift */,
+				2463CF1E2AFA5EF4006AAE65 /* AppLogger.swift */,
+				2463CF222AFA5F8D006AAE65 /* Constants.swift */,
+				2463CF2E2AFA68B4006AAE65 /* EnvironmentConfig.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -160,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				246FBB992AF915EF00AFDD2E /* MainViewController.swift */,
+				2463CF302AFBCCBA006AAE65 /* MainViewViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -191,6 +223,24 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		2463CF1B2AFA5D4F006AAE65 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				2463CF1C2AFA5D59006AAE65 /* LoadingViewController.swift */,
+				2463CF242AFA5FEC006AAE65 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		2463CF282AFA6670006AAE65 /* NetworkManagers */ = {
+			isa = PBXGroup;
+			children = (
+				2463CF292AFA667C006AAE65 /* AlchemyServiceManager.swift */,
+				2463CF2B2AFA66C0006AAE65 /* NetworkServiceManager.swift */,
+			);
+			path = NetworkManagers;
+			sourceTree = "<group>";
+		};
 		246FBB892AF915EF00AFDD2E = {
 			isa = PBXGroup;
 			children = (
@@ -215,15 +265,17 @@
 		246FBB942AF915EF00AFDD2E /* MyNFTTracker */ = {
 			isa = PBXGroup;
 			children = (
+				2463CF282AFA6670006AAE65 /* NetworkManagers */,
 				2463CF102AF941BC006AAE65 /* Models */,
-				2463CF042AF93E1A006AAE65 /* Views */,
 				2463CF002AF9382D006AAE65 /* Utilities */,
 				2463CEEE2AF91FE9006AAE65 /* Extensions */,
 				246FBBC72AF9167400AFDD2E /* Resources */,
+				2463CF042AF93E1A006AAE65 /* Views */,
 				246FBBC52AF9165900AFDD2E /* ViewControllers */,
 				246FBB952AF915EF00AFDD2E /* AppDelegate.swift */,
 				246FBB972AF915EF00AFDD2E /* SceneDelegate.swift */,
 				246FBBA32AF915F400AFDD2E /* Info.plist */,
+				2463CF2D2AFA6891006AAE65 /* Config.xcconfig */,
 			);
 			path = MyNFTTracker;
 			sourceTree = "<group>";
@@ -248,6 +300,7 @@
 		246FBBC52AF9165900AFDD2E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2463CF1B2AFA5D4F006AAE65 /* Base */,
 				2463CF032AF93D92006AAE65 /* Main */,
 				2463CEE62AF91909006AAE65 /* Login */,
 			);
@@ -283,6 +336,7 @@
 			packageProductDependencies = (
 				2463CEF52AF92B37006AAE65 /* SnapKit */,
 				2463CF142AF942B5006AAE65 /* Nuke */,
+				2463CF172AFA5AFE006AAE65 /* metamask-ios-sdk */,
 			);
 			productName = MyNFTTracker;
 			productReference = 246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */;
@@ -359,6 +413,7 @@
 			packageReferences = (
 				2463CEF32AF92987006AAE65 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				2463CF132AF9429C006AAE65 /* XCRemoteSwiftPackageReference "Nuke" */,
+				2463CF162AFA5AFE006AAE65 /* XCRemoteSwiftPackageReference "metamask-ios-sdk" */,
 			);
 			productRefGroup = 246FBB932AF915EF00AFDD2E /* Products */;
 			projectDirPath = "";
@@ -407,20 +462,31 @@
 			files = (
 				2463CF0D2AF94102006AAE65 /* NFTCardViewViewModel.swift in Sources */,
 				2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */,
+				2463CF212AFA5F24006AAE65 /* UIViewContoller+Extensions.swift in Sources */,
 				2463CF122AF941C8006AAE65 /* NFTModel.swift in Sources */,
 				246FBB9A2AF915F000AFDD2E /* MainViewController.swift in Sources */,
 				2463CF0A2AF93F47006AAE65 /* NFTTraitView.swift in Sources */,
+				2463CF2C2AFA66C0006AAE65 /* NetworkServiceManager.swift in Sources */,
+				2463CF1D2AFA5D59006AAE65 /* LoadingViewController.swift in Sources */,
 				246FBB962AF915EF00AFDD2E /* AppDelegate.swift in Sources */,
 				2463CEF82AF931FF006AAE65 /* UIView+Extensions.swift in Sources */,
 				2463CEED2AF91FC9006AAE65 /* AppColors.swift in Sources */,
 				2463CEF02AF9201F006AAE65 /* UIColor+Extensions.swift in Sources */,
+				2463CF232AFA5F8D006AAE65 /* Constants.swift in Sources */,
 				2463CF082AF93EE0006AAE65 /* NFTCardCell.swift in Sources */,
+				2463CF2A2AFA667C006AAE65 /* AlchemyServiceManager.swift in Sources */,
+				2463CF272AFA6276006AAE65 /* UIControl+Extensions.swift in Sources */,
+				2463CF252AFA5FEC006AAE65 /* BaseViewController.swift in Sources */,
 				2463CF022AF9383C006AAE65 /* AppFonts.swift in Sources */,
+				2463CF1A2AFA5C10006AAE65 /* UIButton+Extensions.swift in Sources */,
 				2463CF062AF93E28006AAE65 /* NFTCardView.swift in Sources */,
+				2463CF312AFBCCBA006AAE65 /* MainViewViewModel.swift in Sources */,
 				2463CEEB2AF91951006AAE65 /* LoginViewViewModel.swift in Sources */,
+				2463CF2F2AFA68B4006AAE65 /* EnvironmentConfig.swift in Sources */,
 				2463CF0F2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift in Sources */,
 				246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */,
 				2463CEF22AF920F2006AAE65 /* UIImage+Extensions.swift in Sources */,
+				2463CF1F2AFA5EF4006AAE65 /* AppLogger.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +536,7 @@
 /* Begin XCBuildConfiguration section */
 		246FBBBA2AF915F400AFDD2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -533,6 +600,7 @@
 		};
 		246FBBBB2AF915F400AFDD2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -589,6 +657,7 @@
 		};
 		246FBBBD2AF915F400AFDD2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -617,6 +686,7 @@
 		};
 		246FBBBE2AF915F400AFDD2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -645,6 +715,7 @@
 		};
 		246FBBC02AF915F400AFDD2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -665,6 +736,7 @@
 		};
 		246FBBC12AF915F400AFDD2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -685,6 +757,7 @@
 		};
 		246FBBC32AF915F400AFDD2E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -703,6 +776,7 @@
 		};
 		246FBBC42AF915F400AFDD2E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2463CF2D2AFA6891006AAE65 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -777,6 +851,14 @@
 				minimumVersion = 12.1.6;
 			};
 		};
+		2463CF162AFA5AFE006AAE65 /* XCRemoteSwiftPackageReference "metamask-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MetaMask/metamask-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -789,6 +871,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2463CF132AF9429C006AAE65 /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = Nuke;
+		};
+		2463CF172AFA5AFE006AAE65 /* metamask-ios-sdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2463CF162AFA5AFE006AAE65 /* XCRemoteSwiftPackageReference "metamask-ios-sdk" */;
+			productName = "metamask-ios-sdk";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

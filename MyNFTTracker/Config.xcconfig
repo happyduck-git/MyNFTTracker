@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  MyNFTTracker
+//
+//  Created by HappyDuck on 11/7/23.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// ALCHEMY
+ALCHEMY_API_KEY = c-Tm6eusJrq86-e-AU3_S7zUpFLNSnCg

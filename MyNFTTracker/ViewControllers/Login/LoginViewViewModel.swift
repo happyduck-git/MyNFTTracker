@@ -6,5 +6,10 @@
 //
 
 import UIKit
+import Combine
 
-
+final class LoginViewViewModel {
+    
+    @Published var signInTapped: Bool = false
+    @Published var walletConnected: Bool = false
+}

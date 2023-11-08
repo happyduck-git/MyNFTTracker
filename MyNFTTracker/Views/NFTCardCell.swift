@@ -19,17 +19,19 @@ final class NFTCardCell: UICollectionViewCell {
 
     let cardFrontView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "bellygom_test")
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20.0
-        imageView.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    private let traitView: NftTraitView = {
-        let view = NftTraitView()
+    let cardBackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGreen
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20.0
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -45,12 +47,9 @@ final class NFTCardCell: UICollectionViewCell {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
         
         setUI()
         setLayout()
-
-        traitView.delegate = self
         
     }
     
@@ -67,7 +66,7 @@ final class NFTCardCell: UICollectionViewCell {
     private func setUI() {
         
         self.addSubviews(self.cardFrontView,
-                         self.traitView)
+                         self.cardBackView)
         
     }
     
@@ -78,12 +77,12 @@ final class NFTCardCell: UICollectionViewCell {
             cardFrontView.topAnchor.constraint(equalTo: self.topAnchor),
             cardFrontView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             cardFrontView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            cardFrontView.heightAnchor.constraint(equalToConstant: self.frame.size.width),
-            
-            traitView.topAnchor.constraint(equalTo: cardFrontView.bottomAnchor, constant: 10),
-            traitView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            traitView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20)
-            
+            cardFrontView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+           
+            cardBackView.topAnchor.constraint(equalTo: self.topAnchor),
+            cardBackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            cardBackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            cardBackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
     }
@@ -100,11 +99,7 @@ final class NFTCardCell: UICollectionViewCell {
                           rank: Int,
                           score: Int,
                           updatedAt: Int64) {
-        
-        self.traitView.configure(name: name,
-                                 rank: rank,
-                                 score: score,
-                                 updatedAt: updatedAt)
+
     }
     
     func configureImage(image: UIImage) {
@@ -113,17 +108,11 @@ final class NFTCardCell: UICollectionViewCell {
     
     func selectViewToHide(cardBackView hideCardBackView: Bool, nftImageView hideNftImageView: Bool) {
         self.cardFrontView.isHidden = hideNftImageView
-        self.traitView.changeCardButtonImage(with: traitButtonImage)
     }
     
     func resetCell() {
-      
-        self.traitView.configure(name: nil, rank: nil, score: nil, updatedAt: nil)
-        self.traitView.cardButton.imageView?.image = UIImage(named: "front_deco_button")
         self.cardFrontView.image = nil
-        
         self.cardFrontView.isHidden = false
-        
     }
     
 }

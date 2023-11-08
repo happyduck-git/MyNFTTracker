@@ -10,10 +10,9 @@ import Combine
 
 final class NFTCardViewViewModel {
     
-    weak var delegate: NFTCardViewModelDelegate?
-    @Published var nfts: [NFTModel] = []
+    @Published var nfts: [OwnedNFT] = []
     
-    func getNfts(of wallet: String, completion: @escaping ([NFTModel])->()) {
+    func getNfts(of wallet: String, completion: @escaping ([OwnedNFT])->()) {
 
 
     }
