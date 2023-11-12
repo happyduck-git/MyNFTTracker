@@ -61,7 +61,16 @@ extension MainViewController {
             .sink { [weak self] nfts in
                 guard let `self` = self else { return }
                 
-                self.vm.imageStrings = nfts.compactMap { $0.metadata?.image }
+                self.vm.imageStrings = nfts.compactMap {
+                    guard let imageString = $0.metadata?.image else {
+                        return ""
+                    }
+                    
+                    if imageString.hasPrefix("ipfs://") {
+                        return self.vm.buildPinataUrl(from: imageString)
+                    }
+                    return imageString
+                }
                 
                 DispatchQueue.main.async {
                     self.nftCollectionView.reloadData()

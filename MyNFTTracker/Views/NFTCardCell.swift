@@ -59,6 +59,11 @@ final class NFTCardCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.cardFrontView.setGradientBorder()
+        }
     }
     
     //MARK: - Set UI and Layout

@@ -35,7 +35,7 @@ extension AlchemyServiceManager {
                                                   queryParameters: [
                                                     URLQueryItem(name: "owner", value: ownerAddress),
                                                     URLQueryItem(name: "withMetadata", value: "true"),
-                                                    URLQueryItem(name: "pageSize", value: "4")
+                                                    URLQueryItem(name: "pageSize", value: "100")
                                                   ])
         
         
