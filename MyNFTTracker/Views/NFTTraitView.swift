@@ -37,7 +37,7 @@ final class NftTraitView: UIView {
     private let nftName: UILabel = {
         let label = UILabel()
         label.text = "Bellygom #1920"
-        label.font = .appFont(name: .appMainFontLight, size: 14)
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         label.textColor = .darkGray
         return label
     }()
@@ -63,7 +63,7 @@ final class NftTraitView: UIView {
     private let rankingLabel: UILabel = {
         let label = UILabel()
         label.text = String(localized: "랭킹")
-        label.font = .appFont(name: .appMainFontLight, size: 14)
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         label.textColor = .darkGray
         return label
     }()
@@ -71,7 +71,7 @@ final class NftTraitView: UIView {
     private let rankingNumLabel: UILabel = {
         let label = UILabel()
         label.text = "0"
-        label.font = .appFont(name: .appMainFontLight, size: 14)
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         label.textColor = AppColors.gradientPink
         return label
     }()
@@ -86,7 +86,7 @@ final class NftTraitView: UIView {
     private let scoreLabel: UILabel = {
         let label = UILabel()
         label.text = String(localized: "점수")
-        label.font = .appFont(name: .appMainFontLight, size: 14)
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         label.textColor = .darkGray
         return label
     }()
@@ -94,7 +94,7 @@ final class NftTraitView: UIView {
     private let scoreNumLabel: UILabel = {
         let label = UILabel()
         label.text = "2594"
-        label.font = .appFont(name: .appMainFontLight, size: 14)
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         label.textColor = AppColors.gradientPink
         return label
     }()
@@ -109,7 +109,7 @@ final class NftTraitView: UIView {
     private let withMeLabel: UILabel = {
         let label = UILabel()
         label.text = "With me"
-        label.font = .appFont(name: .appMainFontLight, size: 14)
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         label.textColor = .darkGray
         return label
     }()
@@ -117,7 +117,7 @@ final class NftTraitView: UIView {
     private let withMeNumLabel: UILabel = {
         let label = UILabel()
         label.text = "D+ 291"
-        label.font = .appFont(name: .appMainFontLight, size: 14)
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         label.textColor = AppColors.gradientPink
         return label
     }()

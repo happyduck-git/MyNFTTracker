@@ -9,4 +9,9 @@ import Foundation
 
 enum UserDefaultsConstants {
     static let walletAddress = "walletAddress"
+    static let theme = "app-theme"
+}
+
+enum NotificationConstants {
+    static let theme = "default-theme"
 }

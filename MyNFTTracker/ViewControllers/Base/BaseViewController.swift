@@ -9,8 +9,11 @@ import UIKit
 import SnapKit
 
 protocol BaseViewControllerDelegate: AnyObject {
+    // NOTE: Comment out. NOT IN USE
     func firstBtnTapped()
     func secondBtnTapped()
+    
+    func themeChanged(as theme: Theme)
 }
 
 class BaseViewController: UIViewController {
@@ -20,13 +23,29 @@ class BaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        self.setupThemeNotification()
     }
 
 
 }
 
+extension BaseViewController {
+    private func setupThemeNotification() {
+        NotificationCenter.default.addObserver(forName: Notification.Name(NotificationConstants.theme),
+                                               object: nil,
+                                               queue: nil) { [weak self] noti in
+            guard let `self` = self,
+                  let theme = noti.object as? Theme
+            else { return }
+            
+            self.baseDelegate?.themeChanged(as: theme)
+            print("Obj recieved: \(theme)")
+        }
+    }
+}
+
 // MARK: - Alert Controller
+
 extension BaseViewController {
     func showAlert(alertTitle: String?,
                    alertMessage: String?,
@@ -70,3 +89,4 @@ extension BaseViewController {
         self.present(alert, animated: true)
     }
 }
+

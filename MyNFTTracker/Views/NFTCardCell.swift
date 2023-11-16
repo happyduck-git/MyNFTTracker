@@ -22,16 +22,17 @@ final class NFTCardCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20.0
+        imageView.isHidden = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    let cardBackView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .systemGreen
+    let cardBackView: NFTCardBackView = {
+        let view = NFTCardBackView()
+        view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 20.0
-        view.isHidden = true
+        view.isHidden = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -62,7 +63,13 @@ final class NFTCardCell: UICollectionViewCell {
         
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
-            self.cardFrontView.setGradientBorder()
+            self.cardFrontView.setGradientBorder(
+                colors: [AppColors.frameGradientPurple,
+                         AppColors.frameGradientMint,
+                         .white],
+                startPoint: CGPoint(x: 0.0, y: 0.0),
+                endPoint: CGPoint(x: 1.0, y: 1.0),
+                borderWidth: 5.0)
         }
     }
     
@@ -93,31 +100,24 @@ final class NFTCardCell: UICollectionViewCell {
     }
     
     //MARK: - Configuration
-    public func configure(backgroundDesc: String,
-                          bodyDesc: String,
-                          clothesDesc: String,
-                          headDesc: String,
-                          accDesc: String,
-                          specialDesc: String,
-                          
-                          name: String,
-                          rank: Int,
-                          score: Int,
-                          updatedAt: Int64) {
-
-    }
-    
     func configureImage(image: UIImage) {
         self.cardFrontView.image = image
     }
     
-    func selectViewToHide(cardBackView hideCardBackView: Bool, nftImageView hideNftImageView: Bool) {
+    func configureBackView(nft: OwnedNFT) {
+        self.cardBackView.configure(with: nft)
+    }
+    
+    func selectViewToHide(
+        cardBackView hideCardBackView: Bool,
+        nftImageView hideNftImageView: Bool
+    ) {
         self.cardFrontView.isHidden = hideNftImageView
     }
     
     func resetCell() {
         self.cardFrontView.image = nil
-        self.cardFrontView.isHidden = false
+//        self.cardFrontView.isHidden = false
     }
     
 }

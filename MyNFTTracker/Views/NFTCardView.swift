@@ -35,7 +35,7 @@ import Nuke
      private let numbersOfNft: UILabel = {
          let label = UILabel()
          label.text = "3"
-         label.font = .appFont(name: .appMainFontBold, size: 14)
+         label.font = .appFont(name: .appMainFontBold, size: .plain)
          label.textColor = AppColors.gradientPink
          return label
      }()
@@ -43,7 +43,7 @@ import Nuke
      private let numbersOfNftDescription: UILabel = {
          let label = UILabel()
          label.text = String(localized: "개의 NFT")
-         label.font = .appFont(name: .appMainFontMedium, size: 14)
+         label.font = .appFont(name: .appMainFontMedium, size: .plain)
          label.textColor = .darkGray
          return label
      }()

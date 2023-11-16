@@ -15,7 +15,15 @@ extension UIFont {
         case appMainFontLight = "DNFForgedBlade-Light"
     }
     
-    static func appFont(name: AppFonts, size: CGFloat) -> UIFont? {
-        return UIFont(name: name.rawValue, size: size)
+    enum AppFontSize: CGFloat {
+        case light = 12
+        case plain = 14
+        case main = 15
+        case title = 17
+        case head = 20
+    }
+    
+    static func appFont(name: AppFonts, size: AppFontSize) -> UIFont? {
+        return UIFont(name: name.rawValue, size: size.rawValue)
     }
 }

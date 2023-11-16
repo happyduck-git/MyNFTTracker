@@ -45,6 +45,17 @@
 		246FBBAD2AF915F400AFDD2E /* MyNFTTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBAC2AF915F400AFDD2E /* MyNFTTrackerTests.swift */; };
 		246FBBB72AF915F400AFDD2E /* MyNFTTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBB62AF915F400AFDD2E /* MyNFTTrackerUITests.swift */; };
 		246FBBB92AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBB82AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift */; };
+		248737B22B03C43300E8938B /* NFTCardBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248737B12B03C43300E8938B /* NFTCardBackView.swift */; };
+		248737B42B05111400E8938B /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248737B32B05111400E8938B /* UIStackView+Extensions.swift */; };
+		248737B72B051EBE00E8938B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 248737B62B051EBE00E8938B /* Lottie */; };
+		248737BA2B051F7B00E8938B /* bubble-lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 248737B92B051F7B00E8938B /* bubble-lottie.json */; };
+		248737BD2B05D4B400E8938B /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 248737BC2B05D4B400E8938B /* SideMenu */; };
+		24A4BD882B05DA9400B2F21B /* ContentsSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD872B05DA9400B2F21B /* ContentsSideMenuViewController.swift */; };
+		24A4BD8A2B05E64700B2F21B /* UITableViewCell+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD892B05E64700B2F21B /* UITableViewCell+Extensions.swift */; };
+		24A4BD8C2B05E77100B2F21B /* ContentsSideMenuViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD8B2B05E77100B2F21B /* ContentsSideMenuViewViewModel.swift */; };
+		24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */; };
+		24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */; };
+		24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +116,15 @@
 		246FBBB22AF915F400AFDD2E /* MyNFTTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyNFTTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		246FBBB62AF915F400AFDD2E /* MyNFTTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTTrackerUITests.swift; sourceTree = "<group>"; };
 		246FBBB82AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		248737B12B03C43300E8938B /* NFTCardBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCardBackView.swift; sourceTree = "<group>"; };
+		248737B32B05111400E8938B /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
+		248737B92B051F7B00E8938B /* bubble-lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "bubble-lottie.json"; sourceTree = "<group>"; };
+		24A4BD872B05DA9400B2F21B /* ContentsSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsSideMenuViewController.swift; sourceTree = "<group>"; };
+		24A4BD892B05E64700B2F21B /* UITableViewCell+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Extensions.swift"; sourceTree = "<group>"; };
+		24A4BD8B2B05E77100B2F21B /* ContentsSideMenuViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentsSideMenuViewViewModel.swift; sourceTree = "<group>"; };
+		24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
+		24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +135,8 @@
 				2463CEF62AF92B37006AAE65 /* SnapKit in Frameworks */,
 				2463CF152AF942B5006AAE65 /* Nuke in Frameworks */,
 				2463CF182AFA5AFE006AAE65 /* metamask-ios-sdk in Frameworks */,
+				248737BD2B05D4B400E8938B /* SideMenu in Frameworks */,
+				248737B72B051EBE00E8938B /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +176,9 @@
 				2463CF192AFA5C10006AAE65 /* UIButton+Extensions.swift */,
 				2463CF202AFA5F24006AAE65 /* UIViewContoller+Extensions.swift */,
 				2463CF262AFA6276006AAE65 /* UIControl+Extensions.swift */,
+				248737B32B05111400E8938B /* UIStackView+Extensions.swift */,
+				24A4BD892B05E64700B2F21B /* UITableViewCell+Extensions.swift */,
+				24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -192,6 +217,8 @@
 			children = (
 				246FBB992AF915EF00AFDD2E /* MainViewController.swift */,
 				2463CF302AFBCCBA006AAE65 /* MainViewViewModel.swift */,
+				24A4BD872B05DA9400B2F21B /* ContentsSideMenuViewController.swift */,
+				24A4BD8B2B05E77100B2F21B /* ContentsSideMenuViewViewModel.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -211,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				2463CF0C2AF94102006AAE65 /* NFTCardViewViewModel.swift */,
+				248737B12B03C43300E8938B /* NFTCardBackView.swift */,
 			);
 			path = NFTCardCell;
 			sourceTree = "<group>";
@@ -300,6 +328,7 @@
 		246FBBC52AF9165900AFDD2E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				24A4BD8D2B05EE3400B2F21B /* Settings */,
 				2463CF1B2AFA5D4F006AAE65 /* Base */,
 				2463CF032AF93D92006AAE65 /* Main */,
 				2463CEE62AF91909006AAE65 /* Login */,
@@ -310,11 +339,29 @@
 		246FBBC72AF9167400AFDD2E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				248737B82B051F6500E8938B /* Lottie */,
 				2463CEF92AF93729006AAE65 /* Fonts */,
 				246FBBA02AF915F400AFDD2E /* LaunchScreen.storyboard */,
 				246FBB9E2AF915F400AFDD2E /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		248737B82B051F6500E8938B /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				248737B92B051F7B00E8938B /* bubble-lottie.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
+		24A4BD8D2B05EE3400B2F21B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */,
+				24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,6 +384,8 @@
 				2463CEF52AF92B37006AAE65 /* SnapKit */,
 				2463CF142AF942B5006AAE65 /* Nuke */,
 				2463CF172AFA5AFE006AAE65 /* metamask-ios-sdk */,
+				248737B62B051EBE00E8938B /* Lottie */,
+				248737BC2B05D4B400E8938B /* SideMenu */,
 			);
 			productName = MyNFTTracker;
 			productReference = 246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */;
@@ -414,6 +463,8 @@
 				2463CEF32AF92987006AAE65 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				2463CF132AF9429C006AAE65 /* XCRemoteSwiftPackageReference "Nuke" */,
 				2463CF162AFA5AFE006AAE65 /* XCRemoteSwiftPackageReference "metamask-ios-sdk" */,
+				248737B52B051EBE00E8938B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				248737BB2B05D4B400E8938B /* XCRemoteSwiftPackageReference "SideMenu" */,
 			);
 			productRefGroup = 246FBB932AF915EF00AFDD2E /* Products */;
 			projectDirPath = "";
@@ -435,6 +486,7 @@
 				2463CEFF2AF9373A006AAE65 /* DNFForgedBlade-Light.ttf in Resources */,
 				246FBBA22AF915F400AFDD2E /* LaunchScreen.storyboard in Resources */,
 				2463CEFD2AF9373A006AAE65 /* DNFForgedBlade-Medium.ttf in Resources */,
+				248737BA2B051F7B00E8938B /* bubble-lottie.json in Resources */,
 				246FBB9F2AF915F400AFDD2E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,7 +514,9 @@
 			files = (
 				2463CF0D2AF94102006AAE65 /* NFTCardViewViewModel.swift in Sources */,
 				2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */,
+				24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */,
 				2463CF212AFA5F24006AAE65 /* UIViewContoller+Extensions.swift in Sources */,
+				24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */,
 				2463CF122AF941C8006AAE65 /* NFTModel.swift in Sources */,
 				246FBB9A2AF915F000AFDD2E /* MainViewController.swift in Sources */,
 				2463CF0A2AF93F47006AAE65 /* NFTTraitView.swift in Sources */,
@@ -470,6 +524,8 @@
 				2463CF1D2AFA5D59006AAE65 /* LoadingViewController.swift in Sources */,
 				246FBB962AF915EF00AFDD2E /* AppDelegate.swift in Sources */,
 				2463CEF82AF931FF006AAE65 /* UIView+Extensions.swift in Sources */,
+				24A4BD8A2B05E64700B2F21B /* UITableViewCell+Extensions.swift in Sources */,
+				24A4BD882B05DA9400B2F21B /* ContentsSideMenuViewController.swift in Sources */,
 				2463CEED2AF91FC9006AAE65 /* AppColors.swift in Sources */,
 				2463CEF02AF9201F006AAE65 /* UIColor+Extensions.swift in Sources */,
 				2463CF232AFA5F8D006AAE65 /* Constants.swift in Sources */,
@@ -479,14 +535,18 @@
 				2463CF252AFA5FEC006AAE65 /* BaseViewController.swift in Sources */,
 				2463CF022AF9383C006AAE65 /* AppFonts.swift in Sources */,
 				2463CF1A2AFA5C10006AAE65 /* UIButton+Extensions.swift in Sources */,
+				24A4BD8C2B05E77100B2F21B /* ContentsSideMenuViewViewModel.swift in Sources */,
 				2463CF062AF93E28006AAE65 /* NFTCardView.swift in Sources */,
 				2463CF312AFBCCBA006AAE65 /* MainViewViewModel.swift in Sources */,
 				2463CEEB2AF91951006AAE65 /* LoginViewViewModel.swift in Sources */,
+				248737B22B03C43300E8938B /* NFTCardBackView.swift in Sources */,
 				2463CF2F2AFA68B4006AAE65 /* EnvironmentConfig.swift in Sources */,
 				2463CF0F2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift in Sources */,
 				246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */,
 				2463CEF22AF920F2006AAE65 /* UIImage+Extensions.swift in Sources */,
 				2463CF1F2AFA5EF4006AAE65 /* AppLogger.swift in Sources */,
+				24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */,
+				248737B42B05111400E8938B /* UIStackView+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +919,22 @@
 				minimumVersion = 0.2.2;
 			};
 		};
+		248737B52B051EBE00E8938B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.3.3;
+			};
+		};
+		248737BB2B05D4B400E8938B /* XCRemoteSwiftPackageReference "SideMenu" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jonkykong/SideMenu.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -876,6 +952,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2463CF162AFA5AFE006AAE65 /* XCRemoteSwiftPackageReference "metamask-ios-sdk" */;
 			productName = "metamask-ios-sdk";
+		};
+		248737B62B051EBE00E8938B /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 248737B52B051EBE00E8938B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		248737BC2B05D4B400E8938B /* SideMenu */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 248737BB2B05D4B400E8938B /* XCRemoteSwiftPackageReference "SideMenu" */;
+			productName = SideMenu;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

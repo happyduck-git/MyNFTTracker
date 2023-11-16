@@ -36,7 +36,7 @@ final class LoginViewController: BaseViewController {
     private let loginButton: UIButton = {
         let btn = UIButton()
         btn.setTitle(String(localized: "Metamask로 로그인"), for: .normal)
-        btn.titleLabel?.font = .appFont(name: .appMainFontBold, size: 18)
+        btn.titleLabel?.font = .appFont(name: .appMainFontBold, size: .head)
         btn.setTitleColor(.darkGray, for: .normal)
         btn.clipsToBounds = true
         btn.layer.borderColor = UIColor.white.cgColor

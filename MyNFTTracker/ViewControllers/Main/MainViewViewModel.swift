@@ -10,6 +10,7 @@ import Combine
 
 final class MainViewViewModel {
     
+    @Published var username: String = "USER-NAME"
     @Published var nfts: [OwnedNFT] = []
     @Published var imageStrings: [String] = []
     
