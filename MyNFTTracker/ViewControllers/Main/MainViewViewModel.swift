@@ -11,8 +11,14 @@ import Combine
 final class MainViewViewModel {
     
     @Published var username: String = "USER-NAME"
-    @Published var nfts: [OwnedNFT] = []
+    @Published var nfts: [OwnedNFT] = [] {
+        didSet {
+            selectedNfts = Array(repeating: false, count: nfts.count)
+        }
+    }
     @Published var imageStrings: [String] = []
+    
+    var selectedNfts: [Bool] = []
     
     init() {
         Task {

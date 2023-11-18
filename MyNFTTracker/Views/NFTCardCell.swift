@@ -22,7 +22,7 @@ final class NFTCardCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20.0
-        imageView.isHidden = true
+        imageView.isHidden = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -32,19 +32,11 @@ final class NFTCardCell: UICollectionViewCell {
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 20.0
-        view.isHidden = false
+        view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private var traitButtonImage: UIImage? {
-        if !cardFrontView.isHidden {
-            return UIImage(named: "info")
-        } else {
-            return UIImage(named: "house")
-        }
-    }
-    
+
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -100,26 +92,33 @@ final class NFTCardCell: UICollectionViewCell {
     }
     
     //MARK: - Configuration
-    func configureImage(image: UIImage) {
+    func configureFront(with image: UIImage, isHidden: Bool) {
+        self.cardFrontView.isHidden = isHidden
         self.cardFrontView.image = image
     }
     
-    func configureBackView(nft: OwnedNFT) {
+    func configureBack(with nft: OwnedNFT, isHidden: Bool) {
+        self.cardBackView.isHidden = isHidden
         self.cardBackView.configure(with: nft)
     }
     
-    func selectViewToHide(
-        cardBackView hideCardBackView: Bool,
-        nftImageView hideNftImageView: Bool
+    func toggleToHide(
+        front: Bool,
+        back: Bool
     ) {
-        self.cardFrontView.isHidden = hideNftImageView
+        self.cardFrontView.isHidden = front
+        self.cardBackView.isHidden = back
     }
     
     func resetCell() {
         self.cardFrontView.image = nil
-//        self.cardFrontView.isHidden = false
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.cardFrontView.isHidden = false
+        self.cardBackView.isHidden = true
+    }
 }
 
 extension NFTCardCell: NftTraitViewDelegate {

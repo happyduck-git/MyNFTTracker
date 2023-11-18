@@ -69,9 +69,6 @@ final class MainViewController: BaseViewController {
         
         self.updateTheme()
         
-        self.nftCollectionView.delegate = self
-        self.nftCollectionView.dataSource = self
-        
         self.bind()
         self.setUI()
         self.setLayout()
@@ -156,6 +153,8 @@ extension MainViewController {
     
     private func setDelegate() {
         self.baseDelegate = self
+        self.nftCollectionView.delegate = self
+        self.nftCollectionView.dataSource = self
     }
     
     private func setNavigariontBar() {
@@ -190,31 +189,53 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             fatalError()
         }
         
-        // Card Front View
-        /*
-        if let url = URL(string: self.vm.imageStrings[indexPath.item]) {
-            Task {
-                do {
-                    let image = try await ImagePipeline.shared.image(for: url)
-                    
-                    DispatchQueue.main.async {
-                        cell.configureImage(image: image)
-                    }
-                }
-                catch {
-                    print("Error fetching image -- \(error.localizedDescription)")
-                }
-                
-            }
-            return cell
-        }
-        cell.configureImage(image: UIImage(resource: .myNFTTrackerLogo))
-         */
+        cell.resetCell()
+        
+        let isHidden = vm.selectedNfts[indexPath.row]
         
         // Card Back View
-        cell.configureBackView(nft: self.vm.nfts[indexPath.item])
+        cell.configureBack(with: self.vm.nfts[indexPath.item], isHidden: !isHidden)
+        
+        // Card Front View
+        guard let url = URL(string: self.vm.imageStrings[indexPath.item]) else {
+            cell.configureFront(with: UIImage(resource: .myNFTTrackerLogo), isHidden: isHidden)
+            return cell
+        }
+        
+        Task {
+            do {
+                let image = try await ImagePipeline.shared.image(for: url)
+                
+                DispatchQueue.main.async {
+                    cell.configureFront(with: image, isHidden: isHidden)
+                }
+            }
+            catch {
+                print("Error fetching image -- \(error.localizedDescription)")
+            }
+            
+        }
+        
         return cell
         
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? NFTCardCell else {
+            fatalError()
+        }
+        vm.selectedNfts[indexPath.row].toggle()
+        
+        let hideFront = vm.selectedNfts[indexPath.row] ? true : false
+        cell.toggleToHide(front: hideFront, back: !hideFront)
+        
+        let viewToHide = hideFront ? cell.cardFrontView : cell.cardBackView
+        let viewToShow = hideFront ? cell.cardBackView : cell.cardFrontView
+        
+        UIView.transition(from: viewToHide,
+                          to: viewToShow,
+                          duration: 0.3,
+                          options: [.transitionFlipFromLeft, .showHideTransitionViews])
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
