@@ -15,6 +15,47 @@ final class SettingsViewController: BaseViewController {
     private var bindings = Set<AnyCancellable>()
     
     //MARK: - UI Elements
+    private let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let nicknameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .appFont(name: .appMainFontBold, size: .title)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let walletAddressLabel: UILabel = {
+        let label = UILabel()
+        label.font = .appFont(name: .appMainFontLight, size: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let copyIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: ImageAssets.clipboardFill)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    private let settingTableView: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
+    
+    private let themeLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(localized: "Select Theme")
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private let toggleSwitch: UISwitch = {
         let toggler = UISwitch()
         toggler.isOn = false

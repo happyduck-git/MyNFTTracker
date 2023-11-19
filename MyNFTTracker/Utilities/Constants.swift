@@ -15,3 +15,11 @@ enum UserDefaultsConstants {
 enum NotificationConstants {
     static let theme = "default-theme"
 }
+
+enum ImageAssets {
+    static let clipboardFill = "doc.on.clipboard.fill"
+}
+
+enum Settings {
+    static let selectTheme = "Select Theme"
+}
