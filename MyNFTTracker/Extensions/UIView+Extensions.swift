@@ -31,3 +31,11 @@ extension UIView {
         self.layer.borderColor = graidentColor.cgColor
     }
 }
+
+extension UIView {
+    func circleView() {
+        if self.frame.width.isEqual(to: self.frame.height) {
+            self.layer.cornerRadius = self.frame.width / 2
+        }
+    }
+}

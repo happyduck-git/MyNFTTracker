@@ -17,6 +17,19 @@ final class SettingsViewViewModel {
     
     @Published var theme: Theme = .black
     
+    enum Settings: CaseIterable {
+        case appTheme
+        
+        var sectionTitle: String {
+            switch self {
+            case .appTheme:
+                return SettingsConstants.themeSection
+            }
+        }
+    }
+    
+    let settingContents: [Settings] = Settings.allCases
+    
     init() {
         self.updateTheme()
     }

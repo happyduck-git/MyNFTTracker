@@ -20,6 +20,7 @@ enum ImageAssets {
     static let clipboardFill = "doc.on.clipboard.fill"
 }
 
-enum Settings {
+enum SettingsConstants {
     static let selectTheme = "Select Theme"
+    static let themeSection = String(localized: "App Theme")
 }

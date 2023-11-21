@@ -17,33 +17,49 @@ final class SettingsViewController: BaseViewController {
     //MARK: - UI Elements
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.backgroundColor = .darkGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     private let nicknameLabel: UILabel = {
         let label = UILabel()
-        label.font = .appFont(name: .appMainFontBold, size: .title)
+        label.text = "Nickname"
+        label.lineBreakMode = .byTruncatingMiddle
+        label.textAlignment = .center
+        label.font = .appFont(name: .appMainFontBold, size: .head)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    private let addressStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.spacing = 10.0
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
     private let walletAddressLabel: UILabel = {
         let label = UILabel()
-        label.font = .appFont(name: .appMainFontLight, size: .light)
-        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "0x0000000000"
+        label.lineBreakMode = .byTruncatingMiddle
+        label.textAlignment = .center
+        label.font = .appFont(name: .appMainFontLight, size: .plain)
         return label
     }()
     
     private let copyIcon: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
         imageView.image = UIImage(systemName: ImageAssets.clipboardFill)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
     private let settingTableView: UITableView = {
-        let table = UITableView()
+        let table = UITableView(frame: .zero, style: .insetGrouped)
         table.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
@@ -80,8 +96,14 @@ final class SettingsViewController: BaseViewController {
         self.setUI()
         self.setLayout()
         self.setDelegate()
+        self.setNavigationBar()
         
         self.bind()
+        
+        DispatchQueue.main.async {
+            self.profileImageView.circleView()
+        }
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,17 +114,53 @@ final class SettingsViewController: BaseViewController {
 
 extension SettingsViewController {
     private func setUI() {
-        self.view.addSubview(self.toggleSwitch)
+        self.view.addSubviews(self.profileImageView,
+                              self.nicknameLabel,
+                              self.addressStack,
+                              self.settingTableView)
+        
+        self.addressStack.addArrangedSubviews(self.walletAddressLabel,
+                                              self.copyIcon)
     }
     
     private func setLayout() {
-        self.toggleSwitch.snp.makeConstraints {
-            $0.centerX.centerY.equalTo(self.view)
+        self.profileImageView.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.centerX.equalTo(self.view)
+            $0.width.height.equalTo(self.view.frame.width / 6)
+        }
+        
+        self.nicknameLabel.snp.makeConstraints {
+            $0.top.equalTo(self.profileImageView.snp.bottom).offset(20)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+        }
+        
+        self.addressStack.snp.makeConstraints {
+            $0.top.equalTo(self.nicknameLabel.snp.bottom).offset(20)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+        }
+        
+        self.copyIcon.snp.makeConstraints {
+            $0.width.equalTo(self.copyIcon.snp.height)
+        }
+        
+        self.settingTableView.snp.makeConstraints {
+            $0.top.equalTo(self.copyIcon.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
     
     private func setDelegate() {
         self.baseDelegate = self
+
+        self.settingTableView.dataSource = self
+        self.settingTableView.delegate = self
+    }
+    
+    private func setNavigationBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "Edit"), menu: nil)
     }
 }
 
@@ -147,14 +205,29 @@ extension SettingsViewController {
 extension SettingsViewController: BaseViewControllerDelegate {
     
     func themeChanged(as theme: Theme) {
+        var bgColor: UIColor = .white
+        var elementsColor: UIColor = .black
+        var isOn: Bool = false
+        
         switch theme {
         case .black:
-            self.view.backgroundColor = .black
-            self.toggleSwitch.isOn = false
+            bgColor = .black
+            elementsColor = .white
+            isOn = false
         case .white:
-            self.view.backgroundColor = .white
-            self.toggleSwitch.isOn = true
+            bgColor = .white
+            elementsColor = .black
+            isOn = true
         }
+        
+        self.view.backgroundColor = bgColor
+        self.nicknameLabel.textColor = elementsColor
+        self.walletAddressLabel.textColor = elementsColor
+        self.copyIcon.tintColor = elementsColor
+        self.settingTableView.backgroundColor = bgColor
+        
+        self.toggleSwitch.isOn = isOn
+        
     }
     
     func firstBtnTapped() {
@@ -164,4 +237,24 @@ extension SettingsViewController: BaseViewControllerDelegate {
     func secondBtnTapped() {
         return
     }
+}
+
+extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.vm.settingContents.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier, for: indexPath)
+        var config = cell.defaultContentConfiguration()
+        config.text = self.vm.settingContents[indexPath.row].sectionTitle
+        
+        cell.contentConfiguration = config
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.vm.settingContents[section].sectionTitle
+    }
+    
 }
