@@ -54,6 +54,8 @@
 		24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */; };
 		24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */; };
 		24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */; };
+		24DF40582B170CA10091ACFB /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40572B170CA10091ACFB /* SnackBarView.swift */; };
+		24DF405A2B170CB50091ACFB /* SnackbarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */; };
 		24E3098A2B0D0711001EBE48 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E309892B0D0711001EBE48 /* ToggleCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -122,6 +124,8 @@
 		24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
 		24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
+		24DF40572B170CA10091ACFB /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
+		24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarViewViewModel.swift; sourceTree = "<group>"; };
 		24E309892B0D0711001EBE48 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -224,6 +228,7 @@
 		2463CF042AF93E1A006AAE65 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24DF40562B170C830091ACFB /* SnackBarView */,
 				24E309882B0D06B3001EBE48 /* SettingTableViewCell */,
 				2463CF0B2AF940B1006AAE65 /* NFTCardCell */,
 				2463CF072AF93EE0006AAE65 /* NFTCardCell.swift */,
@@ -359,6 +364,15 @@
 				24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		24DF40562B170C830091ACFB /* SnackBarView */ = {
+			isa = PBXGroup;
+			children = (
+				24DF40572B170CA10091ACFB /* SnackBarView.swift */,
+				24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */,
+			);
+			path = SnackBarView;
 			sourceTree = "<group>";
 		};
 		24E309882B0D06B3001EBE48 /* SettingTableViewCell */ = {
@@ -531,6 +545,7 @@
 				24A4BD8A2B05E64700B2F21B /* UITableViewCell+Extensions.swift in Sources */,
 				24A4BD882B05DA9400B2F21B /* ContentsSideMenuViewController.swift in Sources */,
 				2463CEED2AF91FC9006AAE65 /* AppColors.swift in Sources */,
+				24DF405A2B170CB50091ACFB /* SnackbarViewViewModel.swift in Sources */,
 				2463CEF02AF9201F006AAE65 /* UIColor+Extensions.swift in Sources */,
 				2463CF232AFA5F8D006AAE65 /* Constants.swift in Sources */,
 				2463CF082AF93EE0006AAE65 /* NFTCardCell.swift in Sources */,
@@ -547,6 +562,7 @@
 				2463CF0F2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift in Sources */,
 				246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */,
 				2463CEF22AF920F2006AAE65 /* UIImage+Extensions.swift in Sources */,
+				24DF40582B170CA10091ACFB /* SnackBarView.swift in Sources */,
 				2463CF1F2AFA5EF4006AAE65 /* AppLogger.swift in Sources */,
 				24E3098A2B0D0711001EBE48 /* ToggleCell.swift in Sources */,
 				24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */,

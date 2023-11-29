@@ -35,7 +35,6 @@ final class MainViewController: BaseViewController {
     
     private let welcomeTitle: UILabel = {
         let label = UILabel()
-        label.textColor = .white
         label.numberOfLines = 0
         label.font = UIFont.appFont(name: .appMainFontBold, size: .head)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -67,6 +66,7 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = .systemBackground
         self.updateTheme()
         
         self.bind()
@@ -260,12 +260,7 @@ extension MainViewController {
 
 extension MainViewController: BaseViewControllerDelegate {
     func themeChanged(as theme: Theme) {
-        switch theme {
-        case .black:
-            self.view.backgroundColor = .black
-        case .white:
-            self.view.backgroundColor = .white
-        }
+        self.overrideUserInterfaceStyle = (theme == .black) ? .dark : .light
     }
     
     func firstBtnTapped() {

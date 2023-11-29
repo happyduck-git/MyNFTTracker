@@ -15,6 +15,8 @@ final class SettingsViewController: BaseViewController {
     private var bindings = Set<AnyCancellable>()
     
     //MARK: - UI Elements
+    private var snackbar: SnackBarView?
+    
     private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -28,6 +30,7 @@ final class SettingsViewController: BaseViewController {
         label.text = "Nickname"
         label.lineBreakMode = .byTruncatingMiddle
         label.textAlignment = .center
+        label.textColor = .label
         label.font = .appFont(name: .appMainFontBold, size: .head)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -51,16 +54,16 @@ final class SettingsViewController: BaseViewController {
         return label
     }()
     
-    private let copyIcon: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: ImageAssets.clipboardFill)
-        return imageView
+    private let copyIcon: UIButton = {
+        let button = UIButton()
+        button.contentMode = .scaleAspectFit
+        button.setImage(UIImage(systemName: ImageAssets.clipboardFill), for: .normal)
+        return button
     }()
     
     private let settingTableView: UITableView = {
         let table = UITableView(frame: .zero, style: .insetGrouped)
-        table.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.identifier)
+        table.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.identifier)
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
@@ -92,6 +95,7 @@ final class SettingsViewController: BaseViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
         
         self.setUI()
         self.setLayout()
@@ -127,7 +131,7 @@ extension SettingsViewController {
         self.profileImageView.snp.makeConstraints {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.centerX.equalTo(self.view)
-            $0.width.height.equalTo(self.view.frame.width / 6)
+            $0.width.height.equalTo(self.view.frame.width / 4)
         }
         
         self.nicknameLabel.snp.makeConstraints {
@@ -138,8 +142,8 @@ extension SettingsViewController {
         
         self.addressStack.snp.makeConstraints {
             $0.top.equalTo(self.nicknameLabel.snp.bottom).offset(20)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(50)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-50)
         }
         
         self.copyIcon.snp.makeConstraints {
@@ -147,7 +151,7 @@ extension SettingsViewController {
         }
         
         self.settingTableView.snp.makeConstraints {
-            $0.top.equalTo(self.copyIcon.snp.bottom)
+            $0.top.equalTo(self.copyIcon.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
     }
@@ -167,21 +171,41 @@ extension SettingsViewController {
 extension SettingsViewController {
     
     private func bind() {
-        self.toggleSwitch.statePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                guard let `self` = self else { return }
-                
-                self.vm.theme = $0 ? .white : .black
-                self.sendThemeNotification(newTheme: self.vm.theme)
-            }
-            .store(in: &bindings)
-        
         self.vm.$theme
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let `self` = self else { return }
                 self.themeChanged(as: $0)
+                self.settingTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            }
+            .store(in: &bindings)
+        
+        self.copyIcon.tapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+                if !self.vm.clipboardTapped {
+                    self.vm.clipboardTapped = true
+                }
+            }
+            .store(in: &bindings)
+        
+        self.vm.$clipboardTapped
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] tapped in
+                if tapped {
+                    guard let `self` = self else { return }
+                    
+                    UIPasteboard.general.string = "지갑주소"
+                    
+                    self.addSnackbar()
+                    guard let snackbar = self.snackbar else { return }
+                    self.showSnackbar(snackbar: snackbar, vm: self.vm)
+                    
+                    self.vm.clipboardTapped = false
+                } else {
+                    return
+                }
             }
             .store(in: &bindings)
     }
@@ -207,26 +231,30 @@ extension SettingsViewController: BaseViewControllerDelegate {
     func themeChanged(as theme: Theme) {
         var bgColor: UIColor = .white
         var elementsColor: UIColor = .black
-        var isOn: Bool = false
+        
+        var mode: UIUserInterfaceStyle = .dark
         
         switch theme {
         case .black:
             bgColor = .black
             elementsColor = .white
-            isOn = false
+            
+            mode = .dark
         case .white:
             bgColor = .white
             elementsColor = .black
-            isOn = true
+            
+            mode = .light
         }
         
+        /*
         self.view.backgroundColor = bgColor
         self.nicknameLabel.textColor = elementsColor
         self.walletAddressLabel.textColor = elementsColor
         self.copyIcon.tintColor = elementsColor
         self.settingTableView.backgroundColor = bgColor
-        
-        self.toggleSwitch.isOn = isOn
+        */
+        self.overrideUserInterfaceStyle = mode
         
     }
     
@@ -245,11 +273,14 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.identifier, for: indexPath)
-        var config = cell.defaultContentConfiguration()
-        config.text = self.vm.settingContents[indexPath.row].sectionTitle
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ToggleCell.identifier, for: indexPath) as? ToggleCell else {
+            return UITableViewCell()
+        }
+        cell.delegate = self
         
-        cell.contentConfiguration = config
+        let isOn = (self.vm.theme == .black) ? false : true
+        cell.configure(text: self.vm.settingContents[indexPath.row].sectionTitle,
+                       isOn: isOn)
         return cell
     }
     
@@ -257,4 +288,65 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         return self.vm.settingContents[section].sectionTitle
     }
     
+}
+
+extension SettingsViewController: ToggleCellDelegate {
+    func didToggle(_ isOn: Bool) {
+        self.vm.theme = isOn ? .white : .black
+        self.sendThemeNotification(newTheme: self.vm.theme)
+    }
+}
+
+extension SettingsViewController {
+    
+    func addSnackbar() {
+        let hander = {
+            print("Snackbar Initialted.")
+        }
+        let snackVM = SnackbarViewViewModel(type: .action(handler: hander),
+                                            text: String(localized: "클립보드에 복사되었습니다."))
+        
+        let snackbar = SnackBarView(vm: snackVM)
+        snackbar.frame = CGRect(x: 0, y: 0, width: view.frame.size.width/1.5, height: 60)
+        self.snackbar = snackbar
+        self.view.addSubview(snackbar)
+        
+    }
+    
+    func showSnackbar(snackbar: SnackBarView, vm: SettingsViewViewModel) {
+        let width = view.frame.size.width/1.5
+        
+        // Starting point of snackbar
+        snackbar.frame = CGRect(x: (view.frame.size.width - width) / 2,
+                                y: view.frame.size.height,
+                                width: width,
+                                height: 60)
+        
+        // Animate to up: Change the 'y' position.
+       
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let `self` = self else { return }
+            
+            snackbar.frame = CGRect(x: (view.frame.size.width - width) / 2,
+                                    y: view.frame.size.height - 80,
+                                    width: width,
+                                    height: 60)
+        } completion: { done in
+            if done {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    UIView.animate(withDuration: 0.5) { [weak self] in
+                        guard let `self` = self else { return }
+                        
+                        snackbar.frame = CGRect(x: (view.frame.size.width - width) / 2,
+                                                y: view.frame.size.height,
+                                                width: width,
+                                                height: 60)
+                    }
+      
+                }
+                
+            }
+        }
+
+    }
 }

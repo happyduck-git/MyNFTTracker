@@ -16,6 +16,7 @@ enum Theme: String, CaseIterable {
 final class SettingsViewViewModel {
     
     @Published var theme: Theme = .black
+    @Published var clipboardTapped: Bool = false
     
     enum Settings: CaseIterable {
         case appTheme
