@@ -314,7 +314,7 @@ extension RegisterViewController {
     
     private func showAvatarPicker() {
         let vm = AvatarCollectionViewViewModel()
-        let viewControllerToPresent = AvatarCollectionViewController(vm: vm)
+        let viewControllerToPresent = AvatarCollectionViewController(vm: vm, delegate: self)
             if let sheet = viewControllerToPresent.sheetPresentationController {
                 sheet.detents = [.medium(), .large()]
                 sheet.largestUndimmedDetentIdentifier = .medium
@@ -324,4 +324,13 @@ extension RegisterViewController {
             }
             present(viewControllerToPresent, animated: true, completion: nil)
     }
+}
+
+extension RegisterViewController: AvatarCollectionViewControllerDelegate {
+    func avatarCollectionViewController(_ avatarCollectionViewController: AvatarCollectionViewController,
+                                        didSelectAvatar avatar: UIImage?) {
+        self.profileView.image = avatar
+    }
+    
+    
 }

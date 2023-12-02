@@ -10,7 +10,8 @@ import SnapKit
 import Combine
 
 protocol AvatarCollectionViewControllerDelegate: AnyObject {
-    func avatarCollectionViewController(_ avatarCollectionViewController: AvatarCollectionViewController, didSelectAvatar avatar: UIImage?)
+    func avatarCollectionViewController(_ avatarCollectionViewController: AvatarCollectionViewController,
+                                        didSelectAvatar avatar: UIImage?)
 }
 
 final class AvatarCollectionViewController: UIViewController {
@@ -24,7 +25,7 @@ final class AvatarCollectionViewController: UIViewController {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 5as
+        layout.minimumLineSpacing = 5
         layout.minimumInteritemSpacing = 5
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 0, right: 10)
         
@@ -45,8 +46,11 @@ final class AvatarCollectionViewController: UIViewController {
     }
     //MARK: - Init
     
-    init(vm: AvatarCollectionViewViewModel) {
+    init(vm: AvatarCollectionViewViewModel,
+         delegate: AvatarCollectionViewControllerDelegate
+    ) {
         self.vm = vm
+        self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -116,5 +120,6 @@ extension AvatarCollectionViewController: UICollectionViewDelegate, UICollection
         else { return }
         prevCell.showCheckmark(false)
         cell.showCheckmark(true)
+        self.delegate.avatarCollectionViewController(self, didSelectAvatar: self.vm.avatarImages[indexPath.item])
     }
 }
