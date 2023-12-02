@@ -18,9 +18,38 @@ enum NotificationConstants {
 
 enum ImageAssets {
     static let clipboardFill = "doc.on.clipboard.fill"
+    static let editFill = "pencil.circle.fill"
 }
 
 enum SettingsConstants {
     static let selectTheme = "Select Theme"
     static let themeSection = String(localized: "App Theme")
+}
+
+enum FirestoreConstants {
+    static let users = "users"
+    static let uuid = "id"
+}
+
+enum AvatarConstants {
+    static let avatarList = ["Simon",
+                             "Bella",
+                             "Zoey",
+                             "Charlie",
+                             "George",
+                             "Miss kitty",
+                             "Scooter",
+                             "Lola",
+                             "Missy",
+                             "Spooky",
+                             "Cuddles",
+                             "Maggie",
+                             "Gracie",
+                             "Mimi",
+                             "Toby",
+                             "Loki",
+                             "Kiki",
+                             "Snickers",
+                             "Lily",
+                             "Shadow"]
 }

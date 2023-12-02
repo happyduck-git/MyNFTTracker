@@ -12,4 +12,5 @@ final class LoginViewViewModel {
     
     @Published var signInTapped: Bool = false
     @Published var walletConnected: Bool = false
+    @Published var isFirstVisit: Bool = false
 }

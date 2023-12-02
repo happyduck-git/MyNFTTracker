@@ -72,7 +72,7 @@ final class NftTraitView: UIView {
         let label = UILabel()
         label.text = "0"
         label.font = .appFont(name: .appMainFontLight, size: .plain)
-        label.textColor = AppColors.gradientPink
+        label.textColor = AppColors.LightMode.gradientUpper
         return label
     }()
     
@@ -95,7 +95,7 @@ final class NftTraitView: UIView {
         let label = UILabel()
         label.text = "2594"
         label.font = .appFont(name: .appMainFontLight, size: .plain)
-        label.textColor = AppColors.gradientPink
+        label.textColor = AppColors.LightMode.gradientUpper
         return label
     }()
     
@@ -118,7 +118,7 @@ final class NftTraitView: UIView {
         let label = UILabel()
         label.text = "D+ 291"
         label.font = .appFont(name: .appMainFontLight, size: .plain)
-        label.textColor = AppColors.gradientPink
+        label.textColor = AppColors.LightMode.gradientUpper
         return label
     }()
     

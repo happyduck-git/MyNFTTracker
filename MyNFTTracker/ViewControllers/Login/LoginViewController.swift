@@ -12,9 +12,11 @@ import metamask_ios_sdk
 
 final class LoginViewController: BaseViewController {
     
+    // Firestore
+    private let firestoreManager = FirestoreManager.shared
+    
     // Metamask
-    private let ethereum = MetaMaskSDK.shared.ethereum
-    private let dapp = Dapp(name: "MyNFTTracker", url: "https://my-nft-tracker.com")
+    private let appMetadata = AppMetadata(name: "MyNFTTracker", url: "https://my-nft-tracker.com")
     
     // Combine
     private var bindings = Set<AnyCancellable>()
@@ -41,7 +43,14 @@ final class LoginViewController: BaseViewController {
         btn.clipsToBounds = true
         btn.layer.borderColor = UIColor.white.cgColor
         btn.layer.borderWidth = 2.0
-        btn.backgroundColor = AppColors.buttonBeige
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    private let signupButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle(String(localized: "회원가입 하기"), for: .normal)
+        btn.titleLabel?.font = .appFont(name: .appMainFontBold, size: .light)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -61,13 +70,11 @@ final class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let gradientImage = UIImage.gradientImage(bounds: self.view.bounds,
-                              colors: [AppColors.gradientPink,
-                                       AppColors.gradientGreen])
-        view.backgroundColor = UIColor(patternImage: gradientImage)
+        self.updateTheme()
         
         self.setUI()
         self.setLayout()
+        self.setDelegate()
         
         self.bind()
         
@@ -83,6 +90,7 @@ final class LoginViewController: BaseViewController {
 extension LoginViewController {
     
     private func bind() {
+        let metamask = MetaMaskSDK.shared(self.appMetadata)
         
         self.loginButton.tapPublisher
             .receive(on: DispatchQueue.main)
@@ -91,24 +99,27 @@ extension LoginViewController {
             
                 self.addChildViewController(self.loadingVC)
                 
-                ethereum.connect(self.dapp)?
-                    .sink(receiveCompletion: { [weak self] completion in
-                        guard let `self` = self else { return }
-                        
-                        switch completion {
-                        case let .failure(error):
-                            self.loadingVC.removeViewController()
-                            self.showWalletConnectiontFailedAlert()
-                            AppLogger.logger.error("Connection error: \(String(describing: error))")
-                            
-                        default: break
-                        }
-                    }, receiveValue: { result in
-                        self.loadingVC.removeViewController()
-                        AppLogger.logger.info("Connection result: \(String(describing: result))")
-                        self.saveWalletAddress(address: result as? String)
+                Task {
+                    let result = await metamask.connect()
+                    switch result {
+                    case .success(let adress):
+                        self.saveWalletAddress(address: adress)
                         self.vm.walletConnected = true
-                    }).store(in: &bindings)
+                        
+                        if metamask.connected {
+                            print("Metamask connected")
+                        } else {
+                            print("Metamask NOT connected")
+                        }
+                        
+                    case .failure(let error):
+                        self.showWalletConnectiontFailedAlert()
+                        AppLogger.logger.error("Connection error: \(String(describing: error))")
+                    }
+                    DispatchQueue.main.async {
+                        self.loadingVC.removeViewController()
+                    }
+                }
                 
             }
             .store(in: &bindings)
@@ -119,13 +130,56 @@ extension LoginViewController {
                 guard let `self` = self else { return }
                 
                 if connected {
-                    
-                    let vc = MainViewController(vm: MainViewViewModel())
-                    
-                    self.show(vc, sender: self)
+                   
+                    Task {
+                        guard let wallet = self.retrieveWalletAddress() else { return }
+                        do {
+                            self.vm.isFirstVisit = try await !self.firestoreManager.isRegisteredUser(wallet) ? true : false
+                        }
+                        catch {
+                            AppLogger.logger.error("Error: \(error)")
+                        }
+                    }
                 }
                 
             }.store(in: &bindings)
+        
+        self.vm.$isFirstVisit
+            .sink { [weak self] in
+                
+                guard let `self` = self,
+                      let wallet = self.retrieveWalletAddress()
+                else { return }
+                /*
+                let vc = MainViewController(vm: MainViewViewModel())
+                self.show(vc, sender: self)
+                 */
+                if $0 {
+                    Task {
+                        try await self.firestoreManager.saveWalletAddress(wallet)
+                        AppLogger.logger.info("New wallet \(wallet) has been registred.")
+                        //TODO: Add Register nickname and profile picture.
+                        DispatchQueue.main.async {
+                            let registerVM = RegisterViewViewModel(walletAddres: wallet)
+                            let registerVC = RegisterViewController(vm: registerVM)
+                            
+                            self.show(registerVC, sender: self)
+                        }
+                    }
+                    
+                } else {
+                    
+                }
+            }
+            .store(in: &bindings)
+        
+        self.signupButton.tapPublisher
+            .receive(on: DispatchQueue.global())
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+                metamask.clearSession()
+            }
+            .store(in: &bindings)
     }
     
 }
@@ -134,7 +188,8 @@ extension LoginViewController {
     
     private func setUI() {
         self.view.addSubviews(self.logo,
-                              self.loginButton)
+                              self.loginButton,
+                              self.signupButton)
     }
     
     private func setLayout() {
@@ -150,15 +205,28 @@ extension LoginViewController {
             $0.height.equalTo(50)
         }
         
+        self.signupButton.snp.makeConstraints {
+            $0.top.equalTo(self.loginButton.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+            $0.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide).offset(-20)
+        }
+    }
+    
+    private func setDelegate() {
+        self.baseDelegate = self
     }
 
 }
 
-// MARK: - Private
+// MARK: - Wallet address
 extension LoginViewController {
     
     private func saveWalletAddress(address: String?) {
         UserDefaults.standard.set(address, forKey: UserDefaultsConstants.walletAddress)
+    }
+    
+    private func retrieveWalletAddress() -> String? {
+        return UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress)
     }
     
     private func showWalletConnectiontFailedAlert() {
@@ -167,5 +235,61 @@ extension LoginViewController {
                        alertStyle: .alert,
                        actionTitle1: "확인",
                        actionStyle1: .cancel)
+    }
+}
+
+extension LoginViewController: BaseViewControllerDelegate {
+    func firstBtnTapped() {
+        return
+    }
+    
+    func secondBtnTapped() {
+        return
+    }
+    
+    func themeChanged(as theme: Theme) {
+        var gradientUpperColor: UIColor?
+        var gradientLowerColor: UIColor?
+        var buttonColor: UIColor?
+        var borderColor: UIColor?
+        var textColor: UIColor?
+        
+        switch theme {
+        case .black:
+            gradientUpperColor = AppColors.DarkMode.gradientUpper
+            gradientLowerColor = AppColors.DarkMode.gradientLower
+            buttonColor = AppColors.DarkMode.buttonActive
+            borderColor = AppColors.DarkMode.border
+            textColor = AppColors.DarkMode.text
+        case .white:
+            gradientUpperColor = AppColors.LightMode.gradientUpper
+            gradientLowerColor = AppColors.LightMode.gradientLower
+            buttonColor = AppColors.LightMode.buttonActive
+            borderColor = AppColors.LightMode.border
+            textColor = AppColors.LightMode.text
+        }
+        
+        let gradientImage = UIImage.gradientImage(bounds: self.view.bounds,
+                                                  colors: [gradientUpperColor!,
+                                                           gradientLowerColor!])
+        self.view.backgroundColor = UIColor(patternImage: gradientImage)
+        self.loginButton.backgroundColor = buttonColor
+        self.loginButton.layer.borderColor = borderColor?.cgColor
+        self.loginButton.setTitleColor(textColor, for: .normal)
+    }
+    
+    
+}
+
+extension LoginViewController {
+    private func updateTheme() {
+        guard let themeString = UserDefaults.standard.string(forKey: UserDefaultsConstants.theme),
+              let theme = Theme(rawValue: themeString)
+        else {
+            self.themeChanged(as: .black)
+            return
+        }
+        
+        self.themeChanged(as: theme)
     }
 }

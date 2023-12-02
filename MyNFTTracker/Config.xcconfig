@@ -10,3 +10,6 @@
 
 // ALCHEMY
 ALCHEMY_API_KEY = c-Tm6eusJrq86-e-AU3_S7zUpFLNSnCg
+
+// AVATAR
+AVATAR_BASE_URL = https://api.dicebear.com/7.x/lorelei/svg/
