@@ -8,6 +8,30 @@
 import Foundation
 
 final actor AlchemyServiceManager {
+    
+    enum ChanId: String {
+        case eth = "0x1"
+        case polygon = "0x89"
+        case sepolia = "0xaa36a7"
+        case goerli = "0x5"
+        case mumbai = "0x13881"
+        
+        var chain: String {
+            switch self {
+            case .eth:
+                "eth-mainnet"
+            case .polygon:
+                "ploygon-mainnet"
+            case .sepolia:
+                "eth-sepolia"
+            case .goerli:
+                "arb-goerli"
+            case .mumbai:
+                "polygon-mumbai"
+            }
+        }
+    }
+    
     // MARK: - Init
     static let shared = AlchemyServiceManager()
     private init() {}

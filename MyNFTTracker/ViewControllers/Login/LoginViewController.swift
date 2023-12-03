@@ -105,9 +105,9 @@ extension LoginViewController {
                     let result = await metamask.connect()
                     switch result {
                     case .success(let address):
-                        self.saveWalletAddress(address: address)
+                        self.saveAddressAndChainId(address: address, chainId: metamask.chainId)
                         self.vm.walletConnected = true
-                        print("Chain id: \(metamask.chainId))")
+
                         #if DEBUG
                         if metamask.connected {
                             print("Metamask connected")
@@ -224,10 +224,11 @@ extension LoginViewController {
 // MARK: - Wallet address
 extension LoginViewController {
     
-    private func saveWalletAddress(address: String?) {
+    private func saveAddressAndChainId(address: String?, chainId: String) {
         UserDefaults.standard.set(address, forKey: UserDefaultsConstants.walletAddress)
+        UserDefaults.standard.set(chainId, forKey: UserDefaultsConstants.chainId)
         #if DEBUG
-        AppLogger.logger.log("Wallet address saved to UserDefaults -- \(String(describing: address))")
+        AppLogger.logger.log("Wallet address saved to UserDefaults -- \(String(describing: address))\n and Chain Id -- \(String(describing: chainId))")
         #endif
     }
     

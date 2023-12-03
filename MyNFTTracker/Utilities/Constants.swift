@@ -12,6 +12,7 @@ enum DemoConstants {
 }
 enum UserDefaultsConstants {
     static let walletAddress = "walletAddress"
+    static let chainId = "chain-id"
     static let theme = "app-theme"
 }
 
