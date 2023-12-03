@@ -47,6 +47,10 @@ enum SideMenuConstants {
     static let cancel = String(localized: "취소")
 }
 
+enum EditConstants {
+    static let nickname = String(localized: "닉네임")
+}
+
 enum FirestoreConstants {
     static let users = "users"
     static let uuid = "id"

@@ -11,6 +11,8 @@
 		24407B442B1C63CD007F254A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B432B1C63CD007F254A /* WelcomeViewController.swift */; };
 		24407B462B1C677B007F254A /* confetti.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 24407B452B1C676E007F254A /* confetti.lottie */; };
 		24407B482B1C7F24007F254A /* WelcomeViewViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B472B1C7F24007F254A /* WelcomeViewViewmodel.swift */; };
+		24407B4B2B1CB6C5007F254A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B4A2B1CB6C5007F254A /* EditViewController.swift */; };
+		24407B4D2B1CB7C3007F254A /* EditViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B4C2B1CB7C3007F254A /* EditViewViewModel.swift */; };
 		2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEE72AF91929006AAE65 /* LoginViewController.swift */; };
 		2463CEEB2AF91951006AAE65 /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEEA2AF91951006AAE65 /* LoginViewViewModel.swift */; };
 		2463CEED2AF91FC9006AAE65 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEEC2AF91FC9006AAE65 /* AppColors.swift */; };
@@ -101,6 +103,8 @@
 		24407B432B1C63CD007F254A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		24407B452B1C676E007F254A /* confetti.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = confetti.lottie; sourceTree = "<group>"; };
 		24407B472B1C7F24007F254A /* WelcomeViewViewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewViewmodel.swift; sourceTree = "<group>"; };
+		24407B4A2B1CB6C5007F254A /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		24407B4C2B1CB7C3007F254A /* EditViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewViewModel.swift; sourceTree = "<group>"; };
 		2463CEE72AF91929006AAE65 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2463CEEA2AF91951006AAE65 /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
 		2463CEEC2AF91FC9006AAE65 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -205,6 +209,15 @@
 				24407B412B1C55EF007F254A /* MetamaskManager.swift */,
 			);
 			path = WalletConnect;
+			sourceTree = "<group>";
+		};
+		24407B492B1CB6AC007F254A /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				24407B4A2B1CB6C5007F254A /* EditViewController.swift */,
+				24407B4C2B1CB7C3007F254A /* EditViewViewModel.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 		2463CEE62AF91909006AAE65 /* Login */ = {
@@ -385,6 +398,7 @@
 		246FBBC52AF9165900AFDD2E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				24407B492B1CB6AC007F254A /* Edit */,
 				24A104892B19C4F7003AD597 /* AvatarTable */,
 				24A1047E2B18E0C4003AD597 /* Register */,
 				24DF405B2B17216D0091ACFB /* Signup */,
@@ -672,6 +686,7 @@
 				2463CF082AF93EE0006AAE65 /* NFTCardCell.swift in Sources */,
 				2463CF2A2AFA667C006AAE65 /* AlchemyServiceManager.swift in Sources */,
 				2463CF272AFA6276006AAE65 /* UIControl+Extensions.swift in Sources */,
+				24407B4D2B1CB7C3007F254A /* EditViewViewModel.swift in Sources */,
 				2463CF252AFA5FEC006AAE65 /* BaseViewController.swift in Sources */,
 				24DB467A2B1B31FB00431517 /* AvatarCacheManager.swift in Sources */,
 				2463CF022AF9383C006AAE65 /* AppFonts.swift in Sources */,
@@ -690,6 +705,7 @@
 				2463CF0F2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift in Sources */,
 				246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */,
 				2463CEF22AF920F2006AAE65 /* UIImage+Extensions.swift in Sources */,
+				24407B4B2B1CB6C5007F254A /* EditViewController.swift in Sources */,
 				24DF40582B170CA10091ACFB /* SnackBarView.swift in Sources */,
 				2463CF1F2AFA5EF4006AAE65 /* AppLogger.swift in Sources */,
 				24E3098A2B0D0711001EBE48 /* ToggleCell.swift in Sources */,

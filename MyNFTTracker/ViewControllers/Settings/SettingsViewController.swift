@@ -163,7 +163,7 @@ extension SettingsViewController {
     }
     
     private func setNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "Edit"), menu: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "수정하기"), menu: nil)
     }
 }
 

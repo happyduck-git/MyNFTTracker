@@ -104,9 +104,10 @@ extension LoginViewController {
                 Task {
                     let result = await metamask.connect()
                     switch result {
-                    case .success(let adress):
-                        self.saveWalletAddress(address: adress)
+                    case .success(let address):
+                        self.saveWalletAddress(address: address)
                         self.vm.walletConnected = true
+                        print("Chain id: \(metamask.chainId))")
                         #if DEBUG
                         if metamask.connected {
                             print("Metamask connected")

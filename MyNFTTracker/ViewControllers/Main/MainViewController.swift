@@ -94,7 +94,7 @@ extension MainViewController {
             .sink { [weak self] name in
                 guard let `self` = self else { return }
                 
-                self.welcomeTitle.text = String(localized: "Welcome\n") + name
+                self.welcomeTitle.text = String(localized: "반갑습니다\n") + name
             }
             .store(in: &bindings)
         
