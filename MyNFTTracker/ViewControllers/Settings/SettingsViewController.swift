@@ -95,7 +95,6 @@ final class SettingsViewController: BaseViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .systemBackground
         
         self.setUI()
         self.setLayout()
@@ -142,7 +141,7 @@ extension SettingsViewController {
         
         self.addressStack.snp.makeConstraints {
             $0.top.equalTo(self.nicknameLabel.snp.bottom).offset(20)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(50)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(60)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-50)
         }
         
@@ -180,6 +179,30 @@ extension SettingsViewController {
             }
             .store(in: &bindings)
         
+        self.vm.$userInfo
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let `self` = self else { return }
+                self.nicknameLabel.text = $0.nickname
+            }
+            .store(in: &bindings)
+        
+        self.vm.$profileImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let `self` = self else { return }
+                self.profileImageView.image = $0
+            }
+            .store(in: &bindings)
+        
+        self.vm.$walletAddress
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let `self` = self else { return }
+                self.walletAddressLabel.text = $0
+            }
+            .store(in: &bindings)
+        
         self.copyIcon.tapPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -196,7 +219,10 @@ extension SettingsViewController {
                 if tapped {
                     guard let `self` = self else { return }
                     
-                    UIPasteboard.general.string = "지갑주소"
+                    UIPasteboard.general.string = self.vm.walletAddress
+                    #if DEBUG
+                    AppLogger.logger.debug("Address Copied to Clipboard: \(self.vm.walletAddress)")
+                    #endif
                     
                     self.addSnackbar()
                     guard let snackbar = self.snackbar else { return }
@@ -229,33 +255,25 @@ extension SettingsViewController {
 extension SettingsViewController: BaseViewControllerDelegate {
     
     func themeChanged(as theme: Theme) {
-        var bgColor: UIColor = .white
-        var elementsColor: UIColor = .black
-        
-        var mode: UIUserInterfaceStyle = .dark
+        var bgColor: UIColor?
+        var elementsColor: UIColor?
         
         switch theme {
         case .black:
-            bgColor = .black
-            elementsColor = .white
+            bgColor = AppColors.DarkMode.secondaryBackground
+            elementsColor = AppColors.DarkMode.text
             
-            mode = .dark
         case .white:
-            bgColor = .white
-            elementsColor = .black
-            
-            mode = .light
+            bgColor = AppColors.LightMode.secondaryBackground
+            elementsColor = AppColors.LightMode.text
         }
         
-        /*
         self.view.backgroundColor = bgColor
         self.nicknameLabel.textColor = elementsColor
         self.walletAddressLabel.textColor = elementsColor
         self.copyIcon.tintColor = elementsColor
         self.settingTableView.backgroundColor = bgColor
-        */
-        self.overrideUserInterfaceStyle = mode
-        
+
     }
     
     func firstBtnTapped() {
@@ -269,7 +287,7 @@ extension SettingsViewController: BaseViewControllerDelegate {
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.vm.settingContents.count
+        return self.vm.sections.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -279,13 +297,14 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         cell.delegate = self
         
         let isOn = (self.vm.theme == .black) ? false : true
-        cell.configure(text: self.vm.settingContents[indexPath.row].sectionTitle,
+        let modeText = (self.vm.theme == .black) ? SettingsConstants.darkMode : SettingsConstants.lightMode
+        cell.configure(text: modeText,
                        isOn: isOn)
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.vm.settingContents[section].sectionTitle
+        return self.vm.sections[section].sectionTitle
     }
     
 }
@@ -328,7 +347,7 @@ extension SettingsViewController {
             guard let `self` = self else { return }
             
             snackbar.frame = CGRect(x: (view.frame.size.width - width) / 2,
-                                    y: view.frame.size.height - 80,
+                                    y: view.frame.size.height - 100,
                                     width: width,
                                     height: 60)
         } completion: { done in

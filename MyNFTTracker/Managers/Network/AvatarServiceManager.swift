@@ -14,6 +14,7 @@ final actor AvatarServiceManager {
     static let shared = AvatarServiceManager()
     private init() {}
     
+    private let cacheManager = AvatarCacheManager.shared
     private let baseUrl = "https://api.dicebear.com/7.x/lorelei/png?seed=%@"
     
     enum AvatarServiceError: Error {
@@ -24,21 +25,27 @@ final actor AvatarServiceManager {
 
 extension AvatarServiceManager {
     
-    func retrieveMultipleAvatar(_ nameList: [String]) async throws -> [UIImage?] {
+    struct ImageResult {
+        let name: String
+        let image: UIImage?
+    }
+    
+    func retrieveMultipleAvatar(_ nameList: [String]) async throws -> [String: UIImage?] {
         
-        try await withThrowingTaskGroup(of: UIImage?.self) { [weak self] group in
-            guard let `self` = self else { return [] }
+        try await withThrowingTaskGroup(of: ImageResult.self) { [weak self] group in
+            guard let `self` = self else { return [:] }
             for name in nameList {
                 group.addTask {
-                    try await self.retrieveSingleAvatar(name)
+                    ImageResult(name: name,
+                                image: try await self.retrieveSingleAvatar(name))
                 }
             }
             
-            var images: [UIImage?] = []
-            for try await image in group {
-                images.append(image)
+            var result: [String: UIImage?] = [:]
+            for try await value in group {
+                result[value.name] = value.image
             }
-            return images
+            return result
         }
     }
     
@@ -47,6 +54,13 @@ extension AvatarServiceManager {
         guard let url = URL(string: urlString) else {
             throw AvatarServiceError.invalidUrl
         }
-        return try await ImagePipeline.shared.image(for: url)
+        
+        if let data = self.cacheManager.cachedResponse(for: url) {
+            return UIImage(data: data)
+        }
+        
+        let image = try await ImagePipeline.shared.image(for: url)
+        self.cacheManager.setCache(for: url, data: image.pngData())
+        return image
     }
 }

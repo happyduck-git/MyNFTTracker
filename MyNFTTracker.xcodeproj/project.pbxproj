@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		24407B422B1C55EF007F254A /* MetamaskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B412B1C55EF007F254A /* MetamaskManager.swift */; };
+		24407B442B1C63CD007F254A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B432B1C63CD007F254A /* WelcomeViewController.swift */; };
+		24407B462B1C677B007F254A /* confetti.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 24407B452B1C676E007F254A /* confetti.lottie */; };
+		24407B482B1C7F24007F254A /* WelcomeViewViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B472B1C7F24007F254A /* WelcomeViewViewmodel.swift */; };
 		2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEE72AF91929006AAE65 /* LoginViewController.swift */; };
 		2463CEEB2AF91951006AAE65 /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEEA2AF91951006AAE65 /* LoginViewViewModel.swift */; };
 		2463CEED2AF91FC9006AAE65 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEEC2AF91FC9006AAE65 /* AppColors.swift */; };
@@ -46,7 +50,6 @@
 		248737B22B03C43300E8938B /* NFTCardBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248737B12B03C43300E8938B /* NFTCardBackView.swift */; };
 		248737B42B05111400E8938B /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248737B32B05111400E8938B /* UIStackView+Extensions.swift */; };
 		248737B72B051EBE00E8938B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 248737B62B051EBE00E8938B /* Lottie */; };
-		248737BA2B051F7B00E8938B /* bubble-lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 248737B92B051F7B00E8938B /* bubble-lottie.json */; };
 		248737BD2B05D4B400E8938B /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 248737BC2B05D4B400E8938B /* SideMenu */; };
 		248979652B187B7500A8F28E /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248979642B187B7500A8F28E /* FirestoreManager.swift */; };
 		248979672B187BE400A8F28E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 248979662B187BE400A8F28E /* FirebaseAnalytics */; };
@@ -68,6 +71,8 @@
 		24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */; };
 		24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */; };
 		24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */; };
+		24DB467A2B1B31FB00431517 /* AvatarCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */; };
+		24DB467C2B1B608A00431517 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB467B2B1B608A00431517 /* User.swift */; };
 		24DF40582B170CA10091ACFB /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40572B170CA10091ACFB /* SnackBarView.swift */; };
 		24DF405A2B170CB50091ACFB /* SnackbarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */; };
 		24DF405D2B184CEB0091ACFB /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF405C2B184CEB0091ACFB /* SignupViewController.swift */; };
@@ -92,6 +97,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		24407B412B1C55EF007F254A /* MetamaskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetamaskManager.swift; sourceTree = "<group>"; };
+		24407B432B1C63CD007F254A /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		24407B452B1C676E007F254A /* confetti.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = confetti.lottie; sourceTree = "<group>"; };
+		24407B472B1C7F24007F254A /* WelcomeViewViewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewViewmodel.swift; sourceTree = "<group>"; };
 		2463CEE72AF91929006AAE65 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2463CEEA2AF91951006AAE65 /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
 		2463CEEC2AF91FC9006AAE65 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -132,7 +141,6 @@
 		246FBBB82AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNFTTrackerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		248737B12B03C43300E8938B /* NFTCardBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NFTCardBackView.swift; sourceTree = "<group>"; };
 		248737B32B05111400E8938B /* UIStackView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+Extensions.swift"; sourceTree = "<group>"; };
-		248737B92B051F7B00E8938B /* bubble-lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "bubble-lottie.json"; sourceTree = "<group>"; };
 		248979642B187B7500A8F28E /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		2489796E2B18867F00A8F28E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		24A1047F2B18E0EC003AD597 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -149,6 +157,8 @@
 		24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
 		24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
+		24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCacheManager.swift; sourceTree = "<group>"; };
+		24DB467B2B1B608A00431517 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		24DF40572B170CA10091ACFB /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
 		24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarViewViewModel.swift; sourceTree = "<group>"; };
 		24DF405C2B184CEB0091ACFB /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +199,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		24407B402B1C55DD007F254A /* WalletConnect */ = {
+			isa = PBXGroup;
+			children = (
+				24407B412B1C55EF007F254A /* MetamaskManager.swift */,
+			);
+			path = WalletConnect;
+			sourceTree = "<group>";
+		};
 		2463CEE62AF91909006AAE65 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,6 +299,7 @@
 			isa = PBXGroup;
 			children = (
 				2463CF112AF941C8006AAE65 /* NFTModel.swift */,
+				24DB467B2B1B608A00431517 /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -300,6 +319,7 @@
 				2463CF292AFA667C006AAE65 /* AlchemyServiceManager.swift */,
 				2463CF2B2AFA66C0006AAE65 /* NetworkServiceManager.swift */,
 				24A104872B19B53E003AD597 /* AvatarServiceManager.swift */,
+				24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -390,7 +410,7 @@
 		248737B82B051F6500E8938B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
-				248737B92B051F7B00E8938B /* bubble-lottie.json */,
+				24407B452B1C676E007F254A /* confetti.lottie */,
 			);
 			path = Lottie;
 			sourceTree = "<group>";
@@ -398,6 +418,7 @@
 		248979622B187B5100A8F28E /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				24407B402B1C55DD007F254A /* WalletConnect */,
 				248979632B187B6700A8F28E /* Repository */,
 				2463CF282AFA6670006AAE65 /* Network */,
 			);
@@ -417,6 +438,8 @@
 			children = (
 				24A1047F2B18E0EC003AD597 /* RegisterViewController.swift */,
 				24A104812B19902B003AD597 /* RegisterViewViewModel.swift */,
+				24407B432B1C63CD007F254A /* WelcomeViewController.swift */,
+				24407B472B1C7F24007F254A /* WelcomeViewViewmodel.swift */,
 			);
 			path = Register;
 			sourceTree = "<group>";
@@ -597,10 +620,10 @@
 			files = (
 				2463CEFE2AF9373A006AAE65 /* DNFForgedBlade-Bold.ttf in Resources */,
 				2463CEFF2AF9373A006AAE65 /* DNFForgedBlade-Light.ttf in Resources */,
+				24407B462B1C677B007F254A /* confetti.lottie in Resources */,
 				246FBBA22AF915F400AFDD2E /* LaunchScreen.storyboard in Resources */,
 				2463CEFD2AF9373A006AAE65 /* DNFForgedBlade-Medium.ttf in Resources */,
 				2489796F2B18867F00A8F28E /* GoogleService-Info.plist in Resources */,
-				248737BA2B051F7B00E8938B /* bubble-lottie.json in Resources */,
 				246FBB9F2AF915F400AFDD2E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +651,7 @@
 			files = (
 				2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */,
 				24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */,
+				24DB467C2B1B608A00431517 /* User.swift in Sources */,
 				2463CF212AFA5F24006AAE65 /* UIViewContoller+Extensions.swift in Sources */,
 				24A104842B1992AC003AD597 /* UITextField+Extensions.swift in Sources */,
 				24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */,
@@ -649,6 +673,7 @@
 				2463CF2A2AFA667C006AAE65 /* AlchemyServiceManager.swift in Sources */,
 				2463CF272AFA6276006AAE65 /* UIControl+Extensions.swift in Sources */,
 				2463CF252AFA5FEC006AAE65 /* BaseViewController.swift in Sources */,
+				24DB467A2B1B31FB00431517 /* AvatarCacheManager.swift in Sources */,
 				2463CF022AF9383C006AAE65 /* AppFonts.swift in Sources */,
 				2463CF1A2AFA5C10006AAE65 /* UIButton+Extensions.swift in Sources */,
 				24A104902B19C714003AD597 /* AvatarCollectionViewViewModel.swift in Sources */,
@@ -660,6 +685,7 @@
 				24A1048B2B19C517003AD597 /* AvatarCollectionViewController.swift in Sources */,
 				248737B22B03C43300E8938B /* NFTCardBackView.swift in Sources */,
 				248979652B187B7500A8F28E /* FirestoreManager.swift in Sources */,
+				24407B482B1C7F24007F254A /* WelcomeViewViewmodel.swift in Sources */,
 				2463CF2F2AFA68B4006AAE65 /* EnvironmentConfig.swift in Sources */,
 				2463CF0F2AF9414B006AAE65 /* UICollectionReusableView+Extensions.swift in Sources */,
 				246FBB982AF915EF00AFDD2E /* SceneDelegate.swift in Sources */,
@@ -670,7 +696,9 @@
 				24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */,
 				24A104802B18E0EC003AD597 /* RegisterViewController.swift in Sources */,
 				248737B42B05111400E8938B /* UIStackView+Extensions.swift in Sources */,
+				24407B422B1C55EF007F254A /* MetamaskManager.swift in Sources */,
 				24DF405D2B184CEB0091ACFB /* SignupViewController.swift in Sources */,
+				24407B442B1C63CD007F254A /* WelcomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

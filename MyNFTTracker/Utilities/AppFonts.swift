@@ -21,6 +21,7 @@ extension UIFont {
         case main = 15
         case title = 17
         case head = 20
+        case big = 40
     }
     
     static func appFont(name: AppFonts, size: AppFontSize) -> UIFont? {

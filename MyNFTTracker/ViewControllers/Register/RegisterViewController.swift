@@ -16,6 +16,8 @@ final class RegisterViewController: BaseViewController {
     private var bindings = Set<AnyCancellable>()
     
     //MARK: - UI Elements
+    private let loadingVC = LoadingViewController()
+    
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -73,6 +75,7 @@ final class RegisterViewController: BaseViewController {
         label.text = String(localized: "\"설정\"에서 추후 변경 가능합니다.")
         label.font = .appFont(name: .appMainFontLight, size: .light)
         label.textColor = .darkGray
+        label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -86,6 +89,7 @@ final class RegisterViewController: BaseViewController {
         self.setUI()
         self.setLayout()
         self.setDelegate()
+        self.setNavigationBarItem()
         self.bind()
         
         self.activateSaveButton(false)
@@ -153,7 +157,7 @@ extension RegisterViewController {
         }
         
         self.infoLabel.snp.makeConstraints {
-            $0.top.equalTo(self.nicknameLabel.snp.bottom).offset(10)
+            $0.top.equalTo(self.nicknameTextField.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(50)
             $0.trailing.equalToSuperview().offset(-50)
         }
@@ -192,7 +196,32 @@ extension RegisterViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let `self` = self else { return }
-                self.showAvatarPicker()
+                if self.vm.canShowPickerView {
+                    self.vm.showPickerView = true
+                }
+            }
+            .store(in: &bindings)
+        
+        self.saveButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+                self.saveUserInfo(of: self.vm.walletAddres,
+                                  username: self.vm.nickname,
+                                  imageData: self.vm.profileImage?.pngData()?.base64EncodedString() ?? "no-image")
+            }
+            .store(in: &bindings)
+        
+        self.vm.$showPickerView
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] show in
+                guard let `self` = self,
+                let show = show
+                else { return }
+                
+                if show {
+                    self.vm.canShowPickerView = false
+                    self.showAvatarPicker()
+                }
             }
             .store(in: &bindings)
         
@@ -236,7 +265,7 @@ extension RegisterViewController {
 extension RegisterViewController {
     private func setNavigationBarItem() {
         let rightBarButtonItem = UIBarButtonItem(
-            title: "Skip",
+            title: RegisterViewConstants.skip,
             style: .plain,
             target: self,
             action: #selector(skipDidTap(_:)))
@@ -244,7 +273,28 @@ extension RegisterViewController {
     }
     
     @objc private func skipDidTap(_ sender: UIBarButtonItem) {
-        // TODO: Dismiss this vc and direct to main view controller
+        self.saveUserInfo(of: self.vm.walletAddres,
+                          username: self.vm.walletAddres,
+                          imageData: self.vm.profileImage?.pngData()?.base64EncodedString() ?? "no-image")
+    
+    }
+    
+    private func saveUserInfo(of address: String, username: String, imageData: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.addChildViewController(self.loadingVC)
+        }
+        Task {
+            await self.vm.saveUserInfo(of: address,
+                                 username: username,
+                                 imageUrl: imageData)
+            
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                self.loadingVC.removeViewController()
+                self.show(MainViewController(vm: MainViewViewModel()), sender: self)
+            }
+        }
     }
 }
 
@@ -313,24 +363,35 @@ extension RegisterViewController {
     }
     
     private func showAvatarPicker() {
-        let vm = AvatarCollectionViewViewModel()
+        let vm = AvatarCollectionViewViewModel(selectedCell: self.vm.selectedAvatarIndex)
         let viewControllerToPresent = AvatarCollectionViewController(vm: vm, delegate: self)
-            if let sheet = viewControllerToPresent.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
-                sheet.largestUndimmedDetentIdentifier = .medium
-                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-                sheet.prefersEdgeAttachedInCompactHeight = true
-                sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-            }
-            present(viewControllerToPresent, animated: true, completion: nil)
+        if let sheet = viewControllerToPresent.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+            sheet.delegate = self
+        }
+        present(viewControllerToPresent, animated: true, completion: nil)
     }
 }
 
 extension RegisterViewController: AvatarCollectionViewControllerDelegate {
+    
     func avatarCollectionViewController(_ avatarCollectionViewController: AvatarCollectionViewController,
-                                        didSelectAvatar avatar: UIImage?) {
+                                        didSelectAvatar avatar: UIImage?,
+                                        at indexPath: IndexPath) {
         self.profileView.image = avatar
+        self.vm.selectedAvatarIndex = indexPath
     }
     
     
+}
+
+extension RegisterViewController: UISheetPresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.vm.showPickerView = false
+        self.vm.canShowPickerView = true
+    }
 }

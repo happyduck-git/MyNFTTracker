@@ -19,9 +19,9 @@ final class MainViewController: BaseViewController {
     private var bindings = Set<AnyCancellable>()
     
     //MARK: - UI Elements
-    
-    //TODO: Add ProfileImage View & Card Flip & Side Menu
     private var menu: SideMenuNavigationController?
+    
+    private let loadingVC = LoadingViewController()
     
     private let profileImage: UIImageView = {
         let imageView = UIImageView()
@@ -75,6 +75,7 @@ final class MainViewController: BaseViewController {
         self.setNavigariontBar()
         self.setDelegate()
         
+        self.addChildViewController(self.loadingVC)
     }
     
     override func viewDidLayoutSubviews() {
@@ -89,10 +90,19 @@ extension MainViewController {
     private func bind() {
         
         self.vm.$username
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] name in
                 guard let `self` = self else { return }
                 
                 self.welcomeTitle.text = String(localized: "Welcome\n") + name
+            }
+            .store(in: &bindings)
+        
+        self.vm.$profileImage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                guard let `self` = self else { return }
+                self.profileImage.image = image
             }
             .store(in: &bindings)
         
@@ -113,6 +123,7 @@ extension MainViewController {
                 
                 DispatchQueue.main.async {
                     self.nftCollectionView.reloadData()
+                    self.loadingVC.removeViewController()
                 }
                 
             }
@@ -144,8 +155,8 @@ extension MainViewController {
 
         self.nftCollectionView.snp.makeConstraints {
             $0.centerY.equalTo(self.view.snp.centerY)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-20)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-5)
             $0.centerX.equalTo(self.view.snp.centerX)
             $0.height.equalTo(300)
         }
@@ -239,7 +250,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = self.view.frame.width / 1.5
+        let width = self.view.frame.width / 1.3
         return CGSize(width: width, height: width)
     }
     
@@ -260,7 +271,32 @@ extension MainViewController {
 
 extension MainViewController: BaseViewControllerDelegate {
     func themeChanged(as theme: Theme) {
-        self.overrideUserInterfaceStyle = (theme == .black) ? .dark : .light
+        var gradientUpperColor: UIColor?
+        var gradientLowerColor: UIColor?
+        var textColor: UIColor?
+        var borderColor: UIColor?
+        
+        switch theme {
+        case .black:
+            gradientUpperColor = AppColors.DarkMode.gradientUpper
+            gradientLowerColor = AppColors.DarkMode.gradientLower
+            textColor = AppColors.DarkMode.text
+            borderColor = AppColors.DarkMode.border
+            
+        case .white:
+            gradientUpperColor = AppColors.LightMode.gradientUpper
+            gradientLowerColor = AppColors.LightMode.gradientLower
+            textColor = AppColors.LightMode.text
+            borderColor = AppColors.LightMode.border
+        }
+        
+        let gradientImage = UIImage.gradientImage(bounds: self.view.bounds,
+                                                  colors: [gradientUpperColor!,
+                                                           gradientLowerColor!])
+        self.view.backgroundColor = UIColor(patternImage: gradientImage)
+        
+        self.welcomeTitle.textColor = textColor
+        self.profileImage.layer.borderColor = borderColor?.cgColor
     }
     
     func firstBtnTapped() {
@@ -281,10 +317,42 @@ extension MainViewController: ContentsSideMenuViewDelegate {
             case .main:
                 return
             case .settings:
-                self.show(SettingsViewController(vm: SettingsViewViewModel()), sender: nil)
+                self.show(
+                    SettingsViewController(
+                        vm: SettingsViewViewModel(
+                            userInfo: self.vm.user,
+                            address: self.vm.address)
+                    ),
+                    sender: nil
+                )
             }
         }
 
+    }
+    
+    func signoutDidSelected(_ viewController: ContentsSideMenuViewController) {
+        self.menu?.dismiss(animated: true) { [weak self] in
+            guard let `self` = self else { return }
+            
+            UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.walletAddress)
+            
+            let vcs = self.navigationController?.viewControllers
+            let loginVC = vcs?.filter({ vc in
+                vc is LoginViewController
+            }).first as? LoginViewController
+            
+            guard let loginVC = loginVC else {
+   
+                self.dismiss(animated: true) { [weak self] in
+                    guard let `self` = self else { return }
+                    let loginVM = LoginViewViewModel()
+                    let loginVC = LoginViewController(vm: loginVM)
+                    self.navigationController?.setViewControllers([loginVC], animated: true)
+                }
+                return
+            }
+            self.navigationController?.popToViewController(loginVC, animated: true)
+        }
     }
 }
 

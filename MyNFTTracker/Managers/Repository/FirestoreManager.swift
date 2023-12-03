@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
-final class FirestoreManager {
+final actor FirestoreManager {
 
     static let shared = FirestoreManager()
     private init() {}
@@ -26,6 +26,13 @@ extension FirestoreManager {
             .setData([FirestoreConstants.uuid: UUID().uuidString], merge: true)
     }
     
+    func saveUserInfo(of wallet: String, imageUrl: String, nickname: String) async throws {
+        try await baseDB.collection(FirestoreConstants.users)
+            .document(wallet)
+            .setData([FirestoreConstants.nickname: nickname,
+                      FirestoreConstants.imageUrl: imageUrl], merge: true)
+    }
+    
     func isRegisteredUser(_ wallet: String) async throws -> Bool {
         return try await baseDB.collection(FirestoreConstants.users)
             .document(wallet)
@@ -35,3 +42,12 @@ extension FirestoreManager {
     
 }
 
+extension FirestoreManager {
+    func retrieveUserInfo(of wallet: String) async throws -> User {
+        let document = try await baseDB.collection(FirestoreConstants.users)
+            .document(wallet)
+            .getDocument()
+        
+        return try document.data(as: User.self)
+    }
+}

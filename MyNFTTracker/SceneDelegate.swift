@@ -20,13 +20,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         FirebaseApp.configure()
         
-//        let vc = LoginViewController(vm: LoginViewViewModel())
+        var vc: BaseViewController?
         
-        let registerVM = RegisterViewViewModel(walletAddres: "0x00000000000")
-        let vc = RegisterViewController(vm: registerVM)
+        if let address = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) {
+            print("Saved address: \(address)")
+            let vm = MainViewViewModel()
+            vc = MainViewController(vm: vm)
+            
+        } else {
+            let vm = LoginViewViewModel()
+            vc = LoginViewController(vm: vm)
+        }
         
-        window?.rootViewController = UINavigationController(rootViewController: vc)
+//        let registerVM = RegisterViewViewModel(walletAddres: "0x00000000000")
+//        let vc = RegisterViewController(vm: registerVM)
+        
+//        vc = WelcomeViewController(vm: WelcomeViewViewmodel(address: "0xf9C6e0F084c03e54a1E744e42B47C338A5FFc34D"))
+        
+        window?.rootViewController = UINavigationController(rootViewController: vc ?? BaseViewController())
         window?.makeKeyAndVisible()
+        print(#function)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -34,6 +47,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
+        
+        UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.walletAddress)
+        MetamaskManager.shared.metaMaskSDK.clearSession()
         print(#function)
     }
 

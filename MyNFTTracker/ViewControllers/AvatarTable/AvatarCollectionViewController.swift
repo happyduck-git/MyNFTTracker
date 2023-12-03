@@ -11,7 +11,8 @@ import Combine
 
 protocol AvatarCollectionViewControllerDelegate: AnyObject {
     func avatarCollectionViewController(_ avatarCollectionViewController: AvatarCollectionViewController,
-                                        didSelectAvatar avatar: UIImage?)
+                                        didSelectAvatar avatar: UIImage?,
+                                        at indexPath: IndexPath)
 }
 
 final class AvatarCollectionViewController: UIViewController {
@@ -22,6 +23,15 @@ final class AvatarCollectionViewController: UIViewController {
     unowned var delegate: AvatarCollectionViewControllerDelegate
     
     //MARK: - UI Elements
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = AvatarConstants.title
+        label.textColor = AppColors.DarkMode.text
+        label.font = .appFont(name: .appMainFontBold, size: .title)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -61,14 +71,21 @@ final class AvatarCollectionViewController: UIViewController {
 
 extension AvatarCollectionViewController {
     private func setUI() {
-        self.view.addSubview(self.collectionView)
+        self.view.addSubviews(self.titleLabel,
+                              self.collectionView)
     }
     
     private func setLayout() {
+        self.titleLabel.snp.makeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(30)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-30)
+        }
+        
         self.collectionView.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(50)
+            $0.top.equalTo(self.titleLabel.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-50)
+            $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10)
         }
     }
     
@@ -82,8 +99,10 @@ extension AvatarCollectionViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] imageList in
                 guard let `self` = self else { return }
-                self.collectionView.reloadData()
+ 
                 self.vm.cellStatus = Array(repeating: false, count: imageList.count)
+                self.collectionView.reloadData()
+                
             }
             .store(in: &bindings)
     }
@@ -98,8 +117,17 @@ extension AvatarCollectionViewController: UICollectionViewDelegate, UICollection
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AvatarCollectionViewCell.identifier, for: indexPath) as? AvatarCollectionViewCell else {
             return UICollectionViewCell()
         }
+ 
+        if !self.vm.cellStatus.isEmpty {
+            if let selectedItem = self.vm.selectedCell?.item {
+                self.vm.cellStatus[selectedItem] = true
+            }
+           
+            cell.configure(image: self.vm.avatarImages[indexPath.item], checkHidden: self.vm.cellStatus[indexPath.item])
+            return cell
+        }
         
-        cell.configure(image: self.vm.avatarImages[indexPath.item], checkHidden: self.vm.cellStatus[indexPath.item])
+        cell.configure(image: self.vm.avatarImages[indexPath.item], checkHidden: false)
         return cell
     }
     
@@ -109,17 +137,18 @@ extension AvatarCollectionViewController: UICollectionViewDelegate, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let prev = self.vm.selectedCell
-        self.vm.selectedCell = indexPath.item
-        
-        self.vm.cellStatus[prev] = false
-        self.vm.cellStatus[self.vm.selectedCell] = true
-        
-        guard let prevCell = collectionView.cellForItem(at: IndexPath(item: prev, section: 0)) as? AvatarCollectionViewCell,
-              let cell = collectionView.cellForItem(at: indexPath) as? AvatarCollectionViewCell
-        else { return }
-        prevCell.showCheckmark(false)
-        cell.showCheckmark(true)
-        self.delegate.avatarCollectionViewController(self, didSelectAvatar: self.vm.avatarImages[indexPath.item])
+        if let selectedCell = self.vm.selectedCell?.item {
+            let prev = selectedCell
+            self.vm.cellStatus[prev] = false
+            guard let prevCell = collectionView.cellForItem(at: IndexPath(item: prev, section: 0)) as? AvatarCollectionViewCell else { return }
+            prevCell.showCheckmark(false)
+        }
+            self.vm.selectedCell = indexPath
+            self.vm.cellStatus[indexPath.item] = true
+            guard let cell = collectionView.cellForItem(at: indexPath) as? AvatarCollectionViewCell else { return }
+            cell.showCheckmark(true)
+            self.delegate.avatarCollectionViewController(self,
+                                                         didSelectAvatar: self.vm.avatarImages[indexPath.item],
+                                                         at: indexPath)
     }
 }

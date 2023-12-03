@@ -16,7 +16,8 @@ final class LoginViewController: BaseViewController {
     private let firestoreManager = FirestoreManager.shared
     
     // Metamask
-    private let appMetadata = AppMetadata(name: "MyNFTTracker", url: "https://my-nft-tracker.com")
+//    private let appMetadata = AppMetadata(name: "MyNFTTracker", url: "https://my-nft-tracker.com")
+    private let metamaskManager = MetamaskManager.shared
     
     // Combine
     private var bindings = Set<AnyCancellable>()
@@ -90,7 +91,8 @@ final class LoginViewController: BaseViewController {
 extension LoginViewController {
     
     private func bind() {
-        let metamask = MetaMaskSDK.shared(self.appMetadata)
+
+        let metamask = metamaskManager.metaMaskSDK
         
         self.loginButton.tapPublisher
             .receive(on: DispatchQueue.main)
@@ -105,13 +107,13 @@ extension LoginViewController {
                     case .success(let adress):
                         self.saveWalletAddress(address: adress)
                         self.vm.walletConnected = true
-                        
+                        #if DEBUG
                         if metamask.connected {
                             print("Metamask connected")
                         } else {
                             print("Metamask NOT connected")
                         }
-                        
+                        #endif
                     case .failure(let error):
                         self.showWalletConnectiontFailedAlert()
                         AppLogger.logger.error("Connection error: \(String(describing: error))")
@@ -120,7 +122,7 @@ extension LoginViewController {
                         self.loadingVC.removeViewController()
                     }
                 }
-                
+                //TODO: LoginVC에서 메타마스크 에러로 결과를 제대로 받아오지 못할 때 핸들링 로직 필요.
             }
             .store(in: &bindings)
         
@@ -146,29 +148,29 @@ extension LoginViewController {
         
         self.vm.$isFirstVisit
             .sink { [weak self] in
-                
                 guard let `self` = self,
                       let wallet = self.retrieveWalletAddress()
                 else { return }
-                /*
-                let vc = MainViewController(vm: MainViewViewModel())
-                self.show(vc, sender: self)
-                 */
+                
                 if $0 {
                     Task {
                         try await self.firestoreManager.saveWalletAddress(wallet)
                         AppLogger.logger.info("New wallet \(wallet) has been registred.")
-                        //TODO: Add Register nickname and profile picture.
+                
                         DispatchQueue.main.async {
-                            let registerVM = RegisterViewViewModel(walletAddres: wallet)
-                            let registerVC = RegisterViewController(vm: registerVM)
+                            let welcomeVM = WelcomeViewViewmodel(address: wallet)
+                            let welcomeVC = WelcomeViewController(vm: welcomeVM)
                             
-                            self.show(registerVC, sender: self)
+                            self.show(welcomeVC, sender: self)
                         }
                     }
                     
                 } else {
-                    
+                    DispatchQueue.main.async {
+                        AppLogger.logger.info("User \(wallet) already registered. Direct to MainVC")
+                        let vc = MainViewController(vm: MainViewViewModel())
+                        self.show(vc, sender: self)
+                    }
                 }
             }
             .store(in: &bindings)
@@ -223,6 +225,9 @@ extension LoginViewController {
     
     private func saveWalletAddress(address: String?) {
         UserDefaults.standard.set(address, forKey: UserDefaultsConstants.walletAddress)
+        #if DEBUG
+        AppLogger.logger.log("Wallet address saved to UserDefaults -- \(String(describing: address))")
+        #endif
     }
     
     private func retrieveWalletAddress() -> String? {

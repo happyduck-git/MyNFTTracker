@@ -43,3 +43,9 @@ extension UIImage {
     }
 }
 
+extension UIImage {
+    static func convertBase64StringToImage(_ string: String) -> UIImage? {
+        guard let imageData = Data(base64Encoded: string) else { return nil }
+        return UIImage(data: imageData)
+    }
+}

@@ -14,10 +14,12 @@ final class AvatarCollectionViewViewModel {
     private let avatarManager = AvatarServiceManager.shared
     
     @Published var avatarImages: [UIImage?] = []
-    var selectedCell = 0
+    var selectedCell: IndexPath?
     var cellStatus: [Bool] = []
     
-    init() {
+    init(selectedCell: IndexPath?) {
+        self.selectedCell = selectedCell
+        
         Task {
             do {
                 avatarImages = try await self.retrieveAvatarImages(AvatarConstants.avatarList)
@@ -32,6 +34,19 @@ final class AvatarCollectionViewViewModel {
 extension AvatarCollectionViewViewModel {
     
     func retrieveAvatarImages(_ nameList: [String]) async throws -> [UIImage?] {
-        return try await self.avatarManager.retrieveMultipleAvatar(nameList)
+        let imageResult = try await self.avatarManager.retrieveMultipleAvatar(nameList)
+        return self.sortDictionay(imageResult)
     }
+    
+    func sortDictionay(_ dictionary: [String: UIImage?]) -> [UIImage?] {
+        let sortedKeys = dictionary.keys.sorted()
+
+        var images: [UIImage?] = []
+        for key in sortedKeys {
+            guard let image = dictionary[key] else { continue }
+            images.append(image)
+        }
+        return images
+    }
+
 }

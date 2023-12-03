@@ -10,7 +10,9 @@ import Combine
 
 final class MainViewViewModel {
     
+    @Published var user: User?
     @Published var username: String = "USER-NAME"
+    @Published var profileImage: UIImage?
     @Published var nfts: [OwnedNFT] = [] {
         didSet {
             selectedNfts = Array(repeating: false, count: nfts.count)
@@ -19,10 +21,20 @@ final class MainViewViewModel {
     @Published var imageStrings: [String] = []
     
     var selectedNfts: [Bool] = []
+    var address: String = ""
     
     init() {
         Task {
-            nfts = await getOwnedNfts()
+            async let userInfo = self.getUserInfo()
+            async let nftList = self.getOwnedNfts()
+            
+            self.user = await userInfo
+            
+            self.username = await userInfo.nickname
+            self.nfts = await nftList
+            
+            let imageData = await userInfo.imageData
+            self.profileImage = UIImage.convertBase64StringToImage(imageData)
         }
     }
     
@@ -35,6 +47,21 @@ extension MainViewViewModel {
         let ipfsPrefix = "ipfs://"
         let pinataPrefix = "https://gateway.pinata.cloud/ipfs/"
         return pinataPrefix + string.replacingOccurrences(of: ipfsPrefix, with: "")
+    }
+    
+}
+
+extension MainViewViewModel {
+    private func getUserInfo() async -> User {
+        do {
+            let wallet = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? "no-address"
+            self.address = wallet
+            return try await FirestoreManager.shared.retrieveUserInfo(of: wallet)
+        }
+        catch {
+            print("Error -- \(error)")
+            return User(id: UUID().uuidString, nickname: "no-nickname", imageData: "no-image")
+        }
     }
     
 }

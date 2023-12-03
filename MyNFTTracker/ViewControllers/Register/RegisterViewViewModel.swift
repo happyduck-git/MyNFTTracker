@@ -12,12 +12,16 @@ import Combine
 final class RegisterViewViewModel {
         
     private let avatarManager = AvatarServiceManager.shared
+    private let firestoreManager = FirestoreManager.shared
     
     let walletAddres: String
+    var selectedAvatarIndex: IndexPath?
     @Published var nickname: String = ""
     @Published var isNicknameFilled: Bool = false
     @Published var appTheme: Theme = .black
     @Published var profileImage: UIImage?
+    @Published var showPickerView: Bool?
+    @Published var canShowPickerView: Bool = true
     
     init(walletAddres: String) {
         self.walletAddres = walletAddres
@@ -28,6 +32,17 @@ final class RegisterViewViewModel {
         }
     }
     
+}
+
+extension RegisterViewViewModel {
+    func saveUserInfo(of wallet: String, username: String, imageUrl: String) async {
+        do {
+            try await firestoreManager.saveUserInfo(of: wallet, imageUrl: imageUrl, nickname: username)
+        }
+        catch {
+            AppLogger.logger.error("Error saving user info -- \(error)")
+        }
+    }
 }
 
 extension RegisterViewViewModel {
