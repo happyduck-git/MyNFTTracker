@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 final class LoadingViewController: UIViewController {
 
@@ -19,28 +20,27 @@ final class LoadingViewController: UIViewController {
         return view
     }()
     
-    private let spinner: UIActivityIndicatorView = {
-        let spinner = UIActivityIndicatorView()
-        spinner.color = .white
-        spinner.style = .large
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        return spinner
+    private let loadingView: LottieAnimationView = {
+        let view = LottieAnimationView()
+        view.contentMode = .scaleAspectFill
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .systemGray
-        self.view.alpha = 0.2
-        
+        self.view.backgroundColor = .black.withAlphaComponent(0.5)
+
         self.setUI()
         self.setLayout()
-        
-        self.spinner.startAnimating()
+        Task {
+            await self.loadLottie()
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
-        self.spinner.stopAnimating()
+        self.loadingView.stop()
         
         self.navigationItem.hidesBackButton = true
     }
@@ -50,7 +50,7 @@ final class LoadingViewController: UIViewController {
 extension LoadingViewController {
     private func setUI() {
         self.view.addSubview(self.spinnerBackground)
-        self.spinnerBackground.addSubview(self.spinner)
+        self.spinnerBackground.addSubview(self.loadingView)
     }
     
     private func setLayout() {
@@ -58,9 +58,29 @@ extension LoadingViewController {
             $0.center.equalTo(self.view)
             $0.width.height.equalTo(80)
         }
-        
-        self.spinner.snp.makeConstraints {
-            $0.center.equalTo(self.spinnerBackground)
+        self.loadingView.snp.makeConstraints {
+            $0.top.leading.bottom.trailing.equalToSuperview()
+        }
+    }
+}
+extension LoadingViewController {
+    private func loadLottie() async {
+        do {
+            guard let url = Bundle.main.url(forResource: "loading", withExtension: "lottie") else {
+                print("Error url")
+                return
+            }
+            
+            let dotLottie = try await DotLottieFile.loadedFrom(url: url)
+            loadingView.loadAnimation(from: dotLottie)
+            loadingView.loopMode = .loop
+            DispatchQueue.main.async { [weak self] in
+                guard let `self` = self else { return }
+                self.loadingView.play()
+            }
+        }
+        catch {
+            AppLogger.logger.error("Error playing DotLottie -- \(error)")
         }
     }
 }

@@ -79,6 +79,7 @@
 		24DF405A2B170CB50091ACFB /* SnackbarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */; };
 		24DF405D2B184CEB0091ACFB /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF405C2B184CEB0091ACFB /* SignupViewController.swift */; };
 		24E3098A2B0D0711001EBE48 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E309892B0D0711001EBE48 /* ToggleCell.swift */; };
+		24F0BFEB2B1EDC86006B79DA /* loading.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 24F0BFEA2B1E1C84006B79DA /* loading.lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -637,6 +638,7 @@
 				2463CEFE2AF9373A006AAE65 /* DNFForgedBlade-Bold.ttf in Resources */,
 				2463CEFF2AF9373A006AAE65 /* DNFForgedBlade-Light.ttf in Resources */,
 				24407B462B1C677B007F254A /* confetti.lottie in Resources */,
+				24F0BFEB2B1EDC86006B79DA /* loading.lottie in Resources */,
 				246FBBA22AF915F400AFDD2E /* LaunchScreen.storyboard in Resources */,
 				2463CEFD2AF9373A006AAE65 /* DNFForgedBlade-Medium.ttf in Resources */,
 				2489796F2B18867F00A8F28E /* GoogleService-Info.plist in Resources */,
