@@ -25,7 +25,7 @@ final class MainViewController: BaseViewController {
     
     private let profileImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(resource: .frenchie3)
+        imageView.backgroundColor = .darkGray
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1.0
@@ -89,20 +89,29 @@ extension MainViewController {
     
     private func bind() {
         
+        self.vm.$user
+            .sink { [weak self] user in
+                guard let `self` = self else { return }
+                self.vm.username = user?.nickname ?? self.vm.address
+                self.vm.profileImageDataString = user?.imageData
+            }
+            .store(in: &bindings)
+        
         self.vm.$username
             .receive(on: DispatchQueue.main)
             .sink { [weak self] name in
                 guard let `self` = self else { return }
                 
-                self.welcomeTitle.text = String(localized: "반갑습니다\n") + name
+                self.welcomeTitle.text = String(format: MainViewConstants.welcome, name)
             }
             .store(in: &bindings)
         
-        self.vm.$profileImage
+        self.vm.$profileImageDataString
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] image in
-                guard let `self` = self else { return }
-                self.profileImage.image = image
+            .sink { [weak self] imageData in
+                guard let `self` = self,
+                      let dataString = imageData else { return }
+                self.profileImage.image = UIImage.convertBase64StringToImage(dataString)
             }
             .store(in: &bindings)
         
@@ -148,14 +157,14 @@ extension MainViewController {
         }
         
         self.welcomeTitle.snp.makeConstraints {
-            $0.top.equalTo(self.profileImage.snp.bottom).offset(10)
+            $0.top.equalTo(self.profileImage.snp.bottom).offset(20)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
             $0.bottom.lessThanOrEqualTo(self.nftCollectionView.snp.top).offset(-20)
         }
 
         self.nftCollectionView.snp.makeConstraints {
-            $0.centerY.equalTo(self.view.snp.centerY)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(5)
+            $0.top.equalTo(self.welcomeTitle.snp.bottom).offset(50)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(10)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-5)
             $0.centerX.equalTo(self.view.snp.centerX)
             $0.height.equalTo(300)
@@ -270,6 +279,7 @@ extension MainViewController {
 }
 
 extension MainViewController: BaseViewControllerDelegate {
+
     func themeChanged(as theme: Theme) {
         var gradientUpperColor: UIColor?
         var gradientLowerColor: UIColor?
@@ -298,14 +308,11 @@ extension MainViewController: BaseViewControllerDelegate {
         self.welcomeTitle.textColor = textColor
         self.profileImage.layer.borderColor = borderColor?.cgColor
     }
-    
-    func firstBtnTapped() {
-        return
+
+    func userInfoChanged(as user: User) {
+        self.vm.user = user
     }
     
-    func secondBtnTapped() {
-        return
-    }
 }
 
 extension MainViewController: ContentsSideMenuViewDelegate {
@@ -320,8 +327,8 @@ extension MainViewController: ContentsSideMenuViewDelegate {
                 self.show(
                     SettingsViewController(
                         vm: SettingsViewViewModel(
-                            userInfo: self.vm.user,
-                            address: self.vm.address)
+                            userInfo: self.vm.user
+                        )
                     ),
                     sender: nil
                 )

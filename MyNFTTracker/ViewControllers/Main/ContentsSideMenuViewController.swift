@@ -189,6 +189,7 @@ extension ContentsSideMenuViewController {
 }
 
 extension ContentsSideMenuViewController: BaseViewControllerDelegate {
+
     func themeChanged(as theme: Theme) {
         var textColor: UIColor?
         
@@ -204,11 +205,8 @@ extension ContentsSideMenuViewController: BaseViewControllerDelegate {
         self.signoutButton.setTitleColor(textColor, for: .normal)
     }
     
-    func firstBtnTapped() {
+    func userInfoChanged(as user: User) {
         return
     }
     
-    func secondBtnTapped() {
-        return
-    }
 }

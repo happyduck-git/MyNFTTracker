@@ -8,12 +8,9 @@
 import UIKit
 import SnapKit
 
-protocol BaseViewControllerDelegate: AnyObject {
-    // NOTE: Comment out. NOT IN USE
-    func firstBtnTapped()
-    func secondBtnTapped()
-    
+protocol BaseViewControllerDelegate: AnyObject {  
     func themeChanged(as theme: Theme)
+    func userInfoChanged(as user: User)
 }
 
 class BaseViewController: UIViewController {
@@ -24,6 +21,7 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
 
         self.setupThemeNotification()
+        self.setupInfoChangeNotification()
     }
 
 
@@ -42,51 +40,15 @@ extension BaseViewController {
             print("Obj recieved: \(theme)")
         }
     }
-}
-
-// MARK: - Alert Controller
-
-extension BaseViewController {
-    func showAlert(alertTitle: String?,
-                   alertMessage: String?,
-                   alertStyle: UIAlertController.Style,
-                   actionTitle1: String?,
-                   actionStyle1: UIAlertAction.Style,
-                   actionTitle2: String? = nil,
-                   actionStyle2: UIAlertAction.Style? = nil
-    ) {
-        let alert = UIAlertController(
-            title: alertTitle,
-            message: alertMessage,
-            preferredStyle: alertStyle
-        )
-        
-        if let title2 = actionTitle2,
-           let action2 = actionStyle2 {
-            let action2 = UIAlertAction(
-                title: title2,
-                style: action2
-            ) { [weak self] _ in
-                guard let `self` = self else { return }
-                
-                self.baseDelegate?.secondBtnTapped()
-            }
-            
-            alert.addAction(action2)
+    
+    private func setupInfoChangeNotification() {
+        NotificationCenter.default.addObserver(forName: Notification.Name(NotificationConstants.userInfo),
+                                               object: nil,
+                                               queue: nil) { noti in
+            guard let user = noti.object as? User else { return }
+            self.baseDelegate?.userInfoChanged(as: user)
+            AppLogger.logger.info("UserInfo change notified -- detail: \(String(describing: user))")
         }
-
-        let action1 = UIAlertAction(
-            title: actionTitle1,
-            style: actionStyle1
-        ) { [weak self] _ in
-            guard let `self` = self else { return }
-            
-            self.baseDelegate?.firstBtnTapped()
-        }
-        
-        alert.addAction(action1)
-        
-        self.present(alert, animated: true)
     }
 }
 

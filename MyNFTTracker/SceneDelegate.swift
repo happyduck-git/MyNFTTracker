@@ -37,6 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
 //        vc = WelcomeViewController(vm: WelcomeViewViewmodel(address: "0xf9C6e0F084c03e54a1E744e42B47C338A5FFc34D"))
         
+        
         window?.rootViewController = UINavigationController(rootViewController: vc ?? BaseViewController())
         window?.makeKeyAndVisible()
         print(#function)

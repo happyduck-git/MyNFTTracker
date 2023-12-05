@@ -30,7 +30,7 @@ extension FirestoreManager {
         try await baseDB.collection(FirestoreConstants.users)
             .document(wallet)
             .setData([FirestoreConstants.nickname: nickname,
-                      FirestoreConstants.imageUrl: imageUrl], merge: true)
+                      FirestoreConstants.imageData: imageUrl], merge: true)
     }
     
     func isRegisteredUser(_ wallet: String) async throws -> Bool {
@@ -43,11 +43,22 @@ extension FirestoreManager {
 }
 
 extension FirestoreManager {
+    func updateUserInfo(of wallet: String, nickname: String, profileImage: String) async throws {
+        try await baseDB.collection(FirestoreConstants.users)
+            .document(wallet)
+            .updateData([FirestoreConstants.nickname: nickname,
+                         FirestoreConstants.imageData: profileImage])
+    }
+}
+
+extension FirestoreManager {
     func retrieveUserInfo(of wallet: String) async throws -> User {
         let document = try await baseDB.collection(FirestoreConstants.users)
             .document(wallet)
             .getDocument()
         
-        return try document.data(as: User.self)
+        var user = try document.data(as: User.self)
+        user.address = wallet
+        return user
     }
 }

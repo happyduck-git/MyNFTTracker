@@ -109,10 +109,6 @@ final class SettingsViewController: BaseViewController {
         
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.saveSettingsToUserDefaults(self.vm.theme)
-    }
 }
 
 extension SettingsViewController {
@@ -163,7 +159,16 @@ extension SettingsViewController {
     }
     
     private func setNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: String(localized: "수정하기"), menu: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: SettingsConstants.edit,
+                                                            style: .plain,
+                                                            target: self,
+                                                            action: #selector(editDidTap(_:)))
+    }
+    
+    @objc private func editDidTap(_ sender: UIBarButtonItem) {
+        let vm = EditViewViewModel(userInfo: self.vm.user)
+        let vc = EditViewController(vm: vm)
+        self.show(vc, sender: nil)
     }
 }
 
@@ -179,11 +184,12 @@ extension SettingsViewController {
             }
             .store(in: &bindings)
         
-        self.vm.$userInfo
+        self.vm.$user
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let `self` = self else { return }
                 self.nicknameLabel.text = $0.nickname
+                self.walletAddressLabel.text = $0.address ?? "no-address"
             }
             .store(in: &bindings)
         
@@ -192,14 +198,6 @@ extension SettingsViewController {
             .sink { [weak self] in
                 guard let `self` = self else { return }
                 self.profileImageView.image = $0
-            }
-            .store(in: &bindings)
-        
-        self.vm.$walletAddress
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                guard let `self` = self else { return }
-                self.walletAddressLabel.text = $0
             }
             .store(in: &bindings)
         
@@ -219,9 +217,9 @@ extension SettingsViewController {
                 if tapped {
                     guard let `self` = self else { return }
                     
-                    UIPasteboard.general.string = self.vm.walletAddress
+                    UIPasteboard.general.string = self.vm.user.address ?? "no-address"
                     #if DEBUG
-                    AppLogger.logger.debug("Address Copied to Clipboard: \(self.vm.walletAddress)")
+                    AppLogger.logger.debug("Address Copied to Clipboard: \(self.vm.user.address ?? "no-address")")
                     #endif
                     
                     self.addSnackbar()
@@ -253,7 +251,7 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController: BaseViewControllerDelegate {
-    
+
     func themeChanged(as theme: Theme) {
         var bgColor: UIColor?
         var elementsColor: UIColor?
@@ -276,13 +274,10 @@ extension SettingsViewController: BaseViewControllerDelegate {
 
     }
     
-    func firstBtnTapped() {
-        return
+    func userInfoChanged(as user: User) {
+        self.vm.user = user
     }
-    
-    func secondBtnTapped() {
-        return
-    }
+
 }
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -313,6 +308,7 @@ extension SettingsViewController: ToggleCellDelegate {
     func didToggle(_ isOn: Bool) {
         self.vm.theme = isOn ? .white : .black
         self.sendThemeNotification(newTheme: self.vm.theme)
+        self.saveSettingsToUserDefaults(self.vm.theme)
     }
 }
 

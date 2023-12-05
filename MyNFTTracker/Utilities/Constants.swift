@@ -18,6 +18,7 @@ enum UserDefaultsConstants {
 
 enum NotificationConstants {
     static let theme = "default-theme"
+    static let userInfo = "user-info"
 }
 
 enum ImageAssets {
@@ -34,11 +35,16 @@ enum WelcomeConstants {
     static let welcome = String(localized: "환영합니다!")
 }
 
+enum MainViewConstants {
+    static let welcome = String(localized: "반갑습니다! %@\n소유한 NFT를 구경해 보세요.")
+}
+
 enum SettingsConstants {
     static let selectTheme = "Select Theme"
     static let themeSection = String(localized: "앱 테마")
     static let darkMode = String(localized: "다크 모드")
     static let lightMode = String(localized: "라이트 모드")
+    static let edit = String(localized: "수정하기")
 }
 
 enum SideMenuConstants {
@@ -50,13 +56,20 @@ enum SideMenuConstants {
 
 enum EditConstants {
     static let nickname = String(localized: "닉네임")
+    static let save = String(localized: "저장하기")
+    static let updateConfirm = String(localized: "수정 하시겠습니까?")
+    static let updateConfirmMsg = String(localized: "변경된 내용으로 정보를 수정합니다.")
+    static let updateCompleted = String(localized: "수정 완료")
+    static let updateCompletedMsg = String(localized: "정보가 정상적으로 수정되었습니다.")
+    static let confirm = String(localized: "확인")
+    static let cancel = String(localized: "취소")
 }
 
 enum FirestoreConstants {
     static let users = "users"
     static let uuid = "id"
     static let nickname = "nickname"
-    static let imageUrl = "imageUrl"
+    static let imageData = "imageData"
 }
 
 enum AvatarConstants {

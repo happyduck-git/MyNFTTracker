@@ -299,13 +299,6 @@ extension RegisterViewController {
 }
 
 extension RegisterViewController: BaseViewControllerDelegate {
-    func firstBtnTapped() {
-        return
-    }
-    
-    func secondBtnTapped() {
-        return
-    }
     
     func themeChanged(as theme: Theme) {
         
@@ -343,7 +336,11 @@ extension RegisterViewController: BaseViewControllerDelegate {
         self.saveButton.setTitleColor(textColor, for: .normal)
         
     }
-        
+
+    func userInfoChanged(as user: User) {
+        return
+    }
+    
 }
 
 extension RegisterViewController {
@@ -366,7 +363,7 @@ extension RegisterViewController {
         let vm = AvatarCollectionViewViewModel(selectedCell: self.vm.selectedAvatarIndex)
         let viewControllerToPresent = AvatarCollectionViewController(vm: vm, delegate: self)
         if let sheet = viewControllerToPresent.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
+            sheet.detents = [.medium()]
             sheet.largestUndimmedDetentIdentifier = .medium
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersEdgeAttachedInCompactHeight = true

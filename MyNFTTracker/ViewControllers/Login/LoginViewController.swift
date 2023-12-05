@@ -237,22 +237,17 @@ extension LoginViewController {
     }
     
     private func showWalletConnectiontFailedAlert() {
-        self.showAlert(alertTitle: "지갑 연결 실패",
-                       alertMessage: "다시 한번 시도해주세요.",
-                       alertStyle: .alert,
-                       actionTitle1: "확인",
-                       actionStyle1: .cancel)
+        let alert = UIAlertController(title: "지갑 연결 실패",
+                                      message: "다시 한번 시도해주세요.",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "확인",
+                                      style: .cancel))
+        self.present(alert, animated: true)
     }
 }
 
 extension LoginViewController: BaseViewControllerDelegate {
-    func firstBtnTapped() {
-        return
-    }
-    
-    func secondBtnTapped() {
-        return
-    }
     
     func themeChanged(as theme: Theme) {
         var gradientUpperColor: UIColor?
@@ -285,6 +280,9 @@ extension LoginViewController: BaseViewControllerDelegate {
         self.loginButton.setTitleColor(textColor, for: .normal)
     }
     
+    func userInfoChanged(as user: User) {
+        return
+    }
     
 }
 

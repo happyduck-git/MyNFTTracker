@@ -26,6 +26,7 @@ final class AvatarCollectionViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = AvatarConstants.title
+        label.textAlignment = .center
         label.textColor = AppColors.DarkMode.text
         label.font = .appFont(name: .appMainFontBold, size: .title)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +78,7 @@ extension AvatarCollectionViewController {
     
     private func setLayout() {
         self.titleLabel.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(30)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(30)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-30)
         }

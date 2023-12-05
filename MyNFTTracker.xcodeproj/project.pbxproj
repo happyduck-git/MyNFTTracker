@@ -167,6 +167,7 @@
 		24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarViewViewModel.swift; sourceTree = "<group>"; };
 		24DF405C2B184CEB0091ACFB /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		24E309892B0D0711001EBE48 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
+		24F0BFEA2B1E1C84006B79DA /* loading.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = loading.lottie; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -424,6 +425,7 @@
 		248737B82B051F6500E8938B /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
+				24F0BFEA2B1E1C84006B79DA /* loading.lottie */,
 				24407B452B1C676E007F254A /* confetti.lottie */,
 			);
 			path = Lottie;

@@ -12,7 +12,7 @@ final class MainViewViewModel {
     
     @Published var user: User?
     @Published var username: String = "USER-NAME"
-    @Published var profileImage: UIImage?
+    @Published var profileImageDataString: String?
     @Published var nfts: [OwnedNFT] = [] {
         didSet {
             selectedNfts = Array(repeating: false, count: nfts.count)
@@ -29,12 +29,7 @@ final class MainViewViewModel {
             async let nftList = self.getOwnedNfts()
             
             self.user = await userInfo
-            
-            self.username = await userInfo.nickname
             self.nfts = await nftList
-            
-            let imageData = await userInfo.imageData
-            self.profileImage = UIImage.convertBase64StringToImage(imageData)
         }
     }
     

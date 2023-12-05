@@ -22,7 +22,7 @@ enum AppColors {
     enum LightMode: ColorSet {
         static let gradientUpper = UIColor(hex: 0xF3C1EB)
         static let gradientLower = UIColor(hex: 0xFFE5CC)
-        static let buttonActive = UIColor(hex: 0xF4D2A0)
+        static let buttonActive = UIColor(hex: 0xEA9CCB)
         static let buttonInactive = UIColor.darkGray
         static let border = UIColor(hex: 0xFFFFFF)
         static let text = UIColor(hex: 0x0D0D0D)
@@ -32,7 +32,7 @@ enum AppColors {
     enum DarkMode: ColorSet {
         static let gradientUpper = UIColor(hex: 0x0E1448)
         static let gradientLower = UIColor(hex: 0x6F431A)
-        static let buttonActive = UIColor(hex: 0x1E1D1A)
+        static let buttonActive = UIColor(hex: 0x4461CA)
         static let buttonInactive = UIColor.darkGray
         static let border = UIColor(hex: 0x0D0D0D)
         static let text = UIColor(hex: 0xFAE9CF)

@@ -31,17 +31,15 @@ final class SettingsViewViewModel {
     
     @Published var theme: Theme = .black
     @Published var clipboardTapped: Bool = false
-    @Published var userInfo: User
+    @Published var user: User
     @Published var profileImage: UIImage?
-    @Published var walletAddress: String = ""
     
-    init(userInfo: User?, address: String) {
+    init(userInfo: User?) {
         if let user = userInfo {
-            self.walletAddress = address
-            self.userInfo = user
+            self.user = user
             self.profileImage = UIImage.convertBase64StringToImage(user.imageData)
         } else {
-            self.userInfo = User(id: UUID().uuidString, nickname: "no-username", imageData: "no-image")
+            self.user = User(id: UUID().uuidString, nickname: "no-username", imageData: "no-image")
         }
         self.updateTheme()
     }
