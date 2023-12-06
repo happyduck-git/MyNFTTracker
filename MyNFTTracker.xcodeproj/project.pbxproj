@@ -73,6 +73,8 @@
 		24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */; };
 		24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */; };
 		24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */; };
+		24CA4F6F2B1F606C00676F07 /* EditViewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */; };
+		24CA4F722B1F717500676F07 /* AppThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F712B1F717500676F07 /* AppThemeButton.swift */; };
 		24DB467A2B1B31FB00431517 /* AvatarCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */; };
 		24DB467C2B1B608A00431517 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB467B2B1B608A00431517 /* User.swift */; };
 		24DF40582B170CA10091ACFB /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40572B170CA10091ACFB /* SnackBarView.swift */; };
@@ -162,6 +164,8 @@
 		24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
 		24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
+		24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewViewModelTest.swift; sourceTree = "<group>"; };
+		24CA4F712B1F717500676F07 /* AppThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeButton.swift; sourceTree = "<group>"; };
 		24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCacheManager.swift; sourceTree = "<group>"; };
 		24DB467B2B1B608A00431517 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		24DF40572B170CA10091ACFB /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
@@ -292,9 +296,9 @@
 		2463CF042AF93E1A006AAE65 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				24CA4F702B1F714300676F07 /* Settings */,
 				24A1048C2B19C549003AD597 /* AvatarCollectionViewCell */,
 				24DF40562B170C830091ACFB /* SnackBarView */,
-				24E309882B0D06B3001EBE48 /* SettingTableViewCell */,
 				2463CF0B2AF940B1006AAE65 /* NFTCardCell */,
 				2463CF072AF93EE0006AAE65 /* NFTCardCell.swift */,
 				2463CF092AF93F47006AAE65 /* NFTTraitView.swift */,
@@ -384,6 +388,7 @@
 			children = (
 				246FBBAC2AF915F400AFDD2E /* MyNFTTrackerTests.swift */,
 				24A104852B19A0C9003AD597 /* RegisterViewViewModelTest.swift */,
+				24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */,
 			);
 			path = MyNFTTrackerTests;
 			sourceTree = "<group>";
@@ -483,6 +488,15 @@
 			children = (
 				24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */,
 				24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		24CA4F702B1F714300676F07 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				24E309882B0D06B3001EBE48 /* SettingTableViewCell */,
+				24CA4F712B1F717500676F07 /* AppThemeButton.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -716,6 +730,7 @@
 				24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */,
 				24A104802B18E0EC003AD597 /* RegisterViewController.swift in Sources */,
 				248737B42B05111400E8938B /* UIStackView+Extensions.swift in Sources */,
+				24CA4F722B1F717500676F07 /* AppThemeButton.swift in Sources */,
 				24407B422B1C55EF007F254A /* MetamaskManager.swift in Sources */,
 				24DF405D2B184CEB0091ACFB /* SignupViewController.swift in Sources */,
 				24407B442B1C63CD007F254A /* WelcomeViewController.swift in Sources */,
@@ -728,6 +743,7 @@
 			files = (
 				24A104862B19A0C9003AD597 /* RegisterViewViewModelTest.swift in Sources */,
 				246FBBAD2AF915F400AFDD2E /* MyNFTTrackerTests.swift in Sources */,
+				24CA4F6F2B1F606C00676F07 /* EditViewViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

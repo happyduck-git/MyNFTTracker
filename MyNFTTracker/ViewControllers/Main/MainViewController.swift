@@ -166,7 +166,6 @@ extension MainViewController {
             $0.top.equalTo(self.welcomeTitle.snp.bottom).offset(50)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(10)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-5)
-            $0.centerX.equalTo(self.view.snp.centerX)
             $0.height.equalTo(300)
         }
     }

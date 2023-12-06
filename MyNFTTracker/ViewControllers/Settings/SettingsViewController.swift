@@ -61,27 +61,37 @@ final class SettingsViewController: BaseViewController {
         return button
     }()
     
-    private let settingTableView: UITableView = {
-        let table = UITableView(frame: .zero, style: .insetGrouped)
-        table.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.identifier)
-        table.translatesAutoresizingMaskIntoConstraints = false
-        return table
-    }()
-    
     private let themeLabel: UILabel = {
         let label = UILabel()
+        label.textAlignment = .left
         label.text = String(localized: "Select Theme")
+        label.font = .appFont(name: .appMainFontLight, size: .title)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    private let toggleSwitch: UISwitch = {
-        let toggler = UISwitch()
-        toggler.isOn = false
-        toggler.translatesAutoresizingMaskIntoConstraints = false
-        return toggler
+    private let divider: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
+    private lazy var darkThemeButton: AppThemeButton = {
+        let button = AppThemeButton()
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 8.0
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    private let lightThemeButton: AppThemeButton = {
+        let button = AppThemeButton()
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 8.0
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     //MARK: - Init
     init(vm: SettingsViewViewModel) {
         self.vm = vm
@@ -100,6 +110,7 @@ final class SettingsViewController: BaseViewController {
         self.setLayout()
         self.setDelegate()
         self.setNavigationBar()
+        self.configureThemeButtons()
         
         self.bind()
         
@@ -116,7 +127,10 @@ extension SettingsViewController {
         self.view.addSubviews(self.profileImageView,
                               self.nicknameLabel,
                               self.addressStack,
-                              self.settingTableView)
+                              self.themeLabel,
+                              self.divider,
+                              self.darkThemeButton,
+                              self.lightThemeButton)
         
         self.addressStack.addArrangedSubviews(self.walletAddressLabel,
                                               self.copyIcon)
@@ -145,17 +159,38 @@ extension SettingsViewController {
             $0.width.equalTo(self.copyIcon.snp.height)
         }
         
-        self.settingTableView.snp.makeConstraints {
-            $0.top.equalTo(self.copyIcon.snp.bottom).offset(20)
-            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        self.themeLabel.snp.makeConstraints {
+            $0.top.equalTo(self.addressStack.snp.bottom).offset(50)
+            $0.leading.trailing.equalTo(self.nicknameLabel)
         }
+        
+        self.divider.snp.makeConstraints {
+            $0.top.equalTo(self.themeLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(self.nicknameLabel)
+            $0.height.equalTo(2)
+        }
+
+        self.darkThemeButton.snp.makeConstraints {
+            $0.top.equalTo(self.divider.snp.bottom).offset(10)
+            $0.leading.equalToSuperview().offset(30)
+            $0.height.equalTo(self.view.frame.height / 2.5)
+            $0.width.equalTo((self.view.frame.width - 60) / 2)
+            $0.bottom.lessThanOrEqualToSuperview().offset(-50)
+        }
+        
+        self.lightThemeButton.snp.makeConstraints {
+            $0.top.equalTo(self.divider.snp.bottom).offset(20)
+            $0.leading.equalTo(self.darkThemeButton.snp.trailing).offset(10)
+            $0.height.equalTo(self.darkThemeButton.snp.height)
+            $0.width.equalTo(self.darkThemeButton.snp.width)
+            $0.bottom.lessThanOrEqualToSuperview().offset(-50)
+        }
+        self.darkThemeButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
+        self.lightThemeButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
     
     private func setDelegate() {
         self.baseDelegate = self
-
-        self.settingTableView.dataSource = self
-        self.settingTableView.delegate = self
     }
     
     private func setNavigationBar() {
@@ -170,6 +205,18 @@ extension SettingsViewController {
         let vc = EditViewController(vm: vm)
         self.show(vc, sender: nil)
     }
+    
+    private func configureThemeButtons() {
+        let darkGradientImage = UIImage.gradientImage(bounds: self.view.bounds,
+                                                      colors: [AppColors.DarkMode.gradientUpper,
+                                                               AppColors.DarkMode.gradientLower])
+        let lightGradientImage = UIImage.gradientImage(bounds: self.view.bounds,
+                                                      colors: [AppColors.LightMode.gradientUpper,
+                                                               AppColors.LightMode.gradientLower])
+        
+        self.darkThemeButton.configure(image: darkGradientImage, title: SettingsConstants.darkMode)
+        self.lightThemeButton.configure(image: lightGradientImage, title: SettingsConstants.lightMode)
+    }
 }
 
 extension SettingsViewController {
@@ -180,7 +227,6 @@ extension SettingsViewController {
             .sink { [weak self] in
                 guard let `self` = self else { return }
                 self.themeChanged(as: $0)
-                self.settingTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
             }
             .store(in: &bindings)
         
@@ -198,16 +244,6 @@ extension SettingsViewController {
             .sink { [weak self] in
                 guard let `self` = self else { return }
                 self.profileImageView.image = $0
-            }
-            .store(in: &bindings)
-        
-        self.copyIcon.tapPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let `self` = self else { return }
-                if !self.vm.clipboardTapped {
-                    self.vm.clipboardTapped = true
-                }
             }
             .store(in: &bindings)
         
@@ -232,6 +268,52 @@ extension SettingsViewController {
                 }
             }
             .store(in: &bindings)
+        
+        self.vm.themeChangedTo
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let `self` = self else { return }
+                var selectDark = false
+                var selectLight = false
+                switch $0 {
+                case .black:
+                    selectDark = true
+                case .white:
+                    selectLight = true
+                }
+                self.darkThemeButton.toggleButton(selectDark)
+                self.lightThemeButton.toggleButton(selectLight)
+                
+                self.vm.theme = $0
+                self.sendThemeNotification(newTheme: self.vm.theme)
+                self.saveSettingsToUserDefaults(self.vm.theme)
+            }
+            .store(in: &bindings)
+        
+        self.copyIcon.tapPublisher
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+                if !self.vm.clipboardTapped {
+                    self.vm.clipboardTapped = true
+                }
+            }
+            .store(in: &bindings)
+        
+        self.darkThemeButton.tapPublisher
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+                self.vm.themeChangedTo.send(.black)
+            }
+            .store(in: &bindings)
+        
+        self.lightThemeButton.tapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+                self.vm.themeChangedTo.send(.white)
+            }
+            .store(in: &bindings)
+        
     }
     
 }
@@ -255,23 +337,31 @@ extension SettingsViewController: BaseViewControllerDelegate {
     func themeChanged(as theme: Theme) {
         var bgColor: UIColor?
         var elementsColor: UIColor?
+        var selectDark = false
+        var selectLight = false
         
         switch theme {
         case .black:
             bgColor = AppColors.DarkMode.secondaryBackground
             elementsColor = AppColors.DarkMode.text
-            
+            selectDark = true
         case .white:
             bgColor = AppColors.LightMode.secondaryBackground
             elementsColor = AppColors.LightMode.text
+            selectLight = true
         }
         
         self.view.backgroundColor = bgColor
         self.nicknameLabel.textColor = elementsColor
         self.walletAddressLabel.textColor = elementsColor
         self.copyIcon.tintColor = elementsColor
-        self.settingTableView.backgroundColor = bgColor
+        self.themeLabel.textColor = elementsColor?.withAlphaComponent(0.7)
+        self.divider.backgroundColor = elementsColor?.withAlphaComponent(0.7)
+        self.darkThemeButton.configureTextColor(with: elementsColor)
+        self.lightThemeButton.configureTextColor(with: elementsColor)
 
+        self.darkThemeButton.toggleButton(selectDark)
+        self.lightThemeButton.toggleButton(selectLight)
     }
     
     func userInfoChanged(as user: User) {

@@ -41,5 +41,5 @@ enum AppColors {
     
     static let frameGradientMint = UIColor(hex: 0x65C6C0)
     static let frameGradientPurple = UIColor(hex: 0xBF70E5)
-    
+    static let selectedBorder = UIColor(hex: 0x5DD1EB)
 }

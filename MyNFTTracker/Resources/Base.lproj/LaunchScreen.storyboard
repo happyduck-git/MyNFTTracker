@@ -4,8 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,29 +17,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Launching Screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oMu-Ge-C9Y">
-                                <rect key="frame" x="128" y="415.66666666666669" width="137" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MyNFTTrackerLogo" translatesAutoresizingMaskIntoConstraints="NO" id="D8F-Zp-Qg5">
+                                <rect key="frame" x="70" y="219" width="253" height="199"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="LaunchScreenColor"/>
                         <constraints>
-                            <constraint firstItem="oMu-Ge-C9Y" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="2gw-4H-pMb"/>
-                            <constraint firstItem="oMu-Ge-C9Y" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="eeU-f2-Rx4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="D8F-Zp-Qg5" secondAttribute="trailing" constant="70" id="7ag-EE-zaS"/>
+                            <constraint firstItem="D8F-Zp-Qg5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="160" id="8E7-OP-5tt"/>
+                            <constraint firstItem="D8F-Zp-Qg5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="70" id="U3N-Rm-6bl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="D8F-Zp-Qg5" secondAttribute="bottom" constant="400" id="iPl-sV-WSJ"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <image name="MyNFTTrackerLogo" width="106" height="67"/>
+        <namedColor name="LaunchScreenColor">
+            <color red="0.99607843137254903" green="1" blue="0.90196078431372551" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

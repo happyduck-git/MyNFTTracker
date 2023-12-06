@@ -43,7 +43,7 @@ final class SnackBarView: UIView {
 
 extension SnackBarView {
     private func setUI() {
-        self.backgroundColor = .systemBlue.withAlphaComponent(0.7)
+        self.backgroundColor = .systemGreen
         self.addSubview(self.textLabel)
     }
     

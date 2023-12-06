@@ -33,6 +33,7 @@ final class SettingsViewViewModel {
     @Published var clipboardTapped: Bool = false
     @Published var user: User
     @Published var profileImage: UIImage?
+    var themeChangedTo = PassthroughSubject<Theme, Never>()
     
     init(userInfo: User?) {
         if let user = userInfo {
