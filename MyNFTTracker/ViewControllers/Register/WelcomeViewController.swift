@@ -36,7 +36,9 @@ final class WelcomeViewController: BaseViewController {
         self.view.backgroundColor = .white
         self.setUI()
         self.setLayout()
+        self.setDelegate()
         self.setNavigationBarItem()
+        self.updateTheme()
         Task {
             await self.loadLottie()
         }
@@ -71,7 +73,12 @@ extension WelcomeViewController {
         }
     }
     
+    private func setDelegate() {
+        self.baseDelegate = self
+    }
+    
     private func setNavigationBarItem() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
         let rightBarButtonItem = UIBarButtonItem(
             title: RegisterViewConstants.next,
             style: .plain,
@@ -104,5 +111,47 @@ extension WelcomeViewController {
         catch {
             AppLogger.logger.error("Error playing DotLottie -- \(error)")
         }
+    }
+}
+
+extension WelcomeViewController {
+    private func updateTheme() {
+        guard let themeString = UserDefaults.standard.string(forKey: UserDefaultsConstants.theme),
+              let theme = Theme(rawValue: themeString)
+        else {
+            self.themeChanged(as: .black)
+            return
+        }
+        
+        self.themeChanged(as: theme)
+    }
+}
+
+extension WelcomeViewController: BaseViewControllerDelegate {
+    func themeChanged(as theme: Theme) {
+        var gradientUpperColor: UIColor?
+        var gradientLowerColor: UIColor?
+        var textColor: UIColor?
+        
+        switch theme {
+        case .black:
+            gradientUpperColor = AppColors.DarkMode.gradientUpper
+            gradientLowerColor = AppColors.DarkMode.gradientLower
+            textColor = AppColors.DarkMode.text
+        case .white:
+            gradientUpperColor = AppColors.LightMode.gradientUpper
+            gradientLowerColor = AppColors.LightMode.gradientLower
+            textColor = AppColors.LightMode.text
+        }
+        
+        let gradientImage = UIImage.gradientImage(bounds: self.view.bounds,
+                                                  colors: [gradientUpperColor!,
+                                                           gradientLowerColor!])
+        self.view.backgroundColor = UIColor(patternImage: gradientImage)
+        self.welcomeTitle.textColor = textColor
+    }
+    
+    func userInfoChanged(as user: User) {
+        return
     }
 }

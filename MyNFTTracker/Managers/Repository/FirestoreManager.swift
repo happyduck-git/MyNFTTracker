@@ -40,6 +40,15 @@ extension FirestoreManager {
             .exists
     }
     
+    func isRegistrationCompleted(_ wallet: String) async throws -> Bool {
+        let document = try await baseDB.collection(FirestoreConstants.users)
+            .document(wallet)
+            .getDocument()
+        
+        let data = document.data()
+        return data?[FirestoreConstants.nickname] != nil
+    }
+    
 }
 
 extension FirestoreManager {

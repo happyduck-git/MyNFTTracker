@@ -49,6 +49,7 @@
 		246FBBAD2AF915F400AFDD2E /* MyNFTTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBAC2AF915F400AFDD2E /* MyNFTTrackerTests.swift */; };
 		246FBBB72AF915F400AFDD2E /* MyNFTTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBB62AF915F400AFDD2E /* MyNFTTrackerUITests.swift */; };
 		246FBBB92AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246FBBB82AF915F400AFDD2E /* MyNFTTrackerUITestsLaunchTests.swift */; };
+		2485B29B2B20D39D003690B6 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 2485B29A2B20D39D003690B6 /* SkeletonView */; };
 		248737B22B03C43300E8938B /* NFTCardBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248737B12B03C43300E8938B /* NFTCardBackView.swift */; };
 		248737B42B05111400E8938B /* UIStackView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 248737B32B05111400E8938B /* UIStackView+Extensions.swift */; };
 		248737B72B051EBE00E8938B /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 248737B62B051EBE00E8938B /* Lottie */; };
@@ -184,6 +185,7 @@
 				2463CF152AF942B5006AAE65 /* Nuke in Frameworks */,
 				2489796D2B187C0700A8F28E /* FirebaseStorage in Frameworks */,
 				248979672B187BE400A8F28E /* FirebaseAnalytics in Frameworks */,
+				2485B29B2B20D39D003690B6 /* SkeletonView in Frameworks */,
 				2463CF182AFA5AFE006AAE65 /* metamask-ios-sdk in Frameworks */,
 				248737BD2B05D4B400E8938B /* SideMenu in Frameworks */,
 				248737B72B051EBE00E8938B /* Lottie in Frameworks */,
@@ -552,6 +554,7 @@
 				248979682B187BED00A8F28E /* FirebaseFirestore */,
 				2489796A2B187BF600A8F28E /* FirebaseFirestoreSwift */,
 				2489796C2B187C0700A8F28E /* FirebaseStorage */,
+				2485B29A2B20D39D003690B6 /* SkeletonView */,
 			);
 			productName = MyNFTTracker;
 			productReference = 246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */;
@@ -632,6 +635,7 @@
 				248737B52B051EBE00E8938B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				248737BB2B05D4B400E8938B /* XCRemoteSwiftPackageReference "SideMenu" */,
 				248979612B187AF800A8F28E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				2485B2992B20D39D003690B6 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 			);
 			productRefGroup = 246FBB932AF915EF00AFDD2E /* Products */;
 			projectDirPath = "";
@@ -1108,6 +1112,14 @@
 				minimumVersion = 0.2.2;
 			};
 		};
+		2485B2992B20D39D003690B6 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.30.4;
+			};
+		};
 		248737B52B051EBE00E8938B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -1149,6 +1161,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2463CF162AFA5AFE006AAE65 /* XCRemoteSwiftPackageReference "metamask-ios-sdk" */;
 			productName = "metamask-ios-sdk";
+		};
+		2485B29A2B20D39D003690B6 /* SkeletonView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2485B2992B20D39D003690B6 /* XCRemoteSwiftPackageReference "SkeletonView" */;
+			productName = SkeletonView;
 		};
 		248737B62B051EBE00E8938B /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;

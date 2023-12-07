@@ -11,6 +11,7 @@ import Combine
 import Nuke
 import Lottie
 import SideMenu
+import SkeletonView
 
 final class MainViewController: BaseViewController {
     
@@ -30,6 +31,7 @@ final class MainViewController: BaseViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1.0
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isSkeletonable = true
         return imageView
     }()
     
@@ -38,6 +40,7 @@ final class MainViewController: BaseViewController {
         label.numberOfLines = 0
         label.font = UIFont.appFont(name: .appMainFontBold, size: .head)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isSkeletonable = true
         return label
     }()
     
@@ -49,6 +52,7 @@ final class MainViewController: BaseViewController {
         collection.backgroundColor = .clear
         collection.register(NFTCardCell.self, forCellWithReuseIdentifier: NFTCardCell.identifier)
         collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.isSkeletonable = true
         return collection
     }()
     
@@ -65,8 +69,7 @@ final class MainViewController: BaseViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = .systemBackground
+
         self.updateTheme()
         
         self.bind()
@@ -75,6 +78,9 @@ final class MainViewController: BaseViewController {
         self.setNavigariontBar()
         self.setDelegate()
         
+        self.profileImage.showAnimatedSkeleton()
+        self.welcomeTitle.showAnimatedSkeleton()
+        self.nftCollectionView.showAnimatedSkeleton()
         self.addChildViewController(self.loadingVC)
     }
     
@@ -92,8 +98,12 @@ extension MainViewController {
         self.vm.$user
             .sink { [weak self] user in
                 guard let `self` = self else { return }
-                self.vm.username = user?.nickname ?? self.vm.address
+                self.vm.username = user?.nickname ?? " "
                 self.vm.profileImageDataString = user?.imageData
+                DispatchQueue.main.async {
+                    self.profileImage.hideSkeleton()
+                    self.welcomeTitle.hideSkeleton()
+                }
             }
             .store(in: &bindings)
         
@@ -131,6 +141,7 @@ extension MainViewController {
                 }
                 
                 DispatchQueue.main.async {
+                    self.nftCollectionView.hideSkeleton()
                     self.nftCollectionView.reloadData()
                     self.loadingVC.removeViewController()
                 }
@@ -264,6 +275,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
 }
 
+extension MainViewController: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        return NFTCardCell.identifier
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+}
+
 extension MainViewController {
     private func updateTheme() {
         guard let themeString = UserDefaults.standard.string(forKey: UserDefaultsConstants.theme),
@@ -341,6 +362,7 @@ extension MainViewController: ContentsSideMenuViewDelegate {
             guard let `self` = self else { return }
             
             UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.walletAddress)
+            MetamaskManager.shared.metaMaskSDK.disconnect()
             
             let vcs = self.navigationController?.viewControllers
             let loginVC = vcs?.filter({ vc in

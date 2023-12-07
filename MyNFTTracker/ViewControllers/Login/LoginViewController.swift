@@ -78,6 +78,20 @@ final class LoginViewController: BaseViewController {
         self.setDelegate()
         
         self.bind()
+    
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.updateLayout()
+        
+        UIView.animate(withDuration: 1.0) { [weak self] in
+            guard let `self` = self else { return }
+            self.view.layoutIfNeeded()
+            self.loginButton.alpha = 1.0
+            self.signupButton.alpha = 1.0
+        }
         
     }
     
@@ -197,18 +211,47 @@ extension LoginViewController {
     
     private func setLayout() {
         self.logo.snp.makeConstraints {
-            $0.top.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(self.view.frame.height / 2)
         }
         
         self.loginButton.snp.makeConstraints {
-            $0.top.equalTo(self.logo.snp.bottom).offset(40)
+//            $0.top.equalTo(self.logo.snp.bottom).offset(40)
+            $0.centerY.equalToSuperview()
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             $0.height.equalTo(50)
         }
         
         self.signupButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide).offset(-20)
+        }
+        
+        self.loginButton.alpha = 0.0
+        self.signupButton.alpha = 0.0
+    }
+    
+    private func updateLayout() {
+        
+        self.logo.snp.remakeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(self.view.frame.height / 2)
+        }
+        
+        self.loginButton.snp.remakeConstraints {
+            $0.top.equalTo(self.logo.snp.bottom).offset(40)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(50)
+        }
+        
+        self.signupButton.snp.remakeConstraints {
             $0.top.equalTo(self.loginButton.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
             $0.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide).offset(-20)

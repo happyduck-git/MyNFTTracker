@@ -37,7 +37,6 @@ extension BaseViewController {
             else { return }
             
             self.baseDelegate?.themeChanged(as: theme)
-            print("Obj recieved: \(theme)")
         }
     }
     

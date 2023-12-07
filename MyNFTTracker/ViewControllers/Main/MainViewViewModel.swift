@@ -25,9 +25,10 @@ final class MainViewViewModel {
     
     init() {
         Task {
+            
             async let userInfo = self.getUserInfo()
             async let nftList = self.getOwnedNfts()
-            
+      
             self.user = await userInfo
             self.nfts = await nftList
         }

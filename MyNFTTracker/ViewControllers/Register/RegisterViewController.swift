@@ -18,6 +18,8 @@ final class RegisterViewController: BaseViewController {
     //MARK: - UI Elements
     private let loadingVC = LoadingViewController()
     
+    private var avatarPresentationSheet: AvatarCollectionViewController?
+    
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -361,7 +363,8 @@ extension RegisterViewController {
     
     private func showAvatarPicker() {
         let vm = AvatarCollectionViewViewModel(selectedCell: self.vm.selectedAvatarIndex)
-        let viewControllerToPresent = AvatarCollectionViewController(vm: vm, delegate: self)
+        self.avatarPresentationSheet = AvatarCollectionViewController(vm: vm, delegate: self)
+        guard let viewControllerToPresent = self.avatarPresentationSheet else { return }
         if let sheet = viewControllerToPresent.sheetPresentationController {
             sheet.detents = [.medium()]
             sheet.largestUndimmedDetentIdentifier = .medium
@@ -380,6 +383,7 @@ extension RegisterViewController: AvatarCollectionViewControllerDelegate {
                                         didSelectAvatar avatar: UIImage?,
                                         at indexPath: IndexPath) {
         self.profileView.image = avatar
+        self.vm.profileImage = avatar
         self.vm.selectedAvatarIndex = indexPath
     }
     
@@ -390,5 +394,11 @@ extension RegisterViewController: UISheetPresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.vm.showPickerView = false
         self.vm.canShowPickerView = true
+    }
+}
+
+extension RegisterViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.avatarPresentationSheet?.dismiss(animated: true, completion: nil)
     }
 }

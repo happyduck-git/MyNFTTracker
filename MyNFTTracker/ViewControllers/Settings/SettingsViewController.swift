@@ -47,7 +47,8 @@ final class SettingsViewController: BaseViewController {
     
     private let walletAddressLabel: UILabel = {
         let label = UILabel()
-        label.text = "0x0000000000"
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 6
         label.lineBreakMode = .byTruncatingMiddle
         label.textAlignment = .center
         label.font = .appFont(name: .appMainFontLight, size: .plain)
@@ -236,6 +237,7 @@ extension SettingsViewController {
                 guard let `self` = self else { return }
                 self.nicknameLabel.text = $0.nickname
                 self.walletAddressLabel.text = $0.address ?? "no-address"
+                self.profileImageView.image = UIImage.convertBase64StringToImage($0.imageData)
             }
             .store(in: &bindings)
         
@@ -337,6 +339,7 @@ extension SettingsViewController: BaseViewControllerDelegate {
     func themeChanged(as theme: Theme) {
         var bgColor: UIColor?
         var elementsColor: UIColor?
+        var lableBgColor: UIColor?
         var selectDark = false
         var selectLight = false
         
@@ -344,10 +347,12 @@ extension SettingsViewController: BaseViewControllerDelegate {
         case .black:
             bgColor = AppColors.DarkMode.secondaryBackground
             elementsColor = AppColors.DarkMode.text
+            lableBgColor = .darkGray
             selectDark = true
         case .white:
             bgColor = AppColors.LightMode.secondaryBackground
             elementsColor = AppColors.LightMode.text
+            lableBgColor = .systemGray5
             selectLight = true
         }
         
@@ -359,7 +364,8 @@ extension SettingsViewController: BaseViewControllerDelegate {
         self.divider.backgroundColor = elementsColor?.withAlphaComponent(0.7)
         self.darkThemeButton.configureTextColor(with: elementsColor)
         self.lightThemeButton.configureTextColor(with: elementsColor)
-
+        self.walletAddressLabel.backgroundColor = lableBgColor
+        
         self.darkThemeButton.toggleButton(selectDark)
         self.lightThemeButton.toggleButton(selectLight)
     }

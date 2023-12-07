@@ -36,7 +36,7 @@ enum WelcomeConstants {
 }
 
 enum MainViewConstants {
-    static let welcome = String(localized: "반갑습니다! %@\n내가 가진 NFT를 구경해 보세요.")
+    static let welcome = String(localized: "반갑습니다! %@\n가지고 계신 NFT를 구경해 보세요.")
 }
 
 enum SettingsConstants {
