@@ -11,9 +11,6 @@ import metamask_ios_sdk
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    // Metamask
-    private let appMetadata = AppMetadata(name: "MyNFTTracker", url: "https://my-nft-tracker.com")
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
@@ -34,11 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        let metamask = MetaMaskSDK.shared(self.appMetadata)
-     
-        DispatchQueue.global().async {
-            metamask.clearSession()
-        }
+            MetamaskManager.shared.metaMaskSDK.clearSession()
     }
 }
 

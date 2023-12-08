@@ -11,13 +11,20 @@ import Combine
 import Nuke
 import Lottie
 import SideMenu
-import SkeletonView
+
+protocol MainViewControllerDelegate: AnyObject {
+    func errorDidReceive(_ viewController: UIViewController, error: Error)
+}
 
 final class MainViewController: BaseViewController {
+    
+    weak var delegate: MainViewControllerDelegate?
     
     private let vm: MainViewViewModel
     
     private var bindings = Set<AnyCancellable>()
+    
+    typealias Handler = () -> Void
     
     //MARK: - UI Elements
     private var menu: SideMenuNavigationController?
@@ -31,7 +38,6 @@ final class MainViewController: BaseViewController {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1.0
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isSkeletonable = true
         return imageView
     }()
     
@@ -40,7 +46,6 @@ final class MainViewController: BaseViewController {
         label.numberOfLines = 0
         label.font = UIFont.appFont(name: .appMainFontBold, size: .head)
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.isSkeletonable = true
         return label
     }()
     
@@ -52,8 +57,14 @@ final class MainViewController: BaseViewController {
         collection.backgroundColor = .clear
         collection.register(NFTCardCell.self, forCellWithReuseIdentifier: NFTCardCell.identifier)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.isSkeletonable = true
         return collection
+    }()
+    
+    private let noNftCardView: NoNFTCardView = {
+        let view = NoNFTCardView()
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     //MARK: - Init
@@ -77,11 +88,9 @@ final class MainViewController: BaseViewController {
         self.setLayout()
         self.setNavigariontBar()
         self.setDelegate()
-        
-        self.profileImage.showAnimatedSkeleton()
-        self.welcomeTitle.showAnimatedSkeleton()
-        self.nftCollectionView.showAnimatedSkeleton()
+
         self.addChildViewController(self.loadingVC)
+
     }
     
     override func viewDidLayoutSubviews() {
@@ -94,16 +103,27 @@ final class MainViewController: BaseViewController {
 extension MainViewController {
     
     private func bind() {
-        
-        self.vm.$user
-            .sink { [weak self] user in
+
+        self.vm.user
+            .sink { [weak self] error in
                 guard let `self` = self else { return }
-                self.vm.username = user?.nickname ?? " "
-                self.vm.profileImageDataString = user?.imageData
-                DispatchQueue.main.async {
-                    self.profileImage.hideSkeleton()
-                    self.welcomeTitle.hideSkeleton()
+                switch error {
+                case .finished:
+                    return
+                case .failure(let err):
+                    DispatchQueue.main.async {
+                        self.showLoginViewController {
+                            self.delegate?.errorDidReceive(self, error: err)
+                        }
+                    }
                 }
+            } receiveValue: { [weak self] in
+                guard let `self` = self,
+                      let user = $0 else { return }
+                self.vm.currentUserInfo = user
+                self.vm.username = user.nickname
+                self.vm.profileImageDataString = user.imageData
+
             }
             .store(in: &bindings)
         
@@ -111,8 +131,11 @@ extension MainViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] name in
                 guard let `self` = self else { return }
+                print("Username: \(name)")
+                DispatchQueue.main.async {
+                    self.welcomeTitle.text = String(format: MainViewConstants.welcome, name)
+                }
                 
-                self.welcomeTitle.text = String(format: MainViewConstants.welcome, name)
             }
             .store(in: &bindings)
         
@@ -121,29 +144,42 @@ extension MainViewController {
             .sink { [weak self] imageData in
                 guard let `self` = self,
                       let dataString = imageData else { return }
-                self.profileImage.image = UIImage.convertBase64StringToImage(dataString)
+                DispatchQueue.main.async {
+                    self.profileImage.image = UIImage.convertBase64StringToImage(dataString)
+                }
             }
             .store(in: &bindings)
+        
         
         self.vm.$nfts
             .sink { [weak self] nfts in
                 guard let `self` = self else { return }
                 
-                self.vm.imageStrings = nfts.compactMap {
-                    guard let imageString = $0.metadata?.image else {
-                        return ""
+                if nfts.isEmpty {
+                    DispatchQueue.main.async {
+                        self.nftCollectionView.isHidden = true
+                        self.noNftCardView.isHidden = false
+                        self.loadingVC.removeViewController()
+                    }
+                } else {
+                    
+                    self.vm.imageStrings = nfts.compactMap {
+                        guard let imageString = $0.metadata?.image else {
+                            return ""
+                        }
+                        
+                        if imageString.hasPrefix("ipfs://") {
+                            return self.vm.buildPinataUrl(from: imageString)
+                        }
+                        return imageString
                     }
                     
-                    if imageString.hasPrefix("ipfs://") {
-                        return self.vm.buildPinataUrl(from: imageString)
+                    DispatchQueue.main.async {
+                        self.nftCollectionView.isHidden = false
+                        self.noNftCardView.isHidden = true
+                        self.nftCollectionView.reloadData()
+                        self.loadingVC.removeViewController()
                     }
-                    return imageString
-                }
-                
-                DispatchQueue.main.async {
-                    self.nftCollectionView.hideSkeleton()
-                    self.nftCollectionView.reloadData()
-                    self.loadingVC.removeViewController()
                 }
                 
             }
@@ -157,7 +193,8 @@ extension MainViewController {
     private func setUI() {
         self.view.addSubviews(self.profileImage,
                               self.welcomeTitle,
-                              self.nftCollectionView)
+                              self.nftCollectionView,
+                              self.noNftCardView)
     }
     
     private func setLayout() {
@@ -169,7 +206,8 @@ extension MainViewController {
         
         self.welcomeTitle.snp.makeConstraints {
             $0.top.equalTo(self.profileImage.snp.bottom).offset(20)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             $0.bottom.lessThanOrEqualTo(self.nftCollectionView.snp.top).offset(-20)
         }
 
@@ -178,6 +216,10 @@ extension MainViewController {
             $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(10)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-5)
             $0.height.equalTo(300)
+        }
+        
+        self.noNftCardView.snp.makeConstraints {
+            $0.edges.equalTo(self.nftCollectionView)
         }
     }
     
@@ -275,16 +317,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
 }
 
-extension MainViewController: SkeletonCollectionViewDataSource {
-    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
-        return NFTCardCell.identifier
-    }
-    
-    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
-    }
-}
-
 extension MainViewController {
     private func updateTheme() {
         guard let themeString = UserDefaults.standard.string(forKey: UserDefaultsConstants.theme),
@@ -305,6 +337,7 @@ extension MainViewController: BaseViewControllerDelegate {
         var gradientLowerColor: UIColor?
         var textColor: UIColor?
         var borderColor: UIColor?
+        var tintColor: UIColor?
         
         switch theme {
         case .black:
@@ -312,12 +345,13 @@ extension MainViewController: BaseViewControllerDelegate {
             gradientLowerColor = AppColors.DarkMode.gradientLower
             textColor = AppColors.DarkMode.text
             borderColor = AppColors.DarkMode.border
-            
+            tintColor = .white
         case .white:
             gradientUpperColor = AppColors.LightMode.gradientUpper
             gradientLowerColor = AppColors.LightMode.gradientLower
             textColor = AppColors.LightMode.text
             borderColor = AppColors.LightMode.border
+            tintColor = .black
         }
         
         let gradientImage = UIImage.gradientImage(bounds: self.view.bounds,
@@ -327,10 +361,12 @@ extension MainViewController: BaseViewControllerDelegate {
         
         self.welcomeTitle.textColor = textColor
         self.profileImage.layer.borderColor = borderColor?.cgColor
+        
+        self.noNftCardView.configure(textColor: textColor, imageColor: tintColor)
     }
 
     func userInfoChanged(as user: User) {
-        self.vm.user = user
+        self.vm.user.send(user)
     }
     
 }
@@ -344,10 +380,11 @@ extension MainViewController: ContentsSideMenuViewDelegate {
             case .main:
                 return
             case .settings:
+                guard let user = self.vm.currentUserInfo else { return }
                 self.show(
                     SettingsViewController(
                         vm: SettingsViewViewModel(
-                            userInfo: self.vm.user
+                            userInfo: user
                         )
                     ),
                     sender: nil
@@ -364,23 +401,29 @@ extension MainViewController: ContentsSideMenuViewDelegate {
             UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.walletAddress)
             MetamaskManager.shared.metaMaskSDK.disconnect()
             
-            let vcs = self.navigationController?.viewControllers
-            let loginVC = vcs?.filter({ vc in
-                vc is LoginViewController
-            }).first as? LoginViewController
-            
-            guard let loginVC = loginVC else {
-   
-                self.dismiss(animated: true) { [weak self] in
-                    guard let `self` = self else { return }
-                    let loginVM = LoginViewViewModel()
-                    let loginVC = LoginViewController(vm: loginVM)
-                    self.navigationController?.setViewControllers([loginVC], animated: true)
-                }
-                return
-            }
-            self.navigationController?.popToViewController(loginVC, animated: true)
+            self.showLoginViewController()
         }
+    }
+    
+    private func showLoginViewController(completion: Handler? = nil) {
+        let vcs = self.navigationController?.viewControllers
+        let loginVC = vcs?.filter({ vc in
+            vc is LoginViewController
+        }).first as? LoginViewController
+        
+        guard let loginVC = loginVC else {
+
+            self.dismiss(animated: true) { [weak self] in
+                guard let `self` = self else { return }
+                let loginVM = LoginViewViewModel()
+                let loginVC = LoginViewController(vm: loginVM)
+                self.delegate = loginVC
+                self.navigationController?.setViewControllers([loginVC], animated: true)
+                completion?()
+            }
+            return
+        }
+        self.navigationController?.popToViewController(loginVC, animated: true)
     }
 }
 

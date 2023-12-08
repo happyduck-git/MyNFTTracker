@@ -7,11 +7,13 @@
 
 import UIKit.UIImage
 import Combine
+import FirebaseFirestore
 
 final class MainViewViewModel {
     
-    @Published var user: User?
-    @Published var username: String = "USER-NAME"
+    var user = PassthroughSubject<User?, Error>()
+    var currentUserInfo: User?
+    @Published var username: String = " "
     @Published var profileImageDataString: String?
     @Published var nfts: [OwnedNFT] = [] {
         didSet {
@@ -19,6 +21,7 @@ final class MainViewViewModel {
         }
     }
     @Published var imageStrings: [String] = []
+    var errorFetchingUserInfo = PassthroughSubject<Error, Never>()
     
     var selectedNfts: [Bool] = []
     var address: String = ""
@@ -29,11 +32,10 @@ final class MainViewViewModel {
             async let userInfo = self.getUserInfo()
             async let nftList = self.getOwnedNfts()
       
-            self.user = await userInfo
+            self.user.send(await userInfo)
             self.nfts = await nftList
         }
     }
-    
     
 }
 
@@ -48,15 +50,15 @@ extension MainViewViewModel {
 }
 
 extension MainViewViewModel {
-    private func getUserInfo() async -> User {
+    private func getUserInfo() async -> User? {
         do {
             let wallet = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? "no-address"
             self.address = wallet
             return try await FirestoreManager.shared.retrieveUserInfo(of: wallet)
         }
         catch {
-            print("Error -- \(error)")
-            return User(id: UUID().uuidString, nickname: "no-nickname", imageData: "no-image")
+            self.user.send(completion: .failure(error))
+            return nil
         }
     }
     
@@ -65,10 +67,15 @@ extension MainViewViewModel {
 extension MainViewViewModel {
     private func getOwnedNfts() async -> [OwnedNFT] {
         do {
-            //        let owner = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? "no-address"
-            let owner = "0x04dBF23edb725fe9C859908D76E9Ccf38BC80a13"
-            let result = try await AlchemyServiceManager.shared.requestOwnedNFTs(ownerAddress: owner)
-            print("result: \(result.ownedNfts.count)")
+            let chainId = UserDefaults.standard.string(forKey: UserDefaultsConstants.chainId) ?? Chain.eth.rawValue
+            let owner = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? "no-address"
+//            let owner = "0x04dBF23edb725fe9C859908D76E9Ccf38BC80a13"
+            let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: owner)
+            
+            #if DEBUG
+            print("Number of NFTs received: \(result.ownedNfts.count)")
+            #endif
+            
             return result.ownedNfts
         }
         catch {

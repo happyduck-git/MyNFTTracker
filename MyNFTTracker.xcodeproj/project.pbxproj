@@ -74,6 +74,7 @@
 		24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */; };
 		24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */; };
 		24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */; };
+		24BECD542B2340DE0029F8E6 /* NoNFTCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BECD532B2340DE0029F8E6 /* NoNFTCardView.swift */; };
 		24CA4F6F2B1F606C00676F07 /* EditViewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */; };
 		24CA4F722B1F717500676F07 /* AppThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F712B1F717500676F07 /* AppThemeButton.swift */; };
 		24DB467A2B1B31FB00431517 /* AvatarCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */; };
@@ -165,6 +166,7 @@
 		24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
 		24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
+		24BECD532B2340DE0029F8E6 /* NoNFTCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNFTCardView.swift; sourceTree = "<group>"; };
 		24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewViewModelTest.swift; sourceTree = "<group>"; };
 		24CA4F712B1F717500676F07 /* AppThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeButton.swift; sourceTree = "<group>"; };
 		24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCacheManager.swift; sourceTree = "<group>"; };
@@ -302,8 +304,6 @@
 				24A1048C2B19C549003AD597 /* AvatarCollectionViewCell */,
 				24DF40562B170C830091ACFB /* SnackBarView */,
 				2463CF0B2AF940B1006AAE65 /* NFTCardCell */,
-				2463CF072AF93EE0006AAE65 /* NFTCardCell.swift */,
-				2463CF092AF93F47006AAE65 /* NFTTraitView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -311,7 +311,10 @@
 		2463CF0B2AF940B1006AAE65 /* NFTCardCell */ = {
 			isa = PBXGroup;
 			children = (
+				2463CF072AF93EE0006AAE65 /* NFTCardCell.swift */,
 				248737B12B03C43300E8938B /* NFTCardBackView.swift */,
+				2463CF092AF93F47006AAE65 /* NFTTraitView.swift */,
+				24BECD532B2340DE0029F8E6 /* NoNFTCardView.swift */,
 			);
 			path = NFTCardCell;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 			files = (
 				2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */,
 				24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */,
+				24BECD542B2340DE0029F8E6 /* NoNFTCardView.swift in Sources */,
 				24DB467C2B1B608A00431517 /* User.swift in Sources */,
 				2463CF212AFA5F24006AAE65 /* UIViewContoller+Extensions.swift in Sources */,
 				24A104842B1992AC003AD597 /* UITextField+Extensions.swift in Sources */,

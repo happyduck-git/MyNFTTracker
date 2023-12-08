@@ -29,7 +29,8 @@ extension FirestoreManager {
     func saveUserInfo(of wallet: String, imageUrl: String, nickname: String) async throws {
         try await baseDB.collection(FirestoreConstants.users)
             .document(wallet)
-            .setData([FirestoreConstants.nickname: nickname,
+            .setData([FirestoreConstants.uuid: UUID().uuidString,
+                      FirestoreConstants.nickname: nickname,
                       FirestoreConstants.imageData: imageUrl], merge: true)
     }
     
@@ -62,6 +63,9 @@ extension FirestoreManager {
 
 extension FirestoreManager {
     func retrieveUserInfo(of wallet: String) async throws -> User {
+        if try await !isRegisteredUser(wallet) {
+            throw FirestoreErrorCode(.notFound)
+        }
         let document = try await baseDB.collection(FirestoreConstants.users)
             .document(wallet)
             .getDocument()

@@ -53,7 +53,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         print(#function)
-        // 이 부분 호출되었는데 address 받은 것 없으면 error handling하기.
+        //TODO: 이 부분 호출되었는데 address 받은 것 없으면 error handling하기.
+        print("Account: " + MetamaskManager.shared.metaMaskSDK.account)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -75,6 +76,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print(#function)
     }
 
-
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        print(#function)
+        print(URLContexts)
+    }
 }
 

@@ -161,7 +161,7 @@ extension RegisterViewController {
         self.infoLabel.snp.makeConstraints {
             $0.top.equalTo(self.nicknameTextField.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(50)
-            $0.trailing.equalToSuperview().offset(-50)
+            $0.trailing.equalTo(self.nicknameTextField)
         }
         
         self.saveButton.snp.makeConstraints {
@@ -266,6 +266,7 @@ extension RegisterViewController {
 
 extension RegisterViewController {
     private func setNavigationBarItem() {
+        self.navigationItem.setHidesBackButton(true, animated: false)
         let rightBarButtonItem = UIBarButtonItem(
             title: RegisterViewConstants.skip,
             style: .plain,
@@ -287,9 +288,12 @@ extension RegisterViewController {
             self.addChildViewController(self.loadingVC)
         }
         Task {
-            await self.vm.saveUserInfo(of: address,
+            await self.vm.saveUserInfoOnFirestore(of: address,
                                  username: username,
                                  imageUrl: imageData)
+            
+            self.vm.saveAddressAndChainIdOnUserDefaults(address: address,
+                                                        chainId: MetamaskManager.shared.metaMaskSDK.chainId)
             
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }
@@ -336,7 +340,7 @@ extension RegisterViewController: BaseViewControllerDelegate {
         self.saveButton.backgroundColor = buttonColor
         self.saveButton.layer.borderColor = borderColor?.cgColor
         self.saveButton.setTitleColor(textColor, for: .normal)
-        
+        self.infoLabel.textColor = textColor?.withAlphaComponent(0.7)
     }
 
     func userInfoChanged(as user: User) {

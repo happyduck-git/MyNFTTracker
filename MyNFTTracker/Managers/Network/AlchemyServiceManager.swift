@@ -7,30 +7,30 @@
 
 import Foundation
 
-final actor AlchemyServiceManager {
+enum Chain: String {
+    case eth = "0x1"
+    case polygon = "0x89"
+    case sepolia = "0xaa36a7"
+    case goerli = "0x5"
+    case mumbai = "0x13881"
     
-    enum ChanId: String {
-        case eth = "0x1"
-        case polygon = "0x89"
-        case sepolia = "0xaa36a7"
-        case goerli = "0x5"
-        case mumbai = "0x13881"
-        
-        var chain: String {
-            switch self {
-            case .eth:
-                "eth-mainnet"
-            case .polygon:
-                "ploygon-mainnet"
-            case .sepolia:
-                "eth-sepolia"
-            case .goerli:
-                "arb-goerli"
-            case .mumbai:
-                "polygon-mumbai"
-            }
+    var network: String {
+        switch self {
+        case .eth:
+            "eth-mainnet"
+        case .polygon:
+            "ploygon-mainnet"
+        case .sepolia:
+            "eth-sepolia"
+        case .goerli:
+            "arb-goerli"
+        case .mumbai:
+            "polygon-mumbai"
         }
     }
+}
+
+final actor AlchemyServiceManager {
     
     // MARK: - Init
     static let shared = AlchemyServiceManager()
@@ -38,8 +38,6 @@ final actor AlchemyServiceManager {
     
     // MARK: - URL Constant
     private let baseUrl = "https://%@.g.alchemy.com"
-    private let chain = "polygon"
-    private let network = "mumbai"
     private let acceptKey = "application/json"
     private let headerFieldContentTypeKey = "content-Type"
     
@@ -54,7 +52,35 @@ extension AlchemyServiceManager {
       
         let urlRequest = try self.buildUrlRequest(method: .get,
                                                   chain: .eth,
-                                                  network: .mainnet,
+                                                  api: .nftList,
+                                                  queryParameters: [
+                                                    URLQueryItem(name: "owner", value: ownerAddress),
+                                                    URLQueryItem(name: "withMetadata", value: "true"),
+                                                    URLQueryItem(name: "pageSize", value: "100")
+                                                  ])
+        
+        
+        do {
+            return try await NetworkServiceManager.execute(
+                expecting: OwnedNFTs.self,
+                request: urlRequest
+            )
+        }
+        catch {
+            AppLogger.logger.error("Error requesting Alchemy Service -- \(String(describing: error))")
+            throw AlchemyServiceError.wrongRequest
+        }
+    }
+    
+    /// Request NFT request
+    /// - Returns: Owned NFTs
+    func requestOwnedNFTsOn(_ chainId: String, ownerAddress: String) async throws -> OwnedNFTs {
+        guard let chain = Chain(rawValue: chainId) else {
+            throw AlchemyServiceError.chainNotFound
+        }
+      
+        let urlRequest = try self.buildUrlRequest(method: .get,
+                                                  chain: chain,
                                                   api: .nftList,
                                                   queryParameters: [
                                                     URLQueryItem(name: "owner", value: ownerAddress),
@@ -78,7 +104,6 @@ extension AlchemyServiceManager {
     func requestNftMetadata(contractAddress: String, tokenId: String) async throws -> OwnedNFT {
         let urlRequest = try self.buildUrlRequest(method: .get,
                                                   chain: .polygon,
-                                                  network: .mumbai,
                                                   api: .singleNftMetaData,
                                                   queryParameters: [
                                                     URLQueryItem(name: "contractAddress", value: contractAddress),
@@ -106,17 +131,7 @@ extension AlchemyServiceManager {
         case get = "GET"
         case post = "POST"
     }
-    
-    enum Chain: String {
-        case polygon
-        case eth
-    }
-    
-    enum Network: String {
-        case mumbai
-        case mainnet
-    }
-    
+
     enum AlchemyAPI {
         case transfers
         case nftList
@@ -136,7 +151,6 @@ extension AlchemyServiceManager {
     
     private func buildUrlRequest(method: HTTPMethod,
                                  chain: Chain,
-                                 network: Network,
                                  api: AlchemyAPI,
                                  requests: [String: String] = [:],
                                  pathComponents: [String] = [],
@@ -145,7 +159,6 @@ extension AlchemyServiceManager {
     throws -> URLRequest {
         
         let urlString = self.builUrlString(chain: chain,
-                                           network: network,
                                            api: api,
                                            requests: requests,
                                            pathComponents: pathComponents,
@@ -172,14 +185,13 @@ extension AlchemyServiceManager {
     }
     
     func builUrlString(chain: Chain,
-                       network: Network,
                        api: AlchemyAPI,
                        requests: [String: String] = [:],
                        pathComponents: [String] = [],
                        queryParameters: [URLQueryItem] = [])
     -> String {
-        let chainAndNetwork: String = chain.rawValue + "-" + network.rawValue
-        var urlString = String(format: self.baseUrl, chainAndNetwork)
+
+        var urlString = String(format: self.baseUrl, chain.network)
         let apiVersion = "v2"
         
         switch api {
@@ -218,5 +230,6 @@ extension AlchemyServiceManager {
 extension AlchemyServiceManager {
     enum AlchemyServiceError: Error {
         case wrongRequest
+        case chainNotFound
     }
 }

@@ -35,7 +35,7 @@ final class RegisterViewViewModel {
 }
 
 extension RegisterViewViewModel {
-    func saveUserInfo(of wallet: String, username: String, imageUrl: String) async {
+    func saveUserInfoOnFirestore(of wallet: String, username: String, imageUrl: String) async {
         do {
             try await firestoreManager.saveUserInfo(of: wallet, imageUrl: imageUrl, nickname: username)
         }
@@ -43,6 +43,15 @@ extension RegisterViewViewModel {
             AppLogger.logger.error("Error saving user info -- \(error)")
         }
     }
+    
+    func saveAddressAndChainIdOnUserDefaults(address: String?, chainId: String) {
+        UserDefaults.standard.set(address, forKey: UserDefaultsConstants.walletAddress)
+        UserDefaults.standard.set(chainId, forKey: UserDefaultsConstants.chainId)
+        #if DEBUG
+        AppLogger.logger.log("Wallet address saved to UserDefaults -- \(String(describing: address))\n and Chain Id -- \(String(describing: chainId))")
+        #endif
+    }
+    
 }
 
 extension RegisterViewViewModel {

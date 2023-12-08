@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Combine
 import metamask_ios_sdk
+import FirebaseFirestore
 
 final class LoginViewController: BaseViewController {
     
@@ -119,7 +120,8 @@ extension LoginViewController {
                     let result = await metamask.connect()
                     switch result {
                     case .success(let address):
-                        self.saveAddressAndChainId(address: address, chainId: metamask.chainId)
+//                        self.saveAddressAndChainId(address: address, chainId: metamask.chainId)
+                        self.vm.address = address
                         self.vm.walletConnected = true
 
                         #if DEBUG
@@ -130,7 +132,8 @@ extension LoginViewController {
                         }
                         #endif
                     case .failure(let error):
-                        self.showWalletConnectiontFailedAlert()
+                        self.showWalletConnectionFailedAlert(title: LoginConstants.failedToConnectWallet,
+                                                             message: LoginConstants.tryAgain)
                         AppLogger.logger.error("Connection error: \(String(describing: error))")
                     }
                     DispatchQueue.main.async {
@@ -138,6 +141,7 @@ extension LoginViewController {
                     }
                 }
                 //TODO: LoginVC에서 메타마스크 에러로 결과를 제대로 받아오지 못할 때 핸들링 로직 필요.
+                
             }
             .store(in: &bindings)
         
@@ -149,7 +153,7 @@ extension LoginViewController {
                 if connected {
                    
                     Task {
-                        guard let wallet = self.retrieveWalletAddress() else { return }
+                        guard let wallet = self.vm.address else { return }
                         do {
                             self.vm.isFirstVisit = try await !self.firestoreManager.isRegisteredUser(wallet) ? true : false
                         }
@@ -164,14 +168,11 @@ extension LoginViewController {
         self.vm.$isFirstVisit
             .sink { [weak self] in
                 guard let `self` = self,
-                      let wallet = self.retrieveWalletAddress()
+                      let wallet = self.vm.address
                 else { return }
                 
                 if $0 {
                     Task {
-                        try await self.firestoreManager.saveWalletAddress(wallet)
-                        AppLogger.logger.info("New wallet \(wallet) has been registred.")
-                
                         DispatchQueue.main.async {
                             let welcomeVM = WelcomeViewViewmodel(address: wallet)
                             let welcomeVC = WelcomeViewController(vm: welcomeVM)
@@ -181,9 +182,11 @@ extension LoginViewController {
                     }
                     
                 } else {
+                    self.vm.saveAddressAndChainId(address: wallet, chainId: metamask.chainId)
                     DispatchQueue.main.async {
                         AppLogger.logger.info("User \(wallet) already registered. Direct to MainVC")
                         let vc = MainViewController(vm: MainViewViewModel())
+                        vc.delegate = self
                         self.show(vc, sender: self)
                     }
                 }
@@ -195,6 +198,25 @@ extension LoginViewController {
             .sink { [weak self] _ in
                 guard let `self` = self else { return }
                 metamask.clearSession()
+            }
+            .store(in: &bindings)
+        
+        self.vm.receivedError
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                guard let `self` = self else { return }
+                DispatchQueue.main.async {
+                    if let userNotFound = error as? FirestoreErrorCode {
+                        if userNotFound == FirestoreErrorCode(.notFound) {
+                            self.showWalletConnectionFailedAlert(title: LoginConstants.userNotFound,
+                                                                 message: LoginConstants.tryAgain)
+                        }
+                    } else {
+                        self.showWalletConnectionFailedAlert(title: LoginConstants.retryTitle,
+                                                             message: LoginConstants.tryAgain + "\n Error: " + error.localizedDescription)
+                    }
+                }
+
             }
             .store(in: &bindings)
     }
@@ -267,26 +289,22 @@ extension LoginViewController {
 // MARK: - Wallet address
 extension LoginViewController {
     
-    private func saveAddressAndChainId(address: String?, chainId: String) {
-        UserDefaults.standard.set(address, forKey: UserDefaultsConstants.walletAddress)
-        UserDefaults.standard.set(chainId, forKey: UserDefaultsConstants.chainId)
-        #if DEBUG
-        AppLogger.logger.log("Wallet address saved to UserDefaults -- \(String(describing: address))\n and Chain Id -- \(String(describing: chainId))")
-        #endif
-    }
-    
     private func retrieveWalletAddress() -> String? {
         return UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress)
     }
     
-    private func showWalletConnectiontFailedAlert() {
-        let alert = UIAlertController(title: "지갑 연결 실패",
-                                      message: "다시 한번 시도해주세요.",
+    
+    private func showWalletConnectionFailedAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
                                       preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "확인",
+        alert.addAction(UIAlertAction(title: LoginConstants.confirm,
                                       style: .cancel))
-        self.present(alert, animated: true)
+        DispatchQueue.main.async { [weak self] in
+            guard let `self` = self else { return }
+            self.present(alert, animated: true)
+        }
     }
 }
 
@@ -327,9 +345,6 @@ extension LoginViewController: BaseViewControllerDelegate {
         return
     }
     
-}
-
-extension LoginViewController {
     private func updateTheme() {
         guard let themeString = UserDefaults.standard.string(forKey: UserDefaultsConstants.theme),
               let theme = Theme(rawValue: themeString)
@@ -339,5 +354,11 @@ extension LoginViewController {
         }
         
         self.themeChanged(as: theme)
+    }
+}
+
+extension LoginViewController: MainViewControllerDelegate {
+    func errorDidReceive(_ viewController: UIViewController, error: Error) {
+        self.vm.receivedError.send(error)
     }
 }
