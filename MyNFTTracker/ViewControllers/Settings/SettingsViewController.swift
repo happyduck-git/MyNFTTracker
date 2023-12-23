@@ -180,11 +180,10 @@ extension SettingsViewController {
         }
         
         self.lightThemeButton.snp.makeConstraints {
-            $0.top.equalTo(self.divider.snp.bottom).offset(20)
+            $0.top.bottom.equalTo(self.darkThemeButton)
             $0.leading.equalTo(self.darkThemeButton.snp.trailing).offset(10)
             $0.height.equalTo(self.darkThemeButton.snp.height)
             $0.width.equalTo(self.darkThemeButton.snp.width)
-            $0.bottom.lessThanOrEqualToSuperview().offset(-50)
         }
         self.darkThemeButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         self.lightThemeButton.setContentHuggingPriority(.defaultHigh, for: .vertical)

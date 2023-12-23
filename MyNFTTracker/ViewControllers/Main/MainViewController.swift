@@ -41,6 +41,12 @@ final class MainViewController: BaseViewController {
         return imageView
     }()
     
+    private let chainStatusView: ChainConnectionStatusView = {
+        let view = ChainConnectionStatusView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let welcomeTitle: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -91,11 +97,23 @@ final class MainViewController: BaseViewController {
 
         self.addChildViewController(self.loadingVC)
 
+        Task {
+            
+            async let userInfo = self.vm.getUserInfo()
+            async let nftList = self.vm.getOwnedNfts()
+      
+            self.vm.user.send(await userInfo)
+            self.vm.nfts = await nftList
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.profileImage.layer.cornerRadius = self.profileImage.frame.width / 2
+    }
+    
+    deinit {
+        print("MainVC Deinit")
     }
     
 }
@@ -105,25 +123,31 @@ extension MainViewController {
     private func bind() {
 
         self.vm.user
+            .print("Debug:")
             .sink { [weak self] error in
                 guard let `self` = self else { return }
                 switch error {
                 case .finished:
+                    print("Finished")
                     return
                 case .failure(let err):
+                    print("err \(err)")
                     DispatchQueue.main.async {
                         self.showLoginViewController {
                             self.delegate?.errorDidReceive(self, error: err)
                         }
                     }
                 }
-            } receiveValue: { [weak self] in
+            } receiveValue: { [weak self] user in
+                print("RECEIVED RAW: \(user)")
                 guard let `self` = self,
-                      let user = $0 else { return }
+                      let user = user else {
+                    print("RETURNING...")
+                    return }
                 self.vm.currentUserInfo = user
                 self.vm.username = user.nickname
                 self.vm.profileImageDataString = user.imageData
-
+                print("Received \(user.nickname)")
             }
             .store(in: &bindings)
         
@@ -184,6 +208,24 @@ extension MainViewController {
                 
             }
             .store(in: &bindings)
+        
+        self.vm.$chainId
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] chainId in
+                guard let `self` = self else { return }
+                var name = ""
+                var status = ConnectionStatus.disconnected
+                
+                if let chainName = Chain(rawValue: chainId) {
+                    name = chainName.network
+                    status = .connected
+                } else {
+                    name = MainViewConstants.notConnected
+                    status = .disconnected
+                }
+                self.chainStatusView.configure(with: name, status: status)
+            }
+            .store(in: &bindings)
     }
     
 }
@@ -192,6 +234,7 @@ extension MainViewController {
     
     private func setUI() {
         self.view.addSubviews(self.profileImage,
+                              self.chainStatusView,
                               self.welcomeTitle,
                               self.nftCollectionView,
                               self.noNftCardView)
@@ -202,6 +245,12 @@ extension MainViewController {
             $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(10)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
             $0.height.width.equalTo(self.view.frame.size.width / 5)
+        }
+        
+        self.chainStatusView.snp.makeConstraints {
+            $0.centerY.equalTo(self.profileImage.snp.centerY)
+            $0.leading.equalTo(self.profileImage.snp.trailing).offset(20)
+            $0.trailing.equalTo(self.view.snp.trailing).offset(-20)
         }
         
         self.welcomeTitle.snp.makeConstraints {
@@ -336,6 +385,7 @@ extension MainViewController: BaseViewControllerDelegate {
         var gradientUpperColor: UIColor?
         var gradientLowerColor: UIColor?
         var textColor: UIColor?
+        var secondaryTextColor: UIColor?
         var borderColor: UIColor?
         var tintColor: UIColor?
         
@@ -344,12 +394,14 @@ extension MainViewController: BaseViewControllerDelegate {
             gradientUpperColor = AppColors.DarkMode.gradientUpper
             gradientLowerColor = AppColors.DarkMode.gradientLower
             textColor = AppColors.DarkMode.text
+            secondaryTextColor = AppColors.DarkMode.secondaryText
             borderColor = AppColors.DarkMode.border
             tintColor = .white
         case .white:
             gradientUpperColor = AppColors.LightMode.gradientUpper
             gradientLowerColor = AppColors.LightMode.gradientLower
             textColor = AppColors.LightMode.text
+            secondaryTextColor = AppColors.LightMode.secondaryText
             borderColor = AppColors.LightMode.border
             tintColor = .black
         }
@@ -363,6 +415,7 @@ extension MainViewController: BaseViewControllerDelegate {
         self.profileImage.layer.borderColor = borderColor?.cgColor
         
         self.noNftCardView.configure(textColor: textColor, imageColor: tintColor)
+        self.chainStatusView.setTextColor(with: secondaryTextColor)
     }
 
     func userInfoChanged(as user: User) {
@@ -399,6 +452,7 @@ extension MainViewController: ContentsSideMenuViewDelegate {
             guard let `self` = self else { return }
             
             UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.walletAddress)
+            UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.chainId)
             MetamaskManager.shared.metaMaskSDK.disconnect()
             
             self.showLoginViewController()

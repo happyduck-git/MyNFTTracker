@@ -26,6 +26,7 @@ enum AppColors {
         static let buttonInactive = UIColor.darkGray
         static let border = UIColor(hex: 0xFFFFFF)
         static let text = UIColor(hex: 0x0D0D0D)
+        static let secondaryText = UIColor(hex: 0x605E5E)
         static let secondaryBackground = UIColor(hex: 0xFDFCF1)
     }
     
@@ -36,6 +37,7 @@ enum AppColors {
         static let buttonInactive = UIColor.darkGray
         static let border = UIColor(hex: 0x0D0D0D)
         static let text = UIColor(hex: 0xFAE9CF)
+        static let secondaryText = UIColor(hex: 0xC1AA95)
         static let secondaryBackground = UIColor(hex: 0x08061C)
     }
     

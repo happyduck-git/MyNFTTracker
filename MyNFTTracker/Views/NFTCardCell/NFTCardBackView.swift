@@ -112,13 +112,6 @@ extension NFTCardBackView {
             return
         }
         
-        switch symbol {
-        case .eth:
-            self.symbolImage.image = UIImage(resource: .symbolEth)
-        case .polygon:
-            self.symbolImage.image = UIImage(resource: .symbolPoly)
-        }
-        
     }
 }
 

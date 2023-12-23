@@ -184,7 +184,7 @@ extension LoginViewController {
                 } else {
                     self.vm.saveAddressAndChainId(address: wallet, chainId: metamask.chainId)
                     DispatchQueue.main.async {
-                        AppLogger.logger.info("User \(wallet) already registered. Direct to MainVC")
+                        print("User \(wallet) already registered. Direct to MainVC")
                         let vc = MainViewController(vm: MainViewViewModel())
                         vc.delegate = self
                         self.show(vc, sender: self)

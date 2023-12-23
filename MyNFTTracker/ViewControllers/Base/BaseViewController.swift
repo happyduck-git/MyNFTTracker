@@ -24,7 +24,11 @@ class BaseViewController: UIViewController {
         self.setupInfoChangeNotification()
     }
 
-
+    deinit {
+        // Remove the view controller as an observer from all notifications it has registered for
+        NotificationCenter.default.removeObserver(self)
+        print("BaseViewController is being deinitialized")
+    }
 }
 
 extension BaseViewController {
@@ -43,8 +47,9 @@ extension BaseViewController {
     private func setupInfoChangeNotification() {
         NotificationCenter.default.addObserver(forName: Notification.Name(NotificationConstants.userInfo),
                                                object: nil,
-                                               queue: nil) { noti in
-            guard let user = noti.object as? User else { return }
+                                               queue: nil) { [weak self] noti in
+            guard let `self` = self,
+                  let user = noti.object as? User else { return }
             self.baseDelegate?.userInfoChanged(as: user)
             AppLogger.logger.info("UserInfo change notified -- detail: \(String(describing: user))")
         }

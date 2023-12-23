@@ -8,7 +8,7 @@
 import Foundation
 
 enum DemoConstants {
-    static let dummyWallet = "0xf9C6e0F084c03e54a1E744e42B47C338A5FFc34D"
+    static let dummyWallet = "0x9Ff63e20Ec8c6eA59116a49d5D68fa91d579114D"
 }
 enum UserDefaultsConstants {
     static let walletAddress = "walletAddress"
@@ -38,6 +38,8 @@ enum WelcomeConstants {
 enum MainViewConstants {
     static let welcome = String(localized: "반갑습니다! %@\n가지고 계신 NFT를 구경해 보세요.")
     static let noNft = String(localized: "아직 보유하고 계신 NFT가 없습니다.")
+    static let connectedChain = String(localized: "연결된 체인")
+    static let notConnected = String(localized: "연결되지 않음")
 }
 
 enum LoginConstants {

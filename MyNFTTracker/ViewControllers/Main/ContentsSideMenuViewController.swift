@@ -70,9 +70,7 @@ final class ContentsSideMenuViewController: BaseViewController {
     }
     
     deinit {
-        #if DEBUG
         print("Denit")
-        #endif
     }
     
 }

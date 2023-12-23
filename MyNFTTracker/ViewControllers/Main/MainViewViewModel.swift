@@ -21,22 +21,15 @@ final class MainViewViewModel {
         }
     }
     @Published var imageStrings: [String] = []
+    @Published var chainId: String = ""
     var errorFetchingUserInfo = PassthroughSubject<Error, Never>()
     
     var selectedNfts: [Bool] = []
     var address: String = ""
     
-    init() {
-        Task {
-            
-            async let userInfo = self.getUserInfo()
-            async let nftList = self.getOwnedNfts()
-      
-            self.user.send(await userInfo)
-            self.nfts = await nftList
-        }
+    deinit {
+        print("Main View Model Deinit")
     }
-    
 }
 
 extension MainViewViewModel {
@@ -50,10 +43,14 @@ extension MainViewViewModel {
 }
 
 extension MainViewViewModel {
-    private func getUserInfo() async -> User? {
+    func getUserInfo() async -> User? {
         do {
             let wallet = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? "no-address"
             self.address = wallet
+            
+            let chainId = UserDefaults.standard.string(forKey: UserDefaultsConstants.chainId) ?? "no-chainId"
+            self.chainId = chainId
+            
             return try await FirestoreManager.shared.retrieveUserInfo(of: wallet)
         }
         catch {
@@ -65,15 +62,18 @@ extension MainViewViewModel {
 }
 
 extension MainViewViewModel {
-    private func getOwnedNfts() async -> [OwnedNFT] {
+    func getOwnedNfts() async -> [OwnedNFT] {
         do {
             let chainId = UserDefaults.standard.string(forKey: UserDefaultsConstants.chainId) ?? Chain.eth.rawValue
             let owner = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? "no-address"
-//            let owner = "0x04dBF23edb725fe9C859908D76E9Ccf38BC80a13"
-            let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: owner)
-            
+
+//            let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: owner)
+            let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: DemoConstants.dummyWallet)
             #if DEBUG
             print("Number of NFTs received: \(result.ownedNfts.count)")
+            result.ownedNfts.forEach({ ele in
+                ele.metadata?.attributes
+            })
             #endif
             
             return result.ownedNfts
