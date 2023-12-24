@@ -79,7 +79,7 @@
 		24BECD542B2340DE0029F8E6 /* NoNFTCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BECD532B2340DE0029F8E6 /* NoNFTCardView.swift */; };
 		24CA4F6F2B1F606C00676F07 /* EditViewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */; };
 		24CA4F722B1F717500676F07 /* AppThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F712B1F717500676F07 /* AppThemeButton.swift */; };
-		24DB467A2B1B31FB00431517 /* AvatarCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */; };
+		24DB467A2B1B31FB00431517 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB46792B1B31FB00431517 /* ImageCacheManager.swift */; };
 		24DB467C2B1B608A00431517 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB467B2B1B608A00431517 /* User.swift */; };
 		24DF40582B170CA10091ACFB /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40572B170CA10091ACFB /* SnackBarView.swift */; };
 		24DF405A2B170CB50091ACFB /* SnackbarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */; };
@@ -173,7 +173,7 @@
 		24BECD532B2340DE0029F8E6 /* NoNFTCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNFTCardView.swift; sourceTree = "<group>"; };
 		24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewViewModelTest.swift; sourceTree = "<group>"; };
 		24CA4F712B1F717500676F07 /* AppThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeButton.swift; sourceTree = "<group>"; };
-		24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCacheManager.swift; sourceTree = "<group>"; };
+		24DB46792B1B31FB00431517 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		24DB467B2B1B608A00431517 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		24DF40572B170CA10091ACFB /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
 		24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarViewViewModel.swift; sourceTree = "<group>"; };
@@ -350,7 +350,7 @@
 				2463CF292AFA667C006AAE65 /* AlchemyServiceManager.swift */,
 				2463CF2B2AFA66C0006AAE65 /* NetworkServiceManager.swift */,
 				24A104872B19B53E003AD597 /* AvatarServiceManager.swift */,
-				24DB46792B1B31FB00431517 /* AvatarCacheManager.swift */,
+				24DB46792B1B31FB00431517 /* ImageCacheManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -733,7 +733,7 @@
 				2463CF272AFA6276006AAE65 /* UIControl+Extensions.swift in Sources */,
 				24407B4D2B1CB7C3007F254A /* EditViewViewModel.swift in Sources */,
 				2463CF252AFA5FEC006AAE65 /* BaseViewController.swift in Sources */,
-				24DB467A2B1B31FB00431517 /* AvatarCacheManager.swift in Sources */,
+				24DB467A2B1B31FB00431517 /* ImageCacheManager.swift in Sources */,
 				2463CF022AF9383C006AAE65 /* AppFonts.swift in Sources */,
 				2463CF1A2AFA5C10006AAE65 /* UIButton+Extensions.swift in Sources */,
 				24A104902B19C714003AD597 /* AvatarCollectionViewViewModel.swift in Sources */,

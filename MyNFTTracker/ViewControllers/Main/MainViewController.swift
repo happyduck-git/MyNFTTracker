@@ -301,7 +301,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.configureBack(with: self.vm.nfts[indexPath.item], isHidden: !isHidden)
         
         // Card Front View
-        cell.configureFront(with: URL(string: self.vm.imageStrings[indexPath.item]), isHidden: isHidden)
+        cell.configureFront(with: URL(string: self.vm.imageStrings[indexPath.item]))
         
         return cell
         

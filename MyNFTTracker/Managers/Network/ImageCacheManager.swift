@@ -1,5 +1,5 @@
 //
-//  AvatarCacheManager.swift
+//  ImageCacheManager.swift
 //  MyNFTTracker
 //
 //  Created by HappyDuck on 12/2/23.
@@ -7,14 +7,14 @@
 
 import Foundation
 
-final class AvatarCacheManager {
+final class ImageCacheManager {
     private var cacheDictionary = NSCache<NSString, NSData>()
     
-    static let shared = AvatarCacheManager()
+    static let shared = ImageCacheManager()
     private init() {}
 }
 
-extension AvatarCacheManager {
+extension ImageCacheManager {
     //MARK: - Public
     
     /// Get Cache

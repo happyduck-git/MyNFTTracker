@@ -15,36 +15,19 @@ final class MainViewViewModel {
     var currentUserInfo: User?
     @Published var username: String = " "
     @Published var profileImageDataString: String?
-    @Published var nfts: [OwnedNFT] = [] {
-        didSet {
-            self.selectedNfts = Array(repeating: false, count: nfts.count)
-            self.imageStrings = self.nfts.compactMap {
-                
-                guard let metadata = $0.metadata else {
-                    return ""
-                }
-                
-                switch metadata {
-                case .object(let data):
-                    guard let imageString = data.image else { return "" }
-                    if imageString.hasPrefix("ipfs://") {
-                        return self.buildPinataUrl(from: imageString)
-                    }
-                    return imageString
-                case .htmlString(_):
-                    return ""
-
-                }
-
-            }
-        }
-    }
     @Published var imageStrings: [String] = []
     @Published var chainId: String = ""
     var errorFetchingUserInfo = PassthroughSubject<Error, Never>()
     
     var selectedNfts: [Bool] = []
     var address: String = ""
+    
+    @Published var nfts: [OwnedNFT] = [] {
+        didSet {
+            self.selectedNfts = Array(repeating: false, count: nfts.count)
+            self.imageStrings = self.nfts.compactMap { extractImageString(fromMetadata: $0.metadata) }
+        }
+    }
     
     deinit {
         print("Main View Model Deinit")
@@ -57,6 +40,24 @@ extension MainViewViewModel {
         let ipfsPrefix = "ipfs://"
         let pinataPrefix = "https://gateway.pinata.cloud/ipfs/"
         return pinataPrefix + string.replacingOccurrences(of: ipfsPrefix, with: "")
+    }
+    
+    // Helper function to extract image string from NFTMetadata
+    private func extractImageString(fromMetadata metadata: MetadataContent?) -> String {
+        guard let metadata = metadata else { return "" }
+        
+        switch metadata {
+        case .object(let data):
+            return processImageString(data.image)
+        case .htmlString:
+            return ""
+        }
+    }
+
+    // Helper function to process image string, including handling IPFS URLs
+    private func processImageString(_ imageString: String?) -> String {
+        guard let imageString = imageString else { return "" }
+        return imageString.hasPrefix("ipfs://") ? buildPinataUrl(from: imageString) : imageString
     }
     
 }

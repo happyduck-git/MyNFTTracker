@@ -14,7 +14,7 @@ final actor AvatarServiceManager {
     static let shared = AvatarServiceManager()
     private init() {}
     
-    private let cacheManager = AvatarCacheManager.shared
+    private let cacheManager = ImageCacheManager.shared
     private let baseUrl = "https://api.dicebear.com/7.x/lorelei/png?seed=%@"
     
     enum AvatarServiceError: Error {

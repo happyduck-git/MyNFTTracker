@@ -24,6 +24,8 @@ final class NFTCardCell: UICollectionViewCell {
     
     weak var delegate: NftCardCellDelegate?
 
+    private let cacheManager = ImageCacheManager.shared
+    
     //MARK: - UI Elements
     let cardFrontView: UIImageView = {
         let imageView = UIImageView()
@@ -112,22 +114,16 @@ final class NFTCardCell: UICollectionViewCell {
     }
     
     //MARK: - Configuration
-    func configureFront(with url: URL?, isHidden: Bool) {
-        if isHidden {
-            self.cardFrontView.isHidden = isHidden
-            self.cardAnimatableFrontView.isHidden = isHidden
+    func configureFront(with url: URL?) {
+        guard let url = url else {
+            self.setDefaultImage()
+            return
+        }
+        
+        if url.absoluteString.hasSuffix(".gif") {
+            self.configureForGif(with: url)
         } else {
-            
-            guard let url = url else {
-                self.setDefaultImage()
-                return
-            }
-            
-            if url.absoluteString.hasSuffix(".gif") {
-                self.configureForGif(with: url)
-            } else {
-                self.configureForStaticImage(with: url)
-            }
+            self.configureForStaticImage(with: url)
         }
     }
     
@@ -207,7 +203,9 @@ extension NFTCardCell {
     private func configureForGif(with url: URL) {
         self.cellType = .gif
         self.setFrontImageVisibility(staticHidden: true, animatableHidden: false)
-        self.cardAnimatableFrontView.animate(withGIFURL: url)
+        
+        guard let data = self.convertGifToData(from: url) else { return }
+        self.cardAnimatableFrontView.animate(withGIFData: data)
     }
     
     /// Configure with static image
@@ -216,6 +214,29 @@ extension NFTCardCell {
         self.cellType = .static
         self.setFrontImageVisibility(staticHidden: false, animatableHidden: true)
         self.loadImage(from: url)
+    }
+    
+    private func convertGifToData(from url: URL) -> Data? {
+        var gifData: Data?
+        
+        if let data = self.cacheManager.cachedResponse(for: url) {
+            gifData = data
+        } else {
+            DispatchQueue.global(qos: .utility).async {
+                do {
+                    let data = try Data(contentsOf: url)
+                    self.cacheManager.setCache(for: url, data: data)
+                    gifData = data
+                    
+                    
+                }
+                catch {
+                    AppLogger.logger.error("Error setting cache -- \(error)")
+                }
+            }
+        }
+        
+        return gifData
     }
     
     /// Load static image from URL
