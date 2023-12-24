@@ -123,7 +123,6 @@ extension MainViewController {
     private func bind() {
 
         self.vm.user
-            .print("Debug:")
             .sink { [weak self] error in
                 guard let `self` = self else { return }
                 switch error {
@@ -139,15 +138,11 @@ extension MainViewController {
                     }
                 }
             } receiveValue: { [weak self] user in
-                print("RECEIVED RAW: \(user)")
                 guard let `self` = self,
-                      let user = user else {
-                    print("RETURNING...")
-                    return }
+                      let user = user else { return }
                 self.vm.currentUserInfo = user
                 self.vm.username = user.nickname
                 self.vm.profileImageDataString = user.imageData
-                print("Received \(user.nickname)")
             }
             .store(in: &bindings)
         
@@ -183,21 +178,9 @@ extension MainViewController {
                     DispatchQueue.main.async {
                         self.nftCollectionView.isHidden = true
                         self.noNftCardView.isHidden = false
-                        self.loadingVC.removeViewController()
                     }
                 } else {
-                    
-                    self.vm.imageStrings = nfts.compactMap {
-                        guard let imageString = $0.metadata?.image else {
-                            return ""
-                        }
-                        
-                        if imageString.hasPrefix("ipfs://") {
-                            return self.vm.buildPinataUrl(from: imageString)
-                        }
-                        return imageString
-                    }
-                    
+
                     DispatchQueue.main.async {
                         self.nftCollectionView.isHidden = false
                         self.noNftCardView.isHidden = true
@@ -318,24 +301,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.configureBack(with: self.vm.nfts[indexPath.item], isHidden: !isHidden)
         
         // Card Front View
-        guard let url = URL(string: self.vm.imageStrings[indexPath.item]) else {
-            cell.configureFront(with: UIImage(resource: .myNFTTrackerLogo), isHidden: isHidden)
-            return cell
-        }
-        
-        Task {
-            do {
-                let image = try await ImagePipeline.shared.image(for: url)
-                
-                DispatchQueue.main.async {
-                    cell.configureFront(with: image, isHidden: isHidden)
-                }
-            }
-            catch {
-                print("Error fetching image -- \(error.localizedDescription)")
-            }
-            
-        }
+        cell.configureFront(with: URL(string: self.vm.imageStrings[indexPath.item]), isHidden: isHidden)
+        print("IndexPath: \(indexPath.item) -- URL: \(self.vm.imageStrings[indexPath.item])")
         
         return cell
         
@@ -350,11 +317,25 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let hideFront = vm.selectedNfts[indexPath.row] ? true : false
         cell.toggleToHide(front: hideFront, back: !hideFront)
         
-        let viewToHide = hideFront ? cell.cardFrontView : cell.cardBackView
-        let viewToShow = hideFront ? cell.cardBackView : cell.cardFrontView
+        var viewToHide: UIView?
+        var viewToShow: UIView?
+//        let viewToHide = hideFront ? cell.cardAnimatableFrontView : cell.cardBackView
+//        let viewToShow = hideFront ? cell.cardBackView : cell.cardAnimatableFrontView
         
-        UIView.transition(from: viewToHide,
-                          to: viewToShow,
+        switch cell.cellType {
+        case .gif:
+            viewToHide = hideFront ? cell.cardAnimatableFrontView : cell.cardBackView
+            viewToShow = hideFront ? cell.cardBackView : cell.cardAnimatableFrontView
+        case .static:
+            viewToHide = hideFront ? cell.cardFrontView : cell.cardBackView
+            viewToShow = hideFront ? cell.cardBackView : cell.cardFrontView
+        default:
+            return
+        }
+        
+        
+        UIView.transition(from: viewToHide!,
+                          to: viewToShow!,
                           duration: 0.3,
                           options: [.transitionFlipFromLeft, .showHideTransitionViews])
     }

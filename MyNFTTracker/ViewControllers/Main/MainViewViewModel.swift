@@ -17,7 +17,17 @@ final class MainViewViewModel {
     @Published var profileImageDataString: String?
     @Published var nfts: [OwnedNFT] = [] {
         didSet {
-            selectedNfts = Array(repeating: false, count: nfts.count)
+            self.selectedNfts = Array(repeating: false, count: nfts.count)
+            self.imageStrings = self.nfts.compactMap {
+                guard let imageString = $0.metadata?.image else {
+                    return ""
+                }
+                
+                if imageString.hasPrefix("ipfs://") {
+                    return self.buildPinataUrl(from: imageString)
+                }
+                return imageString
+            }
         }
     }
     @Published var imageStrings: [String] = []

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Gifu
+import Nuke
 
 protocol NftCardCellDelegate: AnyObject {
     func didTapTemplateButton()
@@ -13,16 +15,32 @@ protocol NftCardCellDelegate: AnyObject {
 
 final class NFTCardCell: UICollectionViewCell {
     
+    enum CellType {
+        case gif
+        case `static`
+    }
+    
+    var cellType: CellType?
+    
     weak var delegate: NftCardCellDelegate?
 
     //MARK: - UI Elements
-
     let cardFrontView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20.0
         imageView.isHidden = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let cardAnimatableFrontView: NFTAnimatableImageView = {
+        let imageView = NFTAnimatableImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 20.0
+        imageView.isHidden = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -62,6 +80,14 @@ final class NFTCardCell: UICollectionViewCell {
                 startPoint: CGPoint(x: 0.0, y: 0.0),
                 endPoint: CGPoint(x: 1.0, y: 1.0),
                 borderWidth: 5.0)
+            
+            self.cardAnimatableFrontView.setGradientBorder(
+                colors: [AppColors.frameGradientPurple,
+                         AppColors.frameGradientMint,
+                         .white],
+                startPoint: CGPoint(x: 0.0, y: 0.0),
+                endPoint: CGPoint(x: 1.0, y: 1.0),
+                borderWidth: 5.0)
         }
     }
     
@@ -70,6 +96,7 @@ final class NFTCardCell: UICollectionViewCell {
     private func setUI() {
         
         self.addSubviews(self.cardFrontView,
+                         self.cardAnimatableFrontView,
                          self.cardBackView)
         
     }
@@ -82,6 +109,11 @@ final class NFTCardCell: UICollectionViewCell {
             cardFrontView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             cardFrontView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             cardFrontView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            cardAnimatableFrontView.topAnchor.constraint(equalTo: self.topAnchor),
+            cardAnimatableFrontView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            cardAnimatableFrontView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            cardAnimatableFrontView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
            
             cardBackView.topAnchor.constraint(equalTo: self.topAnchor),
             cardBackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -92,9 +124,42 @@ final class NFTCardCell: UICollectionViewCell {
     }
     
     //MARK: - Configuration
-    func configureFront(with image: UIImage, isHidden: Bool) {
-        self.cardFrontView.isHidden = isHidden
-        self.cardFrontView.image = image
+    func configureFront(with url: URL?, isHidden: Bool) {
+        if isHidden {
+            self.cardFrontView.isHidden = isHidden
+            self.cardAnimatableFrontView.isHidden = isHidden
+        } else {
+            
+            guard let url = url else { return }
+            
+            if url.absoluteString.hasSuffix(".gif") {
+                self.cellType = .gif
+                
+                self.cardFrontView.isHidden = !isHidden
+                self.cardAnimatableFrontView.isHidden = isHidden
+                self.cardAnimatableFrontView.animate(withGIFURL: url)
+            
+            } else {
+                self.cellType = .static
+                
+                self.cardFrontView.isHidden = isHidden
+                self.cardAnimatableFrontView.isHidden = !isHidden
+                Task {
+                    do {
+                        let image = try await ImagePipeline.shared.image(for: url)
+                        
+                        DispatchQueue.main.async {
+                            self.cardFrontView.image = image
+                        }
+                    }
+                    catch {
+                        print("Error fetching image -- \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
+        
+        
     }
     
     func configureBack(with nft: OwnedNFT, isHidden: Bool) {
@@ -106,7 +171,16 @@ final class NFTCardCell: UICollectionViewCell {
         front: Bool,
         back: Bool
     ) {
-        self.cardFrontView.isHidden = front
+        
+        switch self.cellType {
+        case .gif:
+            self.cardAnimatableFrontView.isHidden = front
+        case .static:
+            self.cardFrontView.isHidden = front
+        default:
+            return
+        }
+        
         self.cardBackView.isHidden = back
     }
     
@@ -117,7 +191,9 @@ final class NFTCardCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.cardFrontView.isHidden = false
+        self.cardAnimatableFrontView.isHidden = true
         self.cardBackView.isHidden = true
+        self.cardAnimatableFrontView.prepareForReuse()
     }
 }
 
@@ -125,6 +201,19 @@ extension NFTCardCell: NftTraitViewDelegate {
     
     func didTapTemplateButton() {
         delegate?.didTapTemplateButton()
+    }
+    
+}
+
+
+final class NFTAnimatableImageView: UIImageView, GIFAnimatable {
+    
+    public lazy var animator: Animator? = {
+        return Animator(withDelegate: self)
+    }()
+    
+    override public func display(_ layer: CALayer) {
+        updateImageIfNeeded()
     }
     
 }

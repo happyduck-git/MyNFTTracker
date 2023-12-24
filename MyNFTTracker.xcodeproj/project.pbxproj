@@ -61,6 +61,7 @@
 		2489796D2B187C0700A8F28E /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 2489796C2B187C0700A8F28E /* FirebaseStorage */; };
 		2489796F2B18867F00A8F28E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2489796E2B18867F00A8F28E /* GoogleService-Info.plist */; };
 		2495E85C2B35D15200011118 /* ChainConnectionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495E85B2B35D15200011118 /* ChainConnectionStatusView.swift */; };
+		2495E8612B37237600011118 /* Gifu in Frameworks */ = {isa = PBXBuildFile; productRef = 2495E8602B37237600011118 /* Gifu */; };
 		24A104802B18E0EC003AD597 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A1047F2B18E0EC003AD597 /* RegisterViewController.swift */; };
 		24A104822B19902B003AD597 /* RegisterViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A104812B19902B003AD597 /* RegisterViewViewModel.swift */; };
 		24A104842B1992AC003AD597 /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A104832B1992AC003AD597 /* UITextField+Extensions.swift */; };
@@ -186,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2463CEF62AF92B37006AAE65 /* SnapKit in Frameworks */,
+				2495E8612B37237600011118 /* Gifu in Frameworks */,
 				2463CF152AF942B5006AAE65 /* Nuke in Frameworks */,
 				2489796D2B187C0700A8F28E /* FirebaseStorage in Frameworks */,
 				248979672B187BE400A8F28E /* FirebaseAnalytics in Frameworks */,
@@ -569,6 +571,7 @@
 				2489796A2B187BF600A8F28E /* FirebaseFirestoreSwift */,
 				2489796C2B187C0700A8F28E /* FirebaseStorage */,
 				2485B29A2B20D39D003690B6 /* SkeletonView */,
+				2495E8602B37237600011118 /* Gifu */,
 			);
 			productName = MyNFTTracker;
 			productReference = 246FBB922AF915EF00AFDD2E /* MyNFTTracker.app */;
@@ -650,6 +653,7 @@
 				248737BB2B05D4B400E8938B /* XCRemoteSwiftPackageReference "SideMenu" */,
 				248979612B187AF800A8F28E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				2485B2992B20D39D003690B6 /* XCRemoteSwiftPackageReference "SkeletonView" */,
+				2495E85F2B37237600011118 /* XCRemoteSwiftPackageReference "Gifu" */,
 			);
 			productRefGroup = 246FBB932AF915EF00AFDD2E /* Products */;
 			projectDirPath = "";
@@ -1160,6 +1164,14 @@
 				minimumVersion = 10.18.0;
 			};
 		};
+		2495E85F2B37237600011118 /* XCRemoteSwiftPackageReference "Gifu" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kaishin/Gifu.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1212,6 +1224,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 248979612B187AF800A8F28E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		2495E8602B37237600011118 /* Gifu */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2495E85F2B37237600011118 /* XCRemoteSwiftPackageReference "Gifu" */;
+			productName = Gifu;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
