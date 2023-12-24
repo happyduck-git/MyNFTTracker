@@ -88,8 +88,7 @@ extension MainViewViewModel {
             let chainId = UserDefaults.standard.string(forKey: UserDefaultsConstants.chainId) ?? Chain.eth.rawValue
             let owner = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? "no-address"
 
-//            let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: owner)
-            let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: DemoConstants.dummyWallet)
+            let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: owner)
             #if DEBUG
             print("Number of NFTs received: \(result.ownedNfts.count)")
             #endif
