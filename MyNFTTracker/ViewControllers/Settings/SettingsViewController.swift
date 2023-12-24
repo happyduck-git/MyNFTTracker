@@ -65,7 +65,7 @@ final class SettingsViewController: BaseViewController {
     private let themeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.text = String(localized: "Select Theme")
+        label.text = String(localized: "테마 선택하기")
         label.font = .appFont(name: .appMainFontLight, size: .title)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

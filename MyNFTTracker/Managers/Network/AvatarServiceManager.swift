@@ -51,6 +51,7 @@ extension AvatarServiceManager {
     
     func retrieveSingleAvatar(_ name: String) async throws -> UIImage? {
         let urlString = String(format: baseUrl, name)
+        print(urlString)
         guard let url = URL(string: urlString) else {
             throw AvatarServiceError.invalidUrl
         }

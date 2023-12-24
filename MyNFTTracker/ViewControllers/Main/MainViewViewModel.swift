@@ -19,14 +19,23 @@ final class MainViewViewModel {
         didSet {
             self.selectedNfts = Array(repeating: false, count: nfts.count)
             self.imageStrings = self.nfts.compactMap {
-                guard let imageString = $0.metadata?.image else {
+                
+                guard let metadata = $0.metadata else {
                     return ""
                 }
                 
-                if imageString.hasPrefix("ipfs://") {
-                    return self.buildPinataUrl(from: imageString)
+                switch metadata {
+                case .object(let data):
+                    guard let imageString = data.image else { return "" }
+                    if imageString.hasPrefix("ipfs://") {
+                        return self.buildPinataUrl(from: imageString)
+                    }
+                    return imageString
+                case .htmlString(_):
+                    return ""
+
                 }
-                return imageString
+
             }
         }
     }
@@ -81,9 +90,6 @@ extension MainViewViewModel {
             let result = try await AlchemyServiceManager.shared.requestOwnedNFTsOn(chainId, ownerAddress: DemoConstants.dummyWallet)
             #if DEBUG
             print("Number of NFTs received: \(result.ownedNfts.count)")
-            result.ownedNfts.forEach({ ele in
-                ele.metadata?.attributes
-            })
             #endif
             
             return result.ownedNfts

@@ -18,7 +18,7 @@ struct OwnedNFT: Codable {
     let id: NFTId
     let title: String
     let description: String
-    let metadata: NFTMetadata?
+    let metadata: MetadataContent?
 }
 
 struct Contract: Codable {
@@ -34,7 +34,7 @@ struct NFTMetadata: Codable {
     let name: String?
     let description: String?
     let attributes: [NFTAttribute]?
-    let tokenId: Int?
+    let tokenId: Value?
     let contractMetadata: ContractMetadata?
 }
 
@@ -47,6 +47,26 @@ struct ContractMetadata: Codable {
     let name: String
     let symbol: String
     let tokenType: String
+}
+
+enum MetadataContent: Codable {
+    case object(NFTMetadata)
+    case htmlString(String)
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        // Attempt to decode as structured object first
+        if let metadata = try? container.decode(NFTMetadata.self) {
+            self = .object(metadata)
+            return
+        }
+        // Fall back to decoding as a string
+        if let htmlString = try? container.decode(String.self) {
+            self = .htmlString(htmlString)
+            return
+        }
+        throw DecodingError.typeMismatch(MetadataContent.self, DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Expected object or HTML string for metadata"))
+    }
 }
 
 enum Value: Codable {

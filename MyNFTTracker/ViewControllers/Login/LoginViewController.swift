@@ -195,8 +195,7 @@ extension LoginViewController {
         
         self.signupButton.tapPublisher
             .receive(on: DispatchQueue.global())
-            .sink { [weak self] _ in
-                guard let `self` = self else { return }
+            .sink { _ in
                 metamask.clearSession()
             }
             .store(in: &bindings)

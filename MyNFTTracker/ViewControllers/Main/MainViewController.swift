@@ -302,7 +302,6 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         // Card Front View
         cell.configureFront(with: URL(string: self.vm.imageStrings[indexPath.item]), isHidden: isHidden)
-        print("IndexPath: \(indexPath.item) -- URL: \(self.vm.imageStrings[indexPath.item])")
         
         return cell
         

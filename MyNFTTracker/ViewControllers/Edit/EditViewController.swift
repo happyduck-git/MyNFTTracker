@@ -17,6 +17,8 @@ final class EditViewController: BaseViewController {
     
     private let loadingVC = LoadingViewController()
     
+    private var avatarBottomVC: AvatarCollectionViewController?
+    
     private let profileView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = .darkGray
@@ -88,6 +90,10 @@ final class EditViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        guard let bottomVC = self.avatarBottomVC else { return }
+        bottomVC.dismiss(animated: true)
+    }
 }
 
 extension EditViewController {
@@ -148,7 +154,6 @@ extension EditViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let `self` = self else { return }
-                //TODO: Show picker view
                 self.showAvatarPicker()
             }
             .store(in: &bindings)
@@ -245,8 +250,9 @@ extension EditViewController: BaseViewControllerDelegate {
 extension EditViewController: AvatarCollectionViewControllerDelegate, UISheetPresentationControllerDelegate {
     private func showAvatarPicker() {
         let vm = AvatarCollectionViewViewModel(selectedCell: self.vm.selectedAvatarIndex)
-        let viewControllerToPresent = AvatarCollectionViewController(vm: vm, delegate: self)
-        if let sheet = viewControllerToPresent.sheetPresentationController {
+        self.avatarBottomVC = AvatarCollectionViewController(vm: vm, delegate: self)
+        guard let bottomVC = self.avatarBottomVC else { return }
+        if let sheet = bottomVC.sheetPresentationController {
             sheet.detents = [.medium()]
             sheet.largestUndimmedDetentIdentifier = .medium
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
@@ -254,7 +260,7 @@ extension EditViewController: AvatarCollectionViewControllerDelegate, UISheetPre
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
             sheet.delegate = self
         }
-        present(viewControllerToPresent, animated: true, completion: nil)
+        present(bottomVC, animated: true, completion: nil)
     }
     
     func avatarCollectionViewController(_ avatarCollectionViewController: AvatarCollectionViewController,

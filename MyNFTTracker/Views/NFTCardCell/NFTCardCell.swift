@@ -27,7 +27,7 @@ final class NFTCardCell: UICollectionViewCell {
     //MARK: - UI Elements
     let cardFrontView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20.0
         imageView.isHidden = false
@@ -118,36 +118,17 @@ final class NFTCardCell: UICollectionViewCell {
             self.cardAnimatableFrontView.isHidden = isHidden
         } else {
             
-            guard let url = url else { return }
+            guard let url = url else {
+                self.setDefaultImage()
+                return
+            }
             
             if url.absoluteString.hasSuffix(".gif") {
-                self.cellType = .gif
-                
-                self.cardFrontView.isHidden = !isHidden
-                self.cardAnimatableFrontView.isHidden = isHidden
-                self.cardAnimatableFrontView.animate(withGIFURL: url)
-            
+                self.configureForGif(with: url)
             } else {
-                self.cellType = .static
-                
-                self.cardFrontView.isHidden = isHidden
-                self.cardAnimatableFrontView.isHidden = !isHidden
-                Task {
-                    do {
-                        let image = try await ImagePipeline.shared.image(for: url)
-                        
-                        DispatchQueue.main.async {
-                            self.cardFrontView.image = image
-                        }
-                    }
-                    catch {
-                        print("Error fetching image -- \(error.localizedDescription)")
-                    }
-                }
+                self.configureForStaticImage(with: url)
             }
         }
-        
-        
     }
     
     func configureBack(with nft: OwnedNFT, isHidden: Bool) {
@@ -162,9 +143,19 @@ final class NFTCardCell: UICollectionViewCell {
         
         switch self.cellType {
         case .gif:
-            self.cardAnimatableFrontView.isHidden = front
+            if front {
+                self.cardAnimatableFrontView.isHidden = true
+            } else {
+                self.cardAnimatableFrontView.isHidden = false
+            }
+            self.cardFrontView.isHidden = true
         case .static:
-            self.cardFrontView.isHidden = front
+            if front {
+                self.cardFrontView.isHidden = true
+            } else {
+                self.cardFrontView.isHidden = false
+            }
+            self.cardAnimatableFrontView.isHidden = true
         default:
             return
         }
@@ -194,6 +185,57 @@ final class NFTCardCell: UICollectionViewCell {
             borderWidth: 5.0)
     }
     
+}
+
+extension NFTCardCell {
+    
+    /// Set visibility of front image.
+    /// Decide which view to show (Animatable or Static image)
+    private func setFrontImageVisibility(staticHidden: Bool, animatableHidden: Bool) {
+        cardFrontView.isHidden = staticHidden
+        cardAnimatableFrontView.isHidden = animatableHidden
+    }
+    
+    private func setDefaultImage() {
+        self.cellType = .static
+        self.setFrontImageVisibility(staticHidden: false, animatableHidden: true)
+        self.cardFrontView.image = UIImage(resource: .noNft)
+    }
+    
+    /// Configure with GIF type image
+    /// - Parameter url: URL
+    private func configureForGif(with url: URL) {
+        self.cellType = .gif
+        self.setFrontImageVisibility(staticHidden: true, animatableHidden: false)
+        self.cardAnimatableFrontView.animate(withGIFURL: url)
+    }
+    
+    /// Configure with static image
+    /// - Parameter url: URL
+    private func configureForStaticImage(with url: URL) {
+        self.cellType = .static
+        self.setFrontImageVisibility(staticHidden: false, animatableHidden: true)
+        self.loadImage(from: url)
+    }
+    
+    /// Load static image from URL
+    private func loadImage(from url: URL) {
+        Task {
+            do {
+                let image = try await ImagePipeline.shared.image(for: url)
+                
+                DispatchQueue.main.async {
+                    self.cardFrontView.image = image
+                }
+            }
+            catch {
+                DispatchQueue.main.async {
+                    self.cardFrontView.image = UIImage(resource: .noNft)
+                }
+                print("Error fetching image -- \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 extension NFTCardCell: NftTraitViewDelegate {

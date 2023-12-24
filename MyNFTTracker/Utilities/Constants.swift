@@ -8,7 +8,8 @@
 import Foundation
 
 enum DemoConstants {
-    static let dummyWallet = "0x9Ff63e20Ec8c6eA59116a49d5D68fa91d579114D"
+//    static let dummyWallet = "0x9Ff63e20Ec8c6eA59116a49d5D68fa91d579114D"
+    static let dummyWallet = "0x0097b9cFE64455EED479292671A1121F502bc954"
 }
 enum UserDefaultsConstants {
     static let walletAddress = "walletAddress"

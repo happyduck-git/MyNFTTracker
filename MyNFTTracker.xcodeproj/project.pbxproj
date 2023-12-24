@@ -85,6 +85,7 @@
 		24DF405A2B170CB50091ACFB /* SnackbarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */; };
 		24DF405D2B184CEB0091ACFB /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF405C2B184CEB0091ACFB /* SignupViewController.swift */; };
 		24E3098A2B0D0711001EBE48 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E309892B0D0711001EBE48 /* ToggleCell.swift */; };
+		24E54FA92B3830E000D33574 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 24E54FA82B3830E000D33574 /* Localizable.xcstrings */; };
 		24F0BFEB2B1EDC86006B79DA /* loading.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 24F0BFEA2B1E1C84006B79DA /* loading.lottie */; };
 /* End PBXBuildFile section */
 
@@ -178,6 +179,7 @@
 		24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarViewViewModel.swift; sourceTree = "<group>"; };
 		24DF405C2B184CEB0091ACFB /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		24E309892B0D0711001EBE48 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
+		24E54FA82B3830E000D33574 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		24F0BFEA2B1E1C84006B79DA /* loading.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = loading.lottie; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -356,6 +358,7 @@
 		246FBB892AF915EF00AFDD2E = {
 			isa = PBXGroup;
 			children = (
+				24E54FA82B3830E000D33574 /* Localizable.xcstrings */,
 				246FBB942AF915EF00AFDD2E /* MyNFTTracker */,
 				246FBBAB2AF915F400AFDD2E /* MyNFTTrackerTests */,
 				246FBBB52AF915F400AFDD2E /* MyNFTTrackerUITests */,
@@ -679,6 +682,7 @@
 				2463CEFD2AF9373A006AAE65 /* DNFForgedBlade-Medium.ttf in Resources */,
 				2489796F2B18867F00A8F28E /* GoogleService-Info.plist in Resources */,
 				246FBB9F2AF915F400AFDD2E /* Assets.xcassets in Resources */,
+				24E54FA92B3830E000D33574 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

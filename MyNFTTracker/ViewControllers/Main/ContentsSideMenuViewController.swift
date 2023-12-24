@@ -161,7 +161,7 @@ extension ContentsSideMenuViewController: UITableViewDataSource, UITableViewDele
             }
         }
 
-        config.textProperties.color = textColor ?? .black
+        config.textProperties.color = textColor ?? AppColors.DarkMode.text
     
         cell.contentConfiguration = config
         

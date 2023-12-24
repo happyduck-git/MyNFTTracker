@@ -46,6 +46,7 @@ final actor AlchemyServiceManager {
 // Get NFT Data Related
 extension AlchemyServiceManager {
     
+    // Currently NOT IN USE
     /// Request NFT request
     /// - Returns: Owned NFTs
     func requestOwnedNFTs(ownerAddress: String) async throws -> OwnedNFTs {
@@ -78,7 +79,6 @@ extension AlchemyServiceManager {
         guard let chain = Chain(rawValue: chainId) else {
             throw AlchemyServiceError.chainNotFound
         }
-      
         let urlRequest = try self.buildUrlRequest(method: .get,
                                                   chain: chain,
                                                   api: .nftList,
@@ -89,18 +89,14 @@ extension AlchemyServiceManager {
                                                   ])
         
         
-        do {
-            return try await NetworkServiceManager.execute(
-                expecting: OwnedNFTs.self,
-                request: urlRequest
-            )
-        }
-        catch {
-            AppLogger.logger.error("Error requesting Alchemy Service -- \(String(describing: error))")
-            throw AlchemyServiceError.wrongRequest
-        }
+        
+        return try await NetworkServiceManager.execute(
+            expecting: OwnedNFTs.self,
+            request: urlRequest
+        )
     }
     
+    // Currently NOT IN USE
     func requestNftMetadata(contractAddress: String, tokenId: String) async throws -> OwnedNFT {
         let urlRequest = try self.buildUrlRequest(method: .get,
                                                   chain: .polygon,

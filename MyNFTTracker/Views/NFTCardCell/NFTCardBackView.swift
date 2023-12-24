@@ -99,19 +99,13 @@ final class NFTCardBackView: UIView {
 extension NFTCardBackView {
     func configure(with nft: OwnedNFT) {
         
-        var nftTitle: String = nft.title.isEmpty ? "No Name Found!" : nft.title
+        let nftTitle: String = nft.title.isEmpty ? "No Name Found!" : nft.title
         self.nameLabel.text = nftTitle
         
         self.tokenIdLabel.text = nft.id.tokenId
         self.descLabel.text = nft.description
         self.contractAddressLabel.text = nft.contract.address
-        
-        guard let symbolString = nft.metadata?.contractMetadata?.symbol,
-              let symbol = TokenSymbol(rawValue: symbolString)
-        else {
-            return
-        }
-        
+
     }
 }
 

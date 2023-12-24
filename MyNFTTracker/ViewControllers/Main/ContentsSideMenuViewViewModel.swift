@@ -25,9 +25,9 @@ struct ContentsSideMenuViewViewModel {
         var displayText: String {
             switch self {
             case .main:
-                String(localized: "Main Page")
+                String(localized: "메인 페이지")
             case .settings:
-                String(localized: "Settings")
+                String(localized: "설정")
             }
         }
     }
