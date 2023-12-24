@@ -17,7 +17,6 @@ final class LoginViewController: BaseViewController {
     private let firestoreManager = FirestoreManager.shared
     
     // Metamask
-//    private let appMetadata = AppMetadata(name: "MyNFTTracker", url: "https://my-nft-tracker.com")
     private let metamaskManager = MetamaskManager.shared
     
     // Combine
@@ -45,14 +44,6 @@ final class LoginViewController: BaseViewController {
         btn.clipsToBounds = true
         btn.layer.borderColor = UIColor.white.cgColor
         btn.layer.borderWidth = 2.0
-        btn.translatesAutoresizingMaskIntoConstraints = false
-        return btn
-    }()
-    
-    private let signupButton: UIButton = {
-        let btn = UIButton()
-        btn.setTitle(String(localized: "회원가입 하기"), for: .normal)
-        btn.titleLabel?.font = .appFont(name: .appMainFontBold, size: .light)
         btn.translatesAutoresizingMaskIntoConstraints = false
         return btn
     }()
@@ -91,7 +82,6 @@ final class LoginViewController: BaseViewController {
             guard let `self` = self else { return }
             self.view.layoutIfNeeded()
             self.loginButton.alpha = 1.0
-            self.signupButton.alpha = 1.0
         }
         
     }
@@ -120,7 +110,6 @@ extension LoginViewController {
                     let result = await metamask.connect()
                     switch result {
                     case .success(let address):
-//                        self.saveAddressAndChainId(address: address, chainId: metamask.chainId)
                         self.vm.address = address
                         self.vm.walletConnected = true
 
@@ -193,13 +182,6 @@ extension LoginViewController {
             }
             .store(in: &bindings)
         
-        self.signupButton.tapPublisher
-            .receive(on: DispatchQueue.global())
-            .sink { _ in
-                metamask.clearSession()
-            }
-            .store(in: &bindings)
-        
         self.vm.receivedError
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -226,8 +208,7 @@ extension LoginViewController {
     
     private func setUI() {
         self.view.addSubviews(self.logo,
-                              self.loginButton,
-                              self.signupButton)
+                              self.loginButton)
     }
     
     private func setLayout() {
@@ -239,21 +220,13 @@ extension LoginViewController {
         }
         
         self.loginButton.snp.makeConstraints {
-//            $0.top.equalTo(self.logo.snp.bottom).offset(40)
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             $0.height.equalTo(50)
         }
-        
-        self.signupButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview()
-            $0.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide).offset(-20)
-        }
-        
+
         self.loginButton.alpha = 0.0
-        self.signupButton.alpha = 0.0
     }
     
     private func updateLayout() {
@@ -270,13 +243,9 @@ extension LoginViewController {
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             $0.height.equalTo(50)
-        }
-        
-        self.signupButton.snp.remakeConstraints {
-            $0.top.equalTo(self.loginButton.snp.bottom).offset(10)
-            $0.centerX.equalToSuperview()
             $0.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
+
     }
     
     private func setDelegate() {

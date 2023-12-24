@@ -18,6 +18,7 @@ final class MainViewViewModel {
     @Published var imageStrings: [String] = []
     @Published var chainId: String = ""
     var errorFetchingUserInfo = PassthroughSubject<Error, Never>()
+    var nftIsLoaded = PassthroughSubject<Bool, Error>()
     
     var selectedNfts: [Bool] = []
     var address: String = ""
@@ -97,6 +98,7 @@ extension MainViewViewModel {
         }
         catch {
             print("Error -- \(error)")
+            self.nftIsLoaded.send(completion: .failure(error))
             return []
         }
 

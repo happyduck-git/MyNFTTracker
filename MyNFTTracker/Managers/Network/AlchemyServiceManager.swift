@@ -19,7 +19,7 @@ enum Chain: String {
         case .eth:
             "eth-mainnet"
         case .polygon:
-            "ploygon-mainnet"
+            "polygon-mainnet"
         case .sepolia:
             "eth-sepolia"
         case .goerli:

@@ -94,17 +94,10 @@ final class MainViewController: BaseViewController {
         self.setLayout()
         self.setNavigariontBar()
         self.setDelegate()
-
+        
         self.addChildViewController(self.loadingVC)
 
-        Task {
-            
-            async let userInfo = self.vm.getUserInfo()
-            async let nftList = self.vm.getOwnedNfts()
-      
-            self.vm.user.send(await userInfo)
-            self.vm.nfts = await nftList
-        }
+        self.getUserAndNFTInfo()
     }
     
     override func viewDidLayoutSubviews() {
@@ -114,6 +107,21 @@ final class MainViewController: BaseViewController {
     
     deinit {
         print("MainVC Deinit")
+    }
+    
+}
+
+extension MainViewController {
+    private func getUserAndNFTInfo() {
+        Task {
+            
+            async let userInfo = self.vm.getUserInfo()
+            async let nftList = self.vm.getOwnedNfts()
+      
+            self.vm.user.send(await userInfo)
+            self.vm.nfts = await nftList
+            self.vm.nftIsLoaded.send(true)
+        }
     }
     
 }
@@ -185,7 +193,6 @@ extension MainViewController {
                         self.nftCollectionView.isHidden = false
                         self.noNftCardView.isHidden = true
                         self.nftCollectionView.reloadData()
-                        self.loadingVC.removeViewController()
                     }
                 }
                 
@@ -208,6 +215,19 @@ extension MainViewController {
                 }
                 self.chainStatusView.configure(with: name, status: status)
             }
+            .store(in: &bindings)
+        
+        self.vm.nftIsLoaded
+            .sink(receiveCompletion: { [weak self] error in
+                guard let `self` = self else { return }
+                //TODO: SHOW ERROR ALERT
+                print("Error fetching nft")
+            }, receiveValue: { [weak self] isLoaded in
+                guard let `self` = self else { return }
+                if isLoaded {
+                    self.loadingVC.removeViewController()
+                }
+            })
             .store(in: &bindings)
     }
     

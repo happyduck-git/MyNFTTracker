@@ -50,8 +50,13 @@ extension AvatarServiceManager {
     }
     
     func retrieveSingleAvatar(_ name: String) async throws -> UIImage? {
-        let urlString = String(format: baseUrl, name)
-        print(urlString)
+        var convertedName = name
+        if name.contains(" ") {
+            convertedName = name.replacingOccurrences(of: " ", with: "%20")
+        }
+        
+        let urlString = String(format: baseUrl, convertedName)
+        
         guard let url = URL(string: urlString) else {
             throw AvatarServiceError.invalidUrl
         }
