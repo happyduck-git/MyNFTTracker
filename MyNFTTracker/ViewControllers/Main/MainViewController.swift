@@ -319,20 +319,15 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         var viewToHide: UIView?
         var viewToShow: UIView?
-//        let viewToHide = hideFront ? cell.cardAnimatableFrontView : cell.cardBackView
-//        let viewToShow = hideFront ? cell.cardBackView : cell.cardAnimatableFrontView
         
         switch cell.cellType {
         case .gif:
             viewToHide = hideFront ? cell.cardAnimatableFrontView : cell.cardBackView
             viewToShow = hideFront ? cell.cardBackView : cell.cardAnimatableFrontView
-        case .static:
+        default:
             viewToHide = hideFront ? cell.cardFrontView : cell.cardBackView
             viewToShow = hideFront ? cell.cardBackView : cell.cardFrontView
-        default:
-            return
         }
-        
         
         UIView.transition(from: viewToHide!,
                           to: viewToShow!,

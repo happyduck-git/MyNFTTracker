@@ -35,8 +35,8 @@ final class NFTCardCell: UICollectionViewCell {
         return imageView
     }()
     
-    let cardAnimatableFrontView: NFTAnimatableImageView = {
-        let imageView = NFTAnimatableImageView()
+    let cardAnimatableFrontView: GIFImageView = {
+        let imageView = GIFImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 20.0
@@ -73,21 +73,9 @@ final class NFTCardCell: UICollectionViewCell {
         
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
-            self.cardFrontView.setGradientBorder(
-                colors: [AppColors.frameGradientPurple,
-                         AppColors.frameGradientMint,
-                         .white],
-                startPoint: CGPoint(x: 0.0, y: 0.0),
-                endPoint: CGPoint(x: 1.0, y: 1.0),
-                borderWidth: 5.0)
             
-            self.cardAnimatableFrontView.setGradientBorder(
-                colors: [AppColors.frameGradientPurple,
-                         AppColors.frameGradientMint,
-                         .white],
-                startPoint: CGPoint(x: 0.0, y: 0.0),
-                endPoint: CGPoint(x: 1.0, y: 1.0),
-                borderWidth: 5.0)
+            self.setGradientCellBorder(to: self.cardFrontView)
+            self.setGradientCellBorder(to: self.cardAnimatableFrontView)
         }
     }
     
@@ -195,25 +183,23 @@ final class NFTCardCell: UICollectionViewCell {
         self.cardBackView.isHidden = true
         self.cardAnimatableFrontView.prepareForReuse()
     }
+    
+    private func setGradientCellBorder(to cellView: UIView) {
+        cellView.setGradientBorder(
+            colors: [AppColors.frameGradientPurple,
+                     AppColors.frameGradientMint,
+                     .white],
+            startPoint: CGPoint(x: 0.0, y: 0.0),
+            endPoint: CGPoint(x: 1.0, y: 1.0),
+            borderWidth: 5.0)
+    }
+    
 }
 
 extension NFTCardCell: NftTraitViewDelegate {
     
     func didTapTemplateButton() {
         delegate?.didTapTemplateButton()
-    }
-    
-}
-
-
-final class NFTAnimatableImageView: UIImageView, GIFAnimatable {
-    
-    public lazy var animator: Animator? = {
-        return Animator(withDelegate: self)
-    }()
-    
-    override public func display(_ layer: CALayer) {
-        updateImageIfNeeded()
     }
     
 }
