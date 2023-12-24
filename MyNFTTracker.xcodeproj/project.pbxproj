@@ -76,6 +76,7 @@
 		24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */; };
 		24A4BD912B05F1EC00B2F21B /* SettingsViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */; };
 		24A4BD932B05F3A200B2F21B /* UISwitch+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */; };
+		24B6F1842B3884BD00D7554F /* MainViewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B6F1832B3884BD00D7554F /* MainViewViewModelTest.swift */; };
 		24BECD542B2340DE0029F8E6 /* NoNFTCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BECD532B2340DE0029F8E6 /* NoNFTCardView.swift */; };
 		24CA4F6F2B1F606C00676F07 /* EditViewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */; };
 		24CA4F722B1F717500676F07 /* AppThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24CA4F712B1F717500676F07 /* AppThemeButton.swift */; };
@@ -170,6 +171,7 @@
 		24A4BD8E2B05F00F00B2F21B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		24A4BD902B05F1EC00B2F21B /* SettingsViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewViewModel.swift; sourceTree = "<group>"; };
 		24A4BD922B05F3A200B2F21B /* UISwitch+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISwitch+Extensions.swift"; sourceTree = "<group>"; };
+		24B6F1832B3884BD00D7554F /* MainViewViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewViewModelTest.swift; sourceTree = "<group>"; };
 		24BECD532B2340DE0029F8E6 /* NoNFTCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNFTCardView.swift; sourceTree = "<group>"; };
 		24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewViewModelTest.swift; sourceTree = "<group>"; };
 		24CA4F712B1F717500676F07 /* AppThemeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeButton.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				246FBBAC2AF915F400AFDD2E /* MyNFTTrackerTests.swift */,
 				24A104852B19A0C9003AD597 /* RegisterViewViewModelTest.swift */,
 				24CA4F6E2B1F606C00676F07 /* EditViewViewModelTest.swift */,
+				24B6F1832B3884BD00D7554F /* MainViewViewModelTest.swift */,
 			);
 			path = MyNFTTrackerTests;
 			sourceTree = "<group>";
@@ -771,6 +774,7 @@
 			files = (
 				24A104862B19A0C9003AD597 /* RegisterViewViewModelTest.swift in Sources */,
 				246FBBAD2AF915F400AFDD2E /* MyNFTTrackerTests.swift in Sources */,
+				24B6F1842B3884BD00D7554F /* MainViewViewModelTest.swift in Sources */,
 				24CA4F6F2B1F606C00676F07 /* EditViewViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1000,7 +1004,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1021,7 +1025,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KZ7GPQGAGJ;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gghoneycomb.MyNFTTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
