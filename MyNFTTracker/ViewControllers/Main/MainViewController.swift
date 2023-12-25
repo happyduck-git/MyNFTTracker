@@ -8,7 +8,6 @@
 import UIKit
 import SnapKit
 import Combine
-import Nuke
 import Lottie
 import SideMenu
 
@@ -73,6 +72,13 @@ final class MainViewController: BaseViewController {
         return view
     }()
     
+    private let alchemyLogo: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     //MARK: - Init
     init(vm: MainViewViewModel) {
         self.vm = vm
@@ -98,6 +104,7 @@ final class MainViewController: BaseViewController {
         self.addChildViewController(self.loadingVC)
 
         self.getUserAndNFTInfo()
+        self.getAlchemyLogo()
     }
     
     override func viewDidLayoutSubviews() {
@@ -124,6 +131,13 @@ extension MainViewController {
         }
     }
     
+    private func getAlchemyLogo() {
+        Task {
+            async let logo = self.vm.getAlchemyLogo()
+            
+            self.vm.alchemyLogo = await logo
+        }
+    }
 }
 
 extension MainViewController {
@@ -229,6 +243,13 @@ extension MainViewController {
                 }
             })
             .store(in: &bindings)
+        
+        self.vm.$alchemyLogo
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] image in
+                self?.alchemyLogo.image = image
+            }
+            .store(in: &bindings)
     }
     
 }
@@ -240,7 +261,8 @@ extension MainViewController {
                               self.chainStatusView,
                               self.welcomeTitle,
                               self.nftCollectionView,
-                              self.noNftCardView)
+                              self.noNftCardView,
+                              self.alchemyLogo)
     }
     
     private func setLayout() {
@@ -260,11 +282,10 @@ extension MainViewController {
             $0.top.equalTo(self.profileImage.snp.bottom).offset(20)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            $0.bottom.lessThanOrEqualTo(self.nftCollectionView.snp.top).offset(-20)
         }
 
         self.nftCollectionView.snp.makeConstraints {
-            $0.top.equalTo(self.welcomeTitle.snp.bottom).offset(50)
+            $0.top.equalTo(self.welcomeTitle.snp.bottom).offset(80)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(10)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).offset(-5)
             $0.height.equalTo(300)
@@ -272,6 +293,13 @@ extension MainViewController {
         
         self.noNftCardView.snp.makeConstraints {
             $0.edges.equalTo(self.nftCollectionView)
+        }
+        
+        self.alchemyLogo.snp.makeConstraints {
+            $0.top.greaterThanOrEqualTo(self.nftCollectionView.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(self.view.frame.width / 3)
+            $0.bottom.lessThanOrEqualToSuperview().offset(-10)
         }
     }
     

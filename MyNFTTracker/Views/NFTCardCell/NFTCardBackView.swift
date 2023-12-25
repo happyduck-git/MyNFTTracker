@@ -41,12 +41,6 @@ final class NFTCardBackView: UIView {
         return label
     }()
     
-    private let symbolImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
     private let descLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -113,7 +107,6 @@ extension NFTCardBackView {
     private func setUI() {
         self.addSubviews(
             self.nameStack,
-            self.symbolImage,
             self.descLabel,
             self.contractStack
         )
@@ -134,15 +127,9 @@ extension NFTCardBackView {
     private func setLayout() {
         self.nameStack.snp.makeConstraints {
             $0.top.leading.equalTo(self).offset(20)
-            $0.trailing.equalTo(self.symbolImage.snp.leading).offset(-10)
-        }
-        
-        self.symbolImage.snp.makeConstraints {
-            $0.top.equalTo(self).offset(20)
             $0.trailing.equalTo(self).offset(-20)
-            $0.height.width.equalTo(20)
         }
-        
+
         self.descLabel.snp.makeConstraints {
             $0.top.equalTo(self.nameStack.snp.bottom).offset(10)
             $0.leading.trailing.equalTo(self.nameStack)

@@ -8,6 +8,7 @@
 import UIKit.UIImage
 import Combine
 import FirebaseFirestore
+import Nuke
 
 final class MainViewViewModel {
     
@@ -17,6 +18,7 @@ final class MainViewViewModel {
     @Published var profileImageDataString: String?
     @Published var imageStrings: [String] = []
     @Published var chainId: String = ""
+    @Published var alchemyLogo: UIImage?
     var errorFetchingUserInfo = PassthroughSubject<Error, Never>()
     var nftIsLoaded = PassthroughSubject<Bool, Error>()
     
@@ -101,5 +103,20 @@ extension MainViewViewModel {
             return []
         }
 
+    }
+}
+
+extension MainViewViewModel {
+    func getAlchemyLogo() async -> UIImage? {
+        let urlString = "https://static.alchemyapi.io/images/marketing/badge.png"
+        guard let url = URL(string: urlString) else { return nil }
+        
+        do {
+            return try await ImagePipeline.shared.image(for: url)
+        }
+        catch {
+            AppLogger.logger.error("Error fetchin Alchemy Logo -- \(error)")
+            return nil
+        }
     }
 }
