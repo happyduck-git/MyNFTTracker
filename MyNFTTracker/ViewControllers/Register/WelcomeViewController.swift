@@ -30,6 +30,16 @@ final class WelcomeViewController: BaseViewController {
         return label
     }()
     
+    private let welcomeDesc: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.text = WelcomeConstants.welcomeDesc
+        label.textAlignment = .center
+        label.font = .appFont(name: .appMainFontMedium, size: .main)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,14 +68,21 @@ final class WelcomeViewController: BaseViewController {
 extension WelcomeViewController {
     private func setUI() {
         self.view.addSubviews(self.welcomeTitle,
+                              self.welcomeDesc,
                               self.confettiView)
     }
     
     private func setLayout() {
         self.welcomeTitle.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-20)
             $0.leading.equalToSuperview().offset(10)
             $0.trailing.equalToSuperview().offset(-10)
+        }
+        
+        self.welcomeDesc.snp.makeConstraints {
+            $0.top.equalTo(self.welcomeTitle.snp.bottom).offset(30)
+            $0.leading.equalToSuperview().offset(30)
+            $0.trailing.equalToSuperview().offset(-30)
         }
         
         self.confettiView.snp.makeConstraints {
@@ -149,6 +166,7 @@ extension WelcomeViewController: BaseViewControllerDelegate {
                                                            gradientLowerColor!])
         self.view.backgroundColor = UIColor(patternImage: gradientImage)
         self.welcomeTitle.textColor = textColor
+        self.welcomeDesc.textColor = textColor?.withAlphaComponent(0.7)
     }
     
     func userInfoChanged(as user: User) {

@@ -234,8 +234,9 @@ extension MainViewController {
         self.vm.nftIsLoaded
             .sink(receiveCompletion: { [weak self] error in
                 guard let `self` = self else { return }
-                //TODO: SHOW ERROR ALERT
-                print("Error fetching nft")
+                self.showAlert(title: "Error",
+                               message: "Failed to bring your NFT information. Please retry.",
+                               actionTitle: "Confirm")
             }, receiveValue: { [weak self] isLoaded in
                 guard let `self` = self else { return }
                 if isLoaded {
@@ -399,6 +400,15 @@ extension MainViewController {
         }
         
         self.themeChanged(as: theme)
+    }
+    
+    private func showAlert(title: String, message: String, actionTitle: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: MainViewConstants.confirm, style: .cancel)
+        alert.addAction(action)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
     }
 }
 

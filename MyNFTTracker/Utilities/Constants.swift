@@ -34,6 +34,7 @@ enum RegisterViewConstants {
 
 enum WelcomeConstants {
     static let welcome = String(localized: "환영합니다!")
+    static let welcomeDesc = String(localized: "계정을 등록하고 보유하고 계신 NFT 앨범을 구경해보세요 :)")
 }
 
 enum MainViewConstants {
@@ -41,6 +42,7 @@ enum MainViewConstants {
     static let noNft = String(localized: "아직 보유하고 계신 NFT가 없습니다.")
     static let connectedChain = String(localized: "연결된 체인")
     static let notConnected = String(localized: "연결되지 않음")
+    static let confirm = String(localized: "확인")
 }
 
 enum LoginConstants {
@@ -57,6 +59,13 @@ enum SettingsConstants {
     static let darkMode = String(localized: "다크 모드")
     static let lightMode = String(localized: "라이트 모드")
     static let edit = String(localized: "수정하기")
+    static let deleteAccount = String(localized: "계정 삭제")
+    static let deleteAccountAlertTitle = String(localized: "계정 삭제")
+    static let deleteAccountAlertMsg = String(localized: "계정 삭제 후 복구가 되지 않습니다. 정말로 삭제 하시겠습니까?")
+    static let delete = String(localized: "삭제")
+    static let cancel = String(localized: "취소")
+    static let errorInDeletionAlertTitle = String(localized: "계정 삭제 오류")
+    static let errorInDeletionAlertMsg = String(localized: "계정 삭제 중 오류가 발생했습니다. 다시 시도해 주시기 바랍니다.")
 }
 
 enum SideMenuConstants {

@@ -14,6 +14,8 @@ final class SettingsViewController: BaseViewController {
     
     private var bindings = Set<AnyCancellable>()
     
+    private var firestoreManager: FirestoreManager = FirestoreManager.shared
+    
     //MARK: - UI Elements
     private var snackbar: SnackBarView?
     
@@ -27,7 +29,6 @@ final class SettingsViewController: BaseViewController {
     
     private let nicknameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Nickname"
         label.lineBreakMode = .byTruncatingMiddle
         label.textAlignment = .center
         label.textColor = .label
@@ -92,6 +93,30 @@ final class SettingsViewController: BaseViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    private let accountManageLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.text = String(localized: "계정 관리")
+        label.font = .appFont(name: .appMainFontLight, size: .title)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let divider2: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let deleteAccountButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(SettingsConstants.deleteAccount, for: .normal)
+        button.backgroundColor = .clear
+        button.titleLabel?.font = .appFont(name: .appMainFontLight, size: .light)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
 
     //MARK: - Init
     init(vm: SettingsViewViewModel) {
@@ -131,7 +156,10 @@ extension SettingsViewController {
                               self.themeLabel,
                               self.divider,
                               self.darkThemeButton,
-                              self.lightThemeButton)
+                              self.lightThemeButton,
+                              self.accountManageLabel,
+                              self.divider2,
+                              self.deleteAccountButton)
         
         self.addressStack.addArrangedSubviews(self.walletAddressLabel,
                                               self.copyIcon)
@@ -161,7 +189,7 @@ extension SettingsViewController {
         }
         
         self.themeLabel.snp.makeConstraints {
-            $0.top.equalTo(self.addressStack.snp.bottom).offset(50)
+            $0.top.equalTo(self.addressStack.snp.bottom).offset(30)
             $0.leading.trailing.equalTo(self.nicknameLabel)
         }
         
@@ -174,7 +202,7 @@ extension SettingsViewController {
         self.darkThemeButton.snp.makeConstraints {
             $0.top.equalTo(self.divider.snp.bottom).offset(10)
             $0.leading.equalToSuperview().offset(30)
-            $0.height.equalTo(self.view.frame.height / 2.5)
+            $0.height.equalTo(self.view.frame.height / 2.8)
             $0.width.equalTo((self.view.frame.width - 60) / 2)
             $0.bottom.lessThanOrEqualToSuperview().offset(-50)
         }
@@ -185,6 +213,24 @@ extension SettingsViewController {
             $0.height.equalTo(self.darkThemeButton.snp.height)
             $0.width.equalTo(self.darkThemeButton.snp.width)
         }
+        
+        self.accountManageLabel.snp.makeConstraints {
+            $0.top.equalTo(self.darkThemeButton.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(self.nicknameLabel)
+        }
+        
+        self.divider2.snp.makeConstraints {
+            $0.top.equalTo(self.accountManageLabel.snp.bottom).offset(10)
+            $0.leading.trailing.equalTo(self.nicknameLabel)
+            $0.height.equalTo(2)
+        }
+        
+        self.deleteAccountButton.snp.makeConstraints {
+            $0.top.equalTo(self.divider2.snp.bottom).offset(10)
+            $0.bottom.lessThanOrEqualToSuperview().offset(-20)
+            $0.leading.equalTo(divider2)
+        }
+        
         self.darkThemeButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
         self.lightThemeButton.setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
@@ -315,6 +361,13 @@ extension SettingsViewController {
             }
             .store(in: &bindings)
         
+        self.deleteAccountButton.tapPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let `self` = self else { return }
+                self.deleteAccountDidTap()
+            }
+            .store(in: &bindings)
     }
     
 }
@@ -361,9 +414,12 @@ extension SettingsViewController: BaseViewControllerDelegate {
         self.copyIcon.tintColor = elementsColor
         self.themeLabel.textColor = elementsColor?.withAlphaComponent(0.7)
         self.divider.backgroundColor = elementsColor?.withAlphaComponent(0.7)
+        self.accountManageLabel.textColor = elementsColor?.withAlphaComponent(0.7)
+        self.divider2.backgroundColor = elementsColor?.withAlphaComponent(0.7)
         self.darkThemeButton.configureTextColor(with: elementsColor)
         self.lightThemeButton.configureTextColor(with: elementsColor)
         self.walletAddressLabel.backgroundColor = lableBgColor
+        self.deleteAccountButton.setTitleColor(.systemRed.withAlphaComponent(0.7), for: .normal)
         
         self.darkThemeButton.toggleButton(selectDark)
         self.lightThemeButton.toggleButton(selectLight)
@@ -458,5 +514,78 @@ extension SettingsViewController {
             }
         }
 
+    }
+    
+    private func deleteAccountDidTap() {
+        let alert = UIAlertController(title: SettingsConstants.deleteAccountAlertTitle,
+                                      message: SettingsConstants.deleteAccountAlertMsg,
+                                      preferredStyle: .alert)
+        let confirm = UIAlertAction(title: SettingsConstants.delete, style: .destructive) { [weak self] _ in
+            guard let `self` = self else { return }
+            self.confirmDidTap()
+        }
+        let cancel = UIAlertAction(title: SettingsConstants.cancel, style: .cancel)
+        alert.addAction(confirm)
+        alert.addAction(cancel)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: SettingsConstants.errorInDeletionAlertTitle,
+                                      message: SettingsConstants.errorInDeletionAlertMsg,
+                                      preferredStyle: .alert)
+        let confirm = UIAlertAction(title: SettingsConstants.delete, style: .cancel)
+        alert.addAction(confirm)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func backToLoginVC() {
+        DispatchQueue.main.async {
+            let vcs = self.navigationController?.viewControllers
+            let loginVC = vcs?.filter({ vc in
+                vc is LoginViewController
+            }).first as? LoginViewController
+            
+            let mainVC = vcs?.filter({ vc in
+                vc is MainViewController
+            }).first as? MainViewController
+            
+            guard let loginVC = loginVC else {
+                self.dismiss(animated: true) { [weak self] in
+                    guard let `self` = self else { return }
+                    let loginVM = LoginViewViewModel()
+                    let loginVC = LoginViewController(vm: loginVM)
+                    self.navigationController?.setViewControllers([loginVC], animated: true)
+                }
+                return
+            }
+            self.navigationController?.popToViewController(loginVC, animated: true)
+        }
+    }
+    
+    private func deleteUserDefaults() {
+        UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.walletAddress)
+        UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.chainId)
+    }
+    
+    private func confirmDidTap() {
+        let address = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) ?? ""
+        #if DEBUG
+        AppLogger.logger.info("Account deleted")
+        #endif
+        Task {
+            do {
+                try await self.firestoreManager.deleteUserInfo(of: address)
+                self.deleteUserDefaults()
+                self.backToLoginVC()
+            }
+            catch {
+                self.showErrorAlert()
+            }
+        }
     }
 }

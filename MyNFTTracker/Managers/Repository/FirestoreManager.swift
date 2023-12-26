@@ -75,3 +75,23 @@ extension FirestoreManager {
         return user
     }
 }
+
+extension FirestoreManager {
+    func deleteUserInfo(of wallet: String) async throws {
+        let docRef = baseDB
+            .collection(FirestoreConstants.users)
+            .document(wallet)
+        
+        if try await docRef
+            .getDocument()
+            .exists {
+            try await baseDB
+                .collection(FirestoreConstants.users)
+                .document(wallet)
+                .delete()
+            return
+        }
+        
+        throw FirestoreErrorCode(.notFound)
+    }
+}
