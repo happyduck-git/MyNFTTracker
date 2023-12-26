@@ -8,6 +8,12 @@
             "state" : "translated",
             "value" : "You can change later in \"Settings\"."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"설정\"에서 추후 변경 가능합니다."
+          }
         }
       }
     },
@@ -21,6 +27,12 @@
             "state" : "translated",
             "value" : "Login with Metamask"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metamask로 로그인"
+          }
         }
       }
     },
@@ -32,6 +44,12 @@
             "state" : "translated",
             "value" : "Settings"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
+          }
         }
       }
     },
@@ -41,6 +59,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skip"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "건너뛰기"
           }
         }
       }
@@ -52,6 +76,12 @@
             "state" : "translated",
             "value" : "Account Management"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정 관리"
+          }
         }
       }
     },
@@ -61,6 +91,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete Account"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정 삭제"
           }
         }
       }
@@ -72,6 +108,12 @@
             "state" : "translated",
             "value" : "Error deleting account"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정 삭제 오류"
+          }
         }
       }
     },
@@ -81,6 +123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Error occurred during account deletion process. Please retry later."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정 삭제 중 오류가 발생했습니다. 다시 시도해 주시기 바랍니다."
           }
         }
       }
@@ -92,6 +140,12 @@
             "state" : "translated",
             "value" : "You cannot restore this account once it has been deleted. Are you sure to delete the account?"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정 삭제 후 복구가 되지 않습니다. 정말로 삭제 하시겠습니까?"
+          }
         }
       }
     },
@@ -101,6 +155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Register your wallet address and enjoy your NFT album :)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "계정을 등록하고 보유하고 계신 NFT 앨범을 구경해보세요 :)"
           }
         }
       }
@@ -112,6 +172,12 @@
             "state" : "translated",
             "value" : "My menu"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "나의 메뉴"
+          }
         }
       }
     },
@@ -121,6 +187,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nickname"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "닉네임"
           }
         }
       }
@@ -132,6 +204,12 @@
             "state" : "translated",
             "value" : "Please try again."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다시 한번 시도해주세요."
+          }
         }
       }
     },
@@ -141,6 +219,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Next"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다음"
           }
         }
       }
@@ -152,6 +236,12 @@
             "state" : "translated",
             "value" : "Dark mode"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "다크 모드"
+          }
         }
       }
     },
@@ -161,6 +251,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unregistered user"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "등록되지 않은 사용자"
           }
         }
       }
@@ -172,6 +268,12 @@
             "state" : "translated",
             "value" : "Light mode"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이트 모드"
+          }
         }
       }
     },
@@ -181,6 +283,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rank"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "랭킹"
           }
         }
       }
@@ -192,6 +300,12 @@
             "state" : "translated",
             "value" : "Sign out"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그아웃"
+          }
         }
       }
     },
@@ -201,6 +315,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure to sign out?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그아웃 하시겠습니까?"
           }
         }
       }
@@ -212,6 +332,12 @@
             "state" : "translated",
             "value" : "Main Page"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "메인 페이지"
+          }
         }
       }
     },
@@ -221,6 +347,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Welcome! %@                                                Checkout your NFTs!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "반갑습니다! %@\n가지고 계신 NFT를 구경해 보세요."
           }
         }
       }
@@ -232,6 +364,12 @@
             "state" : "translated",
             "value" : "Submit changes."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "변경된 내용으로 정보를 수정합니다."
+          }
         }
       }
     },
@@ -241,6 +379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "삭제"
           }
         }
       }
@@ -252,6 +396,12 @@
             "state" : "translated",
             "value" : "Settings"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정"
+          }
         }
       }
     },
@@ -261,6 +411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Completed"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수정 완료"
           }
         }
       }
@@ -272,6 +428,12 @@
             "state" : "translated",
             "value" : "Do you want to edit information?"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수정 하시겠습니까?"
+          }
         }
       }
     },
@@ -281,6 +443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edit"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "수정하기"
           }
         }
       }
@@ -292,6 +460,12 @@
             "state" : "translated",
             "value" : "No NFT owned."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아직 보유하고 계신 NFT가 없습니다."
+          }
         }
       }
     },
@@ -301,6 +475,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "App theme"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "앱 테마"
           }
         }
       }
@@ -312,6 +492,12 @@
             "state" : "translated",
             "value" : "Not connected"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "연결되지 않음"
+          }
         }
       }
     },
@@ -321,6 +507,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connected chain"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "연결된 체인"
           }
         }
       }
@@ -332,6 +524,12 @@
             "state" : "translated",
             "value" : "Request to retry"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "재시도 요청"
+          }
         }
       }
     },
@@ -341,6 +539,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Save"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "저장하기"
           }
         }
       }
@@ -352,6 +556,12 @@
             "state" : "translated",
             "value" : "Score"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "점수"
+          }
         }
       }
     },
@@ -361,6 +571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Successfully updated."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정보가 정상적으로 수정되었습니다."
           }
         }
       }
@@ -372,6 +588,12 @@
             "state" : "translated",
             "value" : "Fail wallet connection"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지갑 연결 실패"
+          }
         }
       }
     },
@@ -381,6 +603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancel"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "취소"
           }
         }
       }
@@ -402,6 +630,12 @@
             "state" : "translated",
             "value" : "Copied to clipboard."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "클립보드에 복사되었습니다."
+          }
         }
       }
     },
@@ -411,6 +645,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Select theme"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "테마 선택하기"
           }
         }
       }
@@ -422,6 +662,12 @@
             "state" : "translated",
             "value" : "Set up your profile image and nickname."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "프로필 이미지와 닉네임을 설정해보세요."
+          }
         }
       }
     },
@@ -431,6 +677,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confirm"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "확인"
           }
         }
       }
@@ -442,6 +694,12 @@
             "state" : "translated",
             "value" : "Welcome!"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "환영합니다!"
+          }
         }
       }
     },
@@ -452,6 +710,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sign in"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "회원가입 하기"
           }
         }
       }
