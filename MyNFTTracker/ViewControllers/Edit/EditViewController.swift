@@ -121,7 +121,13 @@ extension EditViewController {
         
         self.vm.$newNickname
             .sink { [weak self] in
-                guard let `self` = self else { return }
+                guard let `self` = self,
+                let newNickname = $0 else { return }
+                if newNickname.trimmingCharacters(in: .whitespaces).isEmpty {
+                    self.vm.isNicknameChanged = false
+                    return
+                }
+                
                 self.vm.isNicknameChanged = ($0 != self.vm.nickname) ? true : false
             }
             .store(in: &bindings)
@@ -136,7 +142,6 @@ extension EditViewController {
         self.vm.infoChanged
             .sink { [weak self] in
                 guard let `self` = self else { return }
-                print("Info change detected")
                 self.activateSaveButton($0)
             }
             .store(in: &bindings)

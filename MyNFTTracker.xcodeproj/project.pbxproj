@@ -84,7 +84,6 @@
 		24DB467C2B1B608A00431517 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DB467B2B1B608A00431517 /* User.swift */; };
 		24DF40582B170CA10091ACFB /* SnackBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40572B170CA10091ACFB /* SnackBarView.swift */; };
 		24DF405A2B170CB50091ACFB /* SnackbarViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */; };
-		24DF405D2B184CEB0091ACFB /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DF405C2B184CEB0091ACFB /* SignupViewController.swift */; };
 		24E3098A2B0D0711001EBE48 /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E309892B0D0711001EBE48 /* ToggleCell.swift */; };
 		24E54FA92B3830E000D33574 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 24E54FA82B3830E000D33574 /* Localizable.xcstrings */; };
 		24F0BFEB2B1EDC86006B79DA /* loading.lottie in Resources */ = {isa = PBXBuildFile; fileRef = 24F0BFEA2B1E1C84006B79DA /* loading.lottie */; };
@@ -179,7 +178,6 @@
 		24DB467B2B1B608A00431517 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		24DF40572B170CA10091ACFB /* SnackBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackBarView.swift; sourceTree = "<group>"; };
 		24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnackbarViewViewModel.swift; sourceTree = "<group>"; };
-		24DF405C2B184CEB0091ACFB /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		24E309892B0D0711001EBE48 /* ToggleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		24E54FA82B3830E000D33574 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		24F0BFEA2B1E1C84006B79DA /* loading.lottie */ = {isa = PBXFileReference; lastKnownFileType = file; path = loading.lottie; sourceTree = "<group>"; };
@@ -424,7 +422,6 @@
 				24407B492B1CB6AC007F254A /* Edit */,
 				24A104892B19C4F7003AD597 /* AvatarTable */,
 				24A1047E2B18E0C4003AD597 /* Register */,
-				24DF405B2B17216D0091ACFB /* Signup */,
 				24A4BD8D2B05EE3400B2F21B /* Settings */,
 				2463CF1B2AFA5D4F006AAE65 /* Base */,
 				2463CF032AF93D92006AAE65 /* Main */,
@@ -532,14 +529,6 @@
 				24DF40592B170CB50091ACFB /* SnackbarViewViewModel.swift */,
 			);
 			path = SnackBarView;
-			sourceTree = "<group>";
-		};
-		24DF405B2B17216D0091ACFB /* Signup */ = {
-			isa = PBXGroup;
-			children = (
-				24DF405C2B184CEB0091ACFB /* SignupViewController.swift */,
-			);
-			path = Signup;
 			sourceTree = "<group>";
 		};
 		24E309882B0D06B3001EBE48 /* SettingTableViewCell */ = {
@@ -764,7 +753,6 @@
 				248737B42B05111400E8938B /* UIStackView+Extensions.swift in Sources */,
 				24CA4F722B1F717500676F07 /* AppThemeButton.swift in Sources */,
 				24407B422B1C55EF007F254A /* MetamaskManager.swift in Sources */,
-				24DF405D2B184CEB0091ACFB /* SignupViewController.swift in Sources */,
 				24407B442B1C63CD007F254A /* WelcomeViewController.swift in Sources */,
 				2495E85C2B35D15200011118 /* ChainConnectionStatusView.swift in Sources */,
 			);

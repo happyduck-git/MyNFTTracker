@@ -620,6 +620,12 @@
             "state" : "translated",
             "value" : "Select your character."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "캐릭터를 고르세요"
+          }
         }
       }
     },
