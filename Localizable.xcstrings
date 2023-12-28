@@ -43,6 +43,12 @@
             "state" : "translated",
             "value" : "Please terminate Metamask app and retry."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metask 종료 후 다시 한번 시도해주세요."
+          }
         }
       }
     },
