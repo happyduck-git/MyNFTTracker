@@ -54,6 +54,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print(#function)
         //TODO: 이 부분 호출되었는데 address 받은 것 없으면 error handling하기.
         print("Account: " + MetamaskManager.shared.metaMaskSDK.account)
+        if MetamaskManager.shared.metaMaskSDK.account.isEmpty {
+            self.sendNotification()
+        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -81,3 +84,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 }
 
+extension SceneDelegate {
+    private func sendNotification() {
+        NotificationCenter.default.post(name: NSNotification.Name(NotificationConstants.metamaskConnection),
+                                        object: nil)
+    }
+}

@@ -20,6 +20,7 @@ enum UserDefaultsConstants {
 enum NotificationConstants {
     static let theme = "default-theme"
     static let userInfo = "user-info"
+    static let metamaskConnection = "metamask-connection"
 }
 
 enum ImageAssets {
@@ -48,7 +49,7 @@ enum MainViewConstants {
 enum LoginConstants {
     static let failedToConnectWallet = String(localized: "지갑 연결 실패")
     static let userNotFound = String(localized: "등록되지 않은 사용자")
-    static let tryAgain = String(localized: "다시 한번 시도해주세요.")
+    static let tryAgain = String(localized: "Metask 종료 후 다시 한번 시도해주세요.")
     static let confirm = String(localized: "확인")
     static let retryTitle = String(localized: "재시도 요청")
 }

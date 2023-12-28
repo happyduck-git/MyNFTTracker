@@ -404,7 +404,12 @@ extension MainViewController {
     
     private func showAlert(title: String, message: String, actionTitle: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: MainViewConstants.confirm, style: .cancel)
+        let action = UIAlertAction(title: MainViewConstants.confirm, style: .cancel) { [weak self] _ in
+            guard let `self` = self else { return }
+            DispatchQueue.main.async {
+                self.showLoginViewController()
+            }
+        }
         alert.addAction(action)
         DispatchQueue.main.async {
             self.present(alert, animated: true)

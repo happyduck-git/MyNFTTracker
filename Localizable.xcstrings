@@ -36,6 +36,16 @@
         }
       }
     },
+    "Metask 종료 후 다시 한번 시도해주세요." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please terminate Metamask app and retry."
+          }
+        }
+      }
+    },
     "Settings" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -198,6 +208,7 @@
       }
     },
     "다시 한번 시도해주세요." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

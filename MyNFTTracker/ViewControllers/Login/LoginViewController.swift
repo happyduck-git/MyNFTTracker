@@ -70,7 +70,7 @@ final class LoginViewController: BaseViewController {
         self.setDelegate()
         
         self.bind()
-    
+        self.setNotification()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -151,6 +151,8 @@ extension LoginViewController {
                             AppLogger.logger.error("Error: \(error)")
                         }
                     }
+                } else {
+                    self.loadingVC.removeViewController()
                 }
                 
             }.store(in: &bindings)
@@ -329,5 +331,18 @@ extension LoginViewController: BaseViewControllerDelegate {
 extension LoginViewController: MainViewControllerDelegate {
     func errorDidReceive(_ viewController: UIViewController, error: Error) {
         self.vm.receivedError.send(error)
+    }
+}
+
+extension LoginViewController {
+    func setNotification() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name(NotificationConstants.metamaskConnection),
+                                               object: nil,
+                                               queue: nil) { [weak self] noti in
+            guard let `self` = self else { return }
+            self.vm.walletConnected = false
+            let metamask = metamaskManager.metaMaskSDK
+            metamask.terminateConnection()
+        }
     }
 }

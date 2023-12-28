@@ -38,6 +38,14 @@ final class LoadingViewController: UIViewController {
             await self.loadLottie()
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !self.loadingView.isAnimationPlaying {
+            self.loadingView.play()
+        }
+    }
 
     override func viewDidDisappear(_ animated: Bool) {
         self.loadingView.stop()
