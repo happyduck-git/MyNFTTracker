@@ -107,6 +107,7 @@ extension LoginViewController {
                 self.addChildViewController(self.loadingVC)
                 
                 Task {
+                    metamask.useDeeplinks = false
                     let result = await metamask.connect()
                     switch result {
                     case .success(let address):
