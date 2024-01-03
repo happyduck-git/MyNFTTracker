@@ -9,4 +9,5 @@ import Foundation
 
 struct WelcomeViewViewmodel {
     let address: String
+    let chainId: String
 }

@@ -150,7 +150,6 @@ final class LoginViewController: BaseViewController {
 extension LoginViewController {
     
     private func bind() {
-        let metamask = metamaskManager.metaMaskSDK
         
         self.vm.transform()
         
@@ -172,36 +171,48 @@ extension LoginViewController {
                 }
                 .store(in: &bindings)
 
+            self.addressTextField.textPublisher
+                .sink { [weak self] text in
+                    guard let `self` = self else { return }
+                    self.vm.textFieldText = text
+                }
+                .store(in: &bindings)
         }
         
         func bindViewModelToView() {
 
             self.vm.isFirstVisit
+                .receive(on: DispatchQueue.main)
                 .sink { [weak self] in
                     guard let `self` = self else { return }
-                    
                     let wallet = self.vm.address
-                    
+            
                     if $0 {
-                        DispatchQueue.main.async {
-                            let welcomeVM = WelcomeViewViewmodel(address: wallet)
-                            let welcomeVC = WelcomeViewController(vm: welcomeVM)
-                            
-                            self.show(welcomeVC, sender: self)
-                        }
+
+                        let welcomeVM = WelcomeViewViewmodel(address: wallet, chainId: self.vm.selectedChain)
+                        let welcomeVC = WelcomeViewController(vm: welcomeVM)
+                        
+                        self.show(welcomeVC, sender: self)
                         
                     } else {
                         self.vm.saveAddressAndChainId(address: wallet, chainId: self.vm.selectedChain)
-                        DispatchQueue.main.async {
-                            #if DEBUG
-                            print("User \(wallet) already registered. Direct to MainVC")
-                            #endif
-                            
-                            let vc = MainViewController(vm: MainViewViewModel())
-                            vc.delegate = self
-                            self.show(vc, sender: self)
-                        }
+                        
+                        #if DEBUG
+                        print("User \(wallet) already registered. Direct to MainVC")
+                        #endif
+
+                        let vc = MainViewController(vm: MainViewViewModel())
+                        vc.delegate = self
+                        self.show(vc, sender: self)
+                        
                     }
+                    
+                    self.addressTextField.text = nil
+                    self.vm.selectedChain = String()
+                    self.vm.address = String()
+                    self.addressValidationLabel.isHidden = true
+                    self.loadingVC.removeViewController()
+                    
                 }
                 .store(in: &bindings)
             
@@ -220,8 +231,17 @@ extension LoginViewController {
                         } else if let wrongFormat = error as? LoginViewViewModel.LoginError {
                             switch wrongFormat {
                             case .wrongAddressFormat:
+                                #if DEBUG
+                                print("Wrong format id")
+                                #endif
+                                
                                 self.addressValidationLabel.isHidden = false
+                                self.loadingVC.removeViewController()
                             case .walletNotConnected:
+                                #if DEBUG
+                                print("Not connected id")
+                                #endif
+                                
                                 self.loadingVC.removeViewController()
                             }
                         
@@ -240,7 +260,8 @@ extension LoginViewController {
                 .dropFirst()
                 .sink { [weak self] in
                     guard let `self` = self else { return }
-                    var chainId = $0.isEmpty ? LoginConstants.selectChain : $0
+                    let chainId = $0.isEmpty ? LoginConstants.selectChain : Chain(rawValue: $0)?.network
+                    
                     self.selectChainButton.setTitle(chainId, for: .normal)
                 }
                 .store(in: &bindings)
@@ -248,17 +269,28 @@ extension LoginViewController {
             self.vm.activateLoginButton
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] in
-                    guard let `self` = self else { return }
+                    guard let `self` = self,
+                          let theme = self.vm.theme else { return }
                     self.loginButton.isUserInteractionEnabled = $0 ? true : false
-                    self.loginButton.backgroundColor = $0 ? .black : .white
+                    
+                    var activatedColor: UIColor?
+                    var deactivatedColor: UIColor?
+                    switch theme {
+                    case .black:
+                        activatedColor = AppColors.DarkMode.buttonActive
+                        deactivatedColor = AppColors.DarkMode.buttonInactive
+                    case .white:
+                        activatedColor = AppColors.LightMode.buttonActive
+                        deactivatedColor = AppColors.LightMode.buttonInactive
+                    }
+                    
+                    self.loginButton.backgroundColor = $0 ? activatedColor : deactivatedColor
                 }
                 .store(in: &bindings)
         }
         
         bindViewToViewModel()
         bindViewModelToView()
-        
-        
         
     }
     
@@ -285,16 +317,19 @@ extension LoginViewController {
         }
         
         self.selectChainButton.snp.makeConstraints {
+            $0.top.equalTo(self.logo.snp.bottom).offset(100)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.height.equalTo(40)
         }
         
         self.addressTextField.snp.makeConstraints {
+            $0.top.equalTo(self.selectChainButton.snp.bottom).offset(10)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.height.equalTo(40)
         }
         
         self.loginButton.snp.makeConstraints {
+            $0.top.equalTo(self.selectChainButton.snp.top)
             $0.leading.equalTo(self.addressTextField.snp.trailing).offset(10)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             $0.height.equalTo(self.loginButton.snp.width)
@@ -396,14 +431,8 @@ extension LoginViewController {
         self.selectChainButton.menu = menu
         self.selectChainButton.showsMenuAsPrimaryAction = true
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(buttonTapped))
-        selectChainButton.addGestureRecognizer(tapRecognizer)
+    }
 
-    }
-    
-    @objc func buttonTapped() {
-        print("Button tapped")
-    }
 }
 
 // MARK: - Wallet address
@@ -431,6 +460,8 @@ extension LoginViewController {
 extension LoginViewController: BaseViewControllerDelegate {
     
     func themeChanged(as theme: Theme) {
+        self.vm.theme = theme
+        
         var gradientUpperColor: UIColor?
         var gradientLowerColor: UIColor?
         var buttonColor: UIColor?
@@ -456,6 +487,8 @@ extension LoginViewController: BaseViewControllerDelegate {
                                                   colors: [gradientUpperColor!,
                                                            gradientLowerColor!])
         self.view.backgroundColor = UIColor(patternImage: gradientImage)
+        
+        self.selectChainButton.setTitleColor(textColor, for: .normal)
         self.loginButton.backgroundColor = buttonColor
         self.loginButton.setTitleColor(textColor, for: .normal)
         

@@ -44,6 +44,8 @@ enum MainViewConstants {
     static let connectedChain = String(localized: "연결된 체인")
     static let notConnected = String(localized: "연결되지 않음")
     static let confirm = String(localized: "확인")
+    static let error = String(localized: "에러")
+    static let nftFail = String(localized: "Failed to bring your NFT information -- %@. Please retry.")
 }
 
 enum LoginConstants {

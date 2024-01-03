@@ -18,7 +18,30 @@
       }
     },
     "Contract" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contract"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contract"
+          }
+        }
+      }
+    },
+    "Failed to bring your NFT information -- %@. Please retry." : {
+      "localizations" : {
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NFT 정보를 불러오는데 실패하였습니다. -- %@. 다시 시도해주세요."
+          }
+        }
+      }
     },
     "Metamask로 로그인" : {
       "localizations" : {
@@ -53,7 +76,20 @@
       }
     },
     "OR" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OR"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OR"
+          }
+        }
+      }
     },
     "Settings" : {
       "extractionState" : "stale",
@@ -352,6 +388,12 @@
             "state" : "translated",
             "value" : "Login"
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그인"
+          }
         }
       }
     },
@@ -515,6 +557,22 @@
         }
       }
     },
+    "에러" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "에러"
+          }
+        }
+      }
+    },
     "연결되지 않음" : {
       "localizations" : {
         "en" : {
@@ -548,7 +606,20 @@
       }
     },
     "올바르지 않은 지갑주소 형식입니다." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not valid address format."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "올바르지 않은 지갑주소 형식입니다."
+          }
+        }
+      }
     },
     "재시도 요청" : {
       "localizations" : {
@@ -637,6 +708,12 @@
             "state" : "translated",
             "value" : "Wallet address 0xabc..."
           }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "지갑 주소 0xabcd..."
+          }
         }
       }
     },
@@ -645,7 +722,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Select Chain"
+            "value" : "Tap to Select Chain"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "체인 선택"
           }
         }
       }

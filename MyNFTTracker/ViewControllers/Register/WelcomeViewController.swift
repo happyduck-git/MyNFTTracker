@@ -105,7 +105,7 @@ extension WelcomeViewController {
     }
     
     @objc func nextDidTap(_ sender: UIBarButtonItem) {
-        let vm = RegisterViewViewModel(walletAddres: self.vm.address)
+        let vm = RegisterViewViewModel(walletAddres: self.vm.address, chainId: self.vm.chainId)
         let vc = RegisterViewController(vm: vm)
         self.show(vc, sender: self)
     }

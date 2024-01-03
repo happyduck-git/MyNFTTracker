@@ -15,6 +15,7 @@ final class RegisterViewViewModel {
     private let firestoreManager = FirestoreManager.shared
     
     let walletAddres: String
+    let chainId: String
     var selectedAvatarIndex: IndexPath?
     @Published var nickname: String = ""
     @Published var isNicknameFilled: Bool = false
@@ -23,8 +24,10 @@ final class RegisterViewViewModel {
     @Published var showPickerView: Bool?
     @Published var canShowPickerView: Bool = true
     
-    init(walletAddres: String) {
+    init(walletAddres: String, chainId: String) {
         self.walletAddres = walletAddres
+        self.chainId = chainId
+        
         self.retrieveTheme()
         
         Task {

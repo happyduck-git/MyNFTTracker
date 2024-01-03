@@ -208,6 +208,7 @@ extension RegisterViewController {
             .sink { [weak self] _ in
                 guard let `self` = self else { return }
                 self.saveUserInfo(of: self.vm.walletAddres,
+                                  chainId: self.vm.chainId,
                                   username: self.vm.nickname,
                                   imageData: self.vm.profileImage?.pngData()?.base64EncodedString() ?? "no-image")
             }
@@ -277,12 +278,13 @@ extension RegisterViewController {
     
     @objc private func skipDidTap(_ sender: UIBarButtonItem) {
         self.saveUserInfo(of: self.vm.walletAddres,
+                          chainId: self.vm.chainId,
                           username: self.vm.walletAddres,
                           imageData: self.vm.profileImage?.pngData()?.base64EncodedString() ?? "no-image")
     
     }
     
-    private func saveUserInfo(of address: String, username: String, imageData: String) {
+    private func saveUserInfo(of address: String, chainId: String, username: String, imageData: String) {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
             self.addChildViewController(self.loadingVC)
@@ -293,7 +295,7 @@ extension RegisterViewController {
                                  imageUrl: imageData)
             
             self.vm.saveAddressAndChainIdOnUserDefaults(address: address,
-                                                        chainId: MetamaskManager.shared.metaMaskSDK.chainId)
+                                                        chainId: chainId)
             
             DispatchQueue.main.async { [weak self] in
                 guard let `self` = self else { return }

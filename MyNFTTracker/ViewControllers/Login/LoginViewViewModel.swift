@@ -18,21 +18,22 @@ final class LoginViewViewModel {
     // Combine
     private var bindings = Set<AnyCancellable>()
     
+    var theme: Theme?
+    
     @Published var signInTapped: Bool = false
     @Published var walletConnected: Bool = false
-//    @Published var isFirstVisit: Bool = false
     @Published var signInCompleted: Bool = false
+    @Published var textFieldText: String = ""
     @Published var address: String = ""
     @Published var selectedChain: String = ""
-    @Published var isAddressLogin: Bool = false
      
     var isFirstVisit = PassthroughSubject<Bool, Never>()
     var walletSigninTapped = PassthroughSubject<String, Never>()
     var metamaskSigninTapped = PassthroughSubject<Void, Never>()
-    var walletConnection = PassthroughSubject<Bool, Never>()
+    private var walletConnection = PassthroughSubject<Bool, Never>()
     var errorTracker = PassthroughSubject<Error, Never>()
     
-    private(set) lazy var activateLoginButton = Publishers.CombineLatest($selectedChain, $address)
+    private(set) lazy var activateLoginButton = Publishers.CombineLatest($selectedChain, $textFieldText)
         .map { chainId, address -> Bool in
             return !chainId.isEmpty && !address.isEmpty ? true : false
         }
@@ -76,11 +77,15 @@ extension LoginViewViewModel {
         
         // Address and chainID validation
         Publishers.CombineLatest($address, $selectedChain).sink { [weak self] add, chain in
-            guard let `self` = self else { return }
+            guard let `self` = self, !add.isEmpty else { return }
+           
             if self.isHexString(add) && self.isValidChain(chain) {
                 self.walletConnection.send(true)
+            } else if chain.isEmpty {
+                return
             } else {
                 self.walletConnection.send(false)
+                self.errorTracker.send(LoginError.wrongAddressFormat)
             }
         }
         .store(in: &bindings)

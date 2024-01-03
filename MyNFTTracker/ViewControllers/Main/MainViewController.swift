@@ -234,9 +234,9 @@ extension MainViewController {
         self.vm.nftIsLoaded
             .sink(receiveCompletion: { [weak self] error in
                 guard let `self` = self else { return }
-                self.showAlert(title: "Error",
-                               message: "Failed to bring your NFT information -- \(error). Please retry.",
-                               actionTitle: "Confirm")
+                self.showAlert(title: MainViewConstants.error,
+                               message: String(format: MainViewConstants.nftFail, "\(error)"),
+                               actionTitle: MainViewConstants.confirm)
             }, receiveValue: { [weak self] isLoaded in
                 guard let `self` = self else { return }
                 if isLoaded {
