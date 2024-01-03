@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Chain: String {
+enum Chain: String, CaseIterable {
     case eth = "0x1"
     case polygon = "0x89"
     case sepolia = "0xaa36a7"

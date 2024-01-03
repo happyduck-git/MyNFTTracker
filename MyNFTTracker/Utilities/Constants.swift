@@ -52,6 +52,11 @@ enum LoginConstants {
     static let tryAgain = String(localized: "Metask 종료 후 다시 한번 시도해주세요.")
     static let confirm = String(localized: "확인")
     static let retryTitle = String(localized: "재시도 요청")
+    static let selectChain = String(localized: "체인 선택")
+    static let or = String(localized: "OR")
+    static let login = String(localized: "로그인")
+    static let address = String(localized: "지갑 주소 0xabcd...")
+    static let wrongAddress = String(localized: "올바르지 않은 지갑주소 형식입니다.")
 }
 
 enum SettingsConstants {

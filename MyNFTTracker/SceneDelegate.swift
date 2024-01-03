@@ -22,7 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         var vc: BaseViewController?
         
-        if let address = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress) {
+        if let address = UserDefaults.standard.string(forKey: UserDefaultsConstants.walletAddress),
+           !address.isEmpty{
             print("Saved address: \(address)")
             let vm = MainViewViewModel()
             vc = MainViewController(vm: vm)

@@ -13,6 +13,7 @@
 		24407B482B1C7F24007F254A /* WelcomeViewViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B472B1C7F24007F254A /* WelcomeViewViewmodel.swift */; };
 		24407B4B2B1CB6C5007F254A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B4A2B1CB6C5007F254A /* EditViewController.swift */; };
 		24407B4D2B1CB7C3007F254A /* EditViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24407B4C2B1CB7C3007F254A /* EditViewViewModel.swift */; };
+		246235312B45315800E71294 /* OrDivider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 246235302B45315800E71294 /* OrDivider.swift */; };
 		2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEE72AF91929006AAE65 /* LoginViewController.swift */; };
 		2463CEEB2AF91951006AAE65 /* LoginViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEEA2AF91951006AAE65 /* LoginViewViewModel.swift */; };
 		2463CEED2AF91FC9006AAE65 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2463CEEC2AF91FC9006AAE65 /* AppColors.swift */; };
@@ -113,6 +114,7 @@
 		24407B472B1C7F24007F254A /* WelcomeViewViewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewViewmodel.swift; sourceTree = "<group>"; };
 		24407B4A2B1CB6C5007F254A /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		24407B4C2B1CB7C3007F254A /* EditViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewViewModel.swift; sourceTree = "<group>"; };
+		246235302B45315800E71294 /* OrDivider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrDivider.swift; sourceTree = "<group>"; };
 		2463CEE72AF91929006AAE65 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2463CEEA2AF91951006AAE65 /* LoginViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewViewModel.swift; sourceTree = "<group>"; };
 		2463CEEC2AF91FC9006AAE65 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -236,6 +238,14 @@
 			path = Edit;
 			sourceTree = "<group>";
 		};
+		2462352F2B45313800E71294 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				246235302B45315800E71294 /* OrDivider.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		2463CEE62AF91909006AAE65 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +316,7 @@
 		2463CF042AF93E1A006AAE65 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2462352F2B45313800E71294 /* Login */,
 				2495E85A2B35D13D00011118 /* Main */,
 				24CA4F702B1F714300676F07 /* Settings */,
 				24A1048C2B19C549003AD597 /* AvatarCollectionViewCell */,
@@ -704,6 +715,7 @@
 				2463CEE82AF91929006AAE65 /* LoginViewController.swift in Sources */,
 				24A4BD8F2B05F00F00B2F21B /* SettingsViewController.swift in Sources */,
 				24BECD542B2340DE0029F8E6 /* NoNFTCardView.swift in Sources */,
+				246235312B45315800E71294 /* OrDivider.swift in Sources */,
 				24DB467C2B1B608A00431517 /* User.swift in Sources */,
 				2463CF212AFA5F24006AAE65 /* UIViewContoller+Extensions.swift in Sources */,
 				24A104842B1992AC003AD597 /* UITextField+Extensions.swift in Sources */,

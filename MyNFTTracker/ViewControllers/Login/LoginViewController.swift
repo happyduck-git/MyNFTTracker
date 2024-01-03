@@ -36,7 +36,55 @@ final class LoginViewController: BaseViewController {
         return imageView
     }()
     
+    private let selectChainButton: UIButton = {
+        let btn = UIButton()
+        btn.setTitle(LoginConstants.selectChain, for: .normal)
+        btn.backgroundColor = .secondarySystemBackground.withAlphaComponent(0.3)
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 10.0
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    private let addressTextField: UITextField = {
+        let textField = UITextField()
+        textField.clipsToBounds = true
+        textField.layer.cornerRadius = 10.0
+        textField.placeholder = LoginConstants.address
+        textField.backgroundColor = .secondarySystemBackground.withAlphaComponent(0.3)
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    private let addressValidationLabel: UILabel = {
+        let label = UILabel()
+        label.isHidden = true
+        label.font = .appFont(name: .appMainFontLight, size: .light)
+        label.textColor = .systemRed
+        label.text = LoginConstants.wrongAddress
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private let loginButton: UIButton = {
+        let btn = UIButton()
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 10.0
+        btn.backgroundColor = .systemOrange
+        btn.setTitle(LoginConstants.login, for: .normal)
+        btn.titleLabel?.textAlignment = .center
+        btn.titleLabel?.numberOfLines = 0
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        return btn
+    }()
+    
+    private let divider: OrDivider = {
+        let view = OrDivider()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let metamaskLoginButton: UIButton = {
         let btn = UIButton()
         btn.setTitle(String(localized: "Metamask로 로그인"), for: .normal)
         btn.titleLabel?.font = .appFont(name: .appMainFontBold, size: .head)
@@ -62,6 +110,7 @@ final class LoginViewController: BaseViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.dismissKeyboard()
         
         self.updateTheme()
         
@@ -71,6 +120,8 @@ final class LoginViewController: BaseViewController {
         
         self.bind()
         self.setNotification()
+        
+        self.setButtonMenu()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -81,14 +132,17 @@ final class LoginViewController: BaseViewController {
         UIView.animate(withDuration: 1.0) { [weak self] in
             guard let `self` = self else { return }
             self.view.layoutIfNeeded()
+            self.addressTextField.alpha = 1.0
             self.loginButton.alpha = 1.0
+            self.divider.alpha = 1.0
+            self.metamaskLoginButton.alpha = 1.0
         }
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.loginButton.layer.cornerRadius = self.loginButton.frame.height / 2
+        self.metamaskLoginButton.layer.cornerRadius = self.metamaskLoginButton.frame.height / 2
     }
     
 }
@@ -96,113 +150,116 @@ final class LoginViewController: BaseViewController {
 extension LoginViewController {
     
     private func bind() {
-
         let metamask = metamaskManager.metaMaskSDK
         
-        self.loginButton.tapPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let `self` = self else { return }
+        self.vm.transform()
+        
+        func bindViewToViewModel() {
+            self.loginButton.tapPublisher
+                .sink { [weak self] _ in
+                    guard let `self` = self,
+                          let address = self.addressTextField.text else { return }
+                    self.addChildViewController(self.loadingVC)
+                    self.vm.walletSigninTapped.send(address)
+                }
+                .store(in: &bindings)
             
-                self.addChildViewController(self.loadingVC)
-                
-                Task {
-                    metamask.useDeeplinks = false
-                    let result = await metamask.connect()
-                    switch result {
-                    case .success(let address):
-                        self.vm.address = address
-                        self.vm.walletConnected = true
+            self.metamaskLoginButton.tapPublisher
+                .sink { [weak self] _ in
+                    guard let `self` = self else { return }
+                    self.addChildViewController(self.loadingVC)
+                    self.vm.metamaskSigninTapped.send(())
+                }
+                .store(in: &bindings)
 
-                        #if DEBUG
-                        if metamask.connected {
-                            print("Metamask connected")
-                        } else {
-                            print("Metamask NOT connected")
-                        }
-                        #endif
-                    case .failure(let error):
-                        self.showWalletConnectionFailedAlert(title: LoginConstants.failedToConnectWallet,
-                                                             message: LoginConstants.tryAgain)
-                        AppLogger.logger.error("Connection error: \(String(describing: error))")
-                    }
-                    DispatchQueue.main.async {
-                        self.loadingVC.removeViewController()
-                    }
-                }
-                //TODO: LoginVC에서 메타마스크 에러로 결과를 제대로 받아오지 못할 때 핸들링 로직 필요.
-                
-            }
-            .store(in: &bindings)
+        }
         
-        self.vm.$walletConnected
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] connected in
-                guard let `self` = self else { return }
-                
-                if connected {
-                   
-                    Task {
-                        guard let wallet = self.vm.address else { return }
-                        do {
-                            self.vm.isFirstVisit = try await !self.firestoreManager.isRegisteredUser(wallet) ? true : false
-                        }
-                        catch {
-                            AppLogger.logger.error("Error: \(error)")
-                        }
-                    }
-                } else {
-                    self.loadingVC.removeViewController()
-                }
-                
-            }.store(in: &bindings)
-        
-        self.vm.$isFirstVisit
-            .sink { [weak self] in
-                guard let `self` = self,
-                      let wallet = self.vm.address
-                else { return }
-                
-                if $0 {
-                    Task {
+        func bindViewModelToView() {
+
+            self.vm.isFirstVisit
+                .sink { [weak self] in
+                    guard let `self` = self else { return }
+                    
+                    let wallet = self.vm.address
+                    
+                    if $0 {
                         DispatchQueue.main.async {
                             let welcomeVM = WelcomeViewViewmodel(address: wallet)
                             let welcomeVC = WelcomeViewController(vm: welcomeVM)
                             
                             self.show(welcomeVC, sender: self)
                         }
-                    }
-                    
-                } else {
-                    self.vm.saveAddressAndChainId(address: wallet, chainId: metamask.chainId)
-                    DispatchQueue.main.async {
-                        print("User \(wallet) already registered. Direct to MainVC")
-                        let vc = MainViewController(vm: MainViewViewModel())
-                        vc.delegate = self
-                        self.show(vc, sender: self)
-                    }
-                }
-            }
-            .store(in: &bindings)
-        
-        self.vm.receivedError
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] error in
-                guard let `self` = self else { return }
-                DispatchQueue.main.async {
-                    if let userNotFound = error as? FirestoreErrorCode {
-                        if userNotFound == FirestoreErrorCode(.notFound) {
-                            self.showWalletConnectionFailedAlert(title: LoginConstants.userNotFound,
-                                                                 message: LoginConstants.tryAgain)
-                        }
+                        
                     } else {
-                        self.showWalletConnectionFailedAlert(title: LoginConstants.retryTitle,
-                                                             message: LoginConstants.tryAgain + "\n Error: " + error.localizedDescription)
+                        self.vm.saveAddressAndChainId(address: wallet, chainId: self.vm.selectedChain)
+                        DispatchQueue.main.async {
+                            #if DEBUG
+                            print("User \(wallet) already registered. Direct to MainVC")
+                            #endif
+                            
+                            let vc = MainViewController(vm: MainViewViewModel())
+                            vc.delegate = self
+                            self.show(vc, sender: self)
+                        }
                     }
                 }
+                .store(in: &bindings)
+            
+            self.vm.errorTracker
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] error in
+                    guard let `self` = self else { return }
+                    DispatchQueue.main.async {
+                        
+                        if let userNotFound = error as? FirestoreErrorCode {
+                            if userNotFound == FirestoreErrorCode(.notFound) {
+                                self.showWalletConnectionFailedAlert(title: LoginConstants.userNotFound,
+                                                                     message: LoginConstants.tryAgain)
+                            }
+                            
+                        } else if let wrongFormat = error as? LoginViewViewModel.LoginError {
+                            switch wrongFormat {
+                            case .wrongAddressFormat:
+                                self.addressValidationLabel.isHidden = false
+                            case .walletNotConnected:
+                                self.loadingVC.removeViewController()
+                            }
+                        
+                        } else {
+                            self.showWalletConnectionFailedAlert(
+                                title: LoginConstants.retryTitle,
+                                message: LoginConstants.tryAgain + "\n Error: " + error.localizedDescription)
+                        }
+                    }
 
-            }
-            .store(in: &bindings)
+                }
+                .store(in: &bindings)
+            
+            self.vm.$selectedChain
+                .receive(on: DispatchQueue.main)
+                .dropFirst()
+                .sink { [weak self] in
+                    guard let `self` = self else { return }
+                    var chainId = $0.isEmpty ? LoginConstants.selectChain : $0
+                    self.selectChainButton.setTitle(chainId, for: .normal)
+                }
+                .store(in: &bindings)
+            
+            self.vm.activateLoginButton
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] in
+                    guard let `self` = self else { return }
+                    self.loginButton.isUserInteractionEnabled = $0 ? true : false
+                    self.loginButton.backgroundColor = $0 ? .black : .white
+                }
+                .store(in: &bindings)
+        }
+        
+        bindViewToViewModel()
+        bindViewModelToView()
+        
+        
+        
     }
     
 }
@@ -211,7 +268,12 @@ extension LoginViewController {
     
     private func setUI() {
         self.view.addSubviews(self.logo,
-                              self.loginButton)
+                              self.selectChainButton,
+                              self.addressTextField,
+                              self.addressValidationLabel,
+                              self.loginButton,
+                              self.divider,
+                              self.metamaskLoginButton)
     }
     
     private func setLayout() {
@@ -219,17 +281,43 @@ extension LoginViewController {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            $0.height.equalTo(self.view.frame.height / 2)
+            $0.height.equalTo(self.view.frame.height / 4)
+        }
+        
+        self.selectChainButton.snp.makeConstraints {
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.height.equalTo(40)
+        }
+        
+        self.addressTextField.snp.makeConstraints {
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.height.equalTo(40)
         }
         
         self.loginButton.snp.makeConstraints {
+            $0.leading.equalTo(self.addressTextField.snp.trailing).offset(10)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(self.loginButton.snp.width)
+        }
+        
+        self.divider.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(40)
+        }
+        
+        self.metamaskLoginButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             $0.height.equalTo(50)
         }
-
+        
+        self.addressTextField.alpha = 0.0
         self.loginButton.alpha = 0.0
+        self.divider.alpha = 0.0
+        self.metamaskLoginButton.alpha = 0.0
     }
     
     private func updateLayout() {
@@ -238,11 +326,45 @@ extension LoginViewController {
             $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
-            $0.height.equalTo(self.view.frame.height / 2)
+            $0.height.equalTo(self.view.frame.height / 4)
+        }
+        
+        self.selectChainButton.snp.remakeConstraints {
+            $0.top.equalTo(self.logo.snp.bottom).offset(100)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.height.equalTo(40)
+        }
+        
+        self.addressTextField.snp.remakeConstraints {
+            $0.top.equalTo(self.selectChainButton.snp.bottom).offset(10)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.selectChainButton.snp.trailing)
+            $0.height.equalTo(40)
+        }
+        
+        self.addressValidationLabel.snp.makeConstraints {
+            $0.top.equalTo(self.addressTextField.snp.bottom).offset(5)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
         }
         
         self.loginButton.snp.remakeConstraints {
-            $0.top.equalTo(self.logo.snp.bottom).offset(40)
+            $0.top.equalTo(self.selectChainButton.snp.top)
+            $0.bottom.equalTo(self.addressTextField.snp.bottom)
+            $0.leading.equalTo(self.selectChainButton.snp.trailing).offset(10)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(self.loginButton.snp.width)
+        }
+        
+        self.divider.snp.remakeConstraints {
+            $0.top.equalTo(self.loginButton.snp.bottom).offset(30)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
+            $0.height.equalTo(40)
+        }
+        
+        self.metamaskLoginButton.snp.remakeConstraints {
+            $0.top.equalTo(self.divider.snp.bottom).offset(30)
             $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(20)
             $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-20)
             $0.height.equalTo(50)
@@ -255,6 +377,33 @@ extension LoginViewController {
         self.baseDelegate = self
     }
 
+}
+
+extension LoginViewController {
+    private func setButtonMenu() {
+        let chains: [Chain] = Chain.allCases
+        var menuItems: [UIAction] = []
+        
+        for chain in chains {
+            menuItems.append(UIAction(title: chain.network, handler: { [weak self] _ in
+                guard let `self` = self else { return }
+                self.vm.selectedChain = chain.rawValue
+            }))
+        }
+        
+        let menu = UIMenu(children: menuItems)
+        menu.preferredElementSize = .large
+        self.selectChainButton.menu = menu
+        self.selectChainButton.showsMenuAsPrimaryAction = true
+
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(buttonTapped))
+        selectChainButton.addGestureRecognizer(tapRecognizer)
+
+    }
+    
+    @objc func buttonTapped() {
+        print("Button tapped")
+    }
 }
 
 // MARK: - Wallet address
@@ -308,8 +457,13 @@ extension LoginViewController: BaseViewControllerDelegate {
                                                            gradientLowerColor!])
         self.view.backgroundColor = UIColor(patternImage: gradientImage)
         self.loginButton.backgroundColor = buttonColor
-        self.loginButton.layer.borderColor = borderColor?.cgColor
         self.loginButton.setTitleColor(textColor, for: .normal)
+        
+        self.divider.configureColor(textColor)
+        
+        self.metamaskLoginButton.backgroundColor = buttonColor
+        self.metamaskLoginButton.layer.borderColor = borderColor?.cgColor
+        self.metamaskLoginButton.setTitleColor(textColor, for: .normal)
     }
     
     func userInfoChanged(as user: User) {
@@ -330,7 +484,7 @@ extension LoginViewController: BaseViewControllerDelegate {
 
 extension LoginViewController: MainViewControllerDelegate {
     func errorDidReceive(_ viewController: UIViewController, error: Error) {
-        self.vm.receivedError.send(error)
+        self.vm.errorTracker.send(error)
     }
 }
 

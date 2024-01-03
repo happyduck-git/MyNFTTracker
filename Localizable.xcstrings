@@ -52,6 +52,9 @@
         }
       }
     },
+    "OR" : {
+
+    },
     "Settings" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -342,6 +345,16 @@
         }
       }
     },
+    "로그인" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Login"
+          }
+        }
+      }
+    },
     "메인 페이지" : {
       "localizations" : {
         "en" : {
@@ -534,6 +547,9 @@
         }
       }
     },
+    "올바르지 않은 지갑주소 형식입니다." : {
+
+    },
     "재시도 요청" : {
       "localizations" : {
         "en" : {
@@ -610,6 +626,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "지갑 연결 실패"
+          }
+        }
+      }
+    },
+    "지갑 주소 0xabcd..." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wallet address 0xabc..."
+          }
+        }
+      }
+    },
+    "체인 선택" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select Chain"
           }
         }
       }
@@ -732,12 +768,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign in"
+            "value" : "Sign up"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "회원가입 하기"
           }
         }

@@ -235,7 +235,7 @@ extension MainViewController {
             .sink(receiveCompletion: { [weak self] error in
                 guard let `self` = self else { return }
                 self.showAlert(title: "Error",
-                               message: "Failed to bring your NFT information. Please retry.",
+                               message: "Failed to bring your NFT information -- \(error). Please retry.",
                                actionTitle: "Confirm")
             }, receiveValue: { [weak self] isLoaded in
                 guard let `self` = self else { return }
@@ -492,6 +492,7 @@ extension MainViewController: ContentsSideMenuViewDelegate {
             UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.walletAddress)
             UserDefaults.standard.removeObject(forKey: UserDefaultsConstants.chainId)
             MetamaskManager.shared.metaMaskSDK.disconnect()
+            MetamaskManager.shared.metaMaskSDK.clearSession()
             
             self.showLoginViewController()
         }

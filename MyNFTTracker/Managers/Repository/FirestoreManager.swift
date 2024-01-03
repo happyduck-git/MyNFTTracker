@@ -35,6 +35,7 @@ extension FirestoreManager {
     }
     
     func isRegisteredUser(_ wallet: String) async throws -> Bool {
+        if wallet.isEmpty { return false }
         return try await baseDB.collection(FirestoreConstants.users)
             .document(wallet)
             .getDocument()
