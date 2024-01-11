@@ -6,20 +6,20 @@ AppStore: [MyNFTTracker Link](https://apps.apple.com/us/app/weather-island/id647
 #### NFT를 체인별로 모아서 볼 수 있는 앱 (영어,한국어 지원)
 
 
-#### 주요 기능
+### 주요 기능
 ----
 보유하고 있는 NFT를 한 번에 감상하고 싶은 사용자들을 위한 앱.
 여러 종류의 블록체인을 지원하여, 각 체인에 흩어져 있는 NFT도 앱에서 바로 조회 가능.
 
-#### iOS 지원버전
+### iOS 지원버전
 ----
 - 16.0 이상
 
-#### 개발기간
+### 개발기간
 ----
 - 2023.12.09~2023.12.16 (약 1주)
 
-#### 사용 기술 스택
+### 사용 기술 스택
 ----
 
 - UIKit, Code base
@@ -32,11 +32,11 @@ AppStore: [MyNFTTracker Link](https://apps.apple.com/us/app/weather-island/id647
 - Firebase SDK (Firestore, Storage)
 ​- Xcode Cloud (CI/CD)
 
-#### 디자인 툴
+### 디자인 툴
 ----
 - Figma
 
-#### 앱 화면
+### 앱 화면
 ----
 
 <table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -61,7 +61,7 @@ AppStore: [MyNFTTracker Link](https://apps.apple.com/us/app/weather-island/id647
   </tr>
 </table>
 
-#### 데모 영상
+### 데모 영상
 ----
 https://github.com/happyduck-git/MyNFTTracker/assets/82161055/e9e029ac-1f89-4616-a448-ebd0f35a3398
 
