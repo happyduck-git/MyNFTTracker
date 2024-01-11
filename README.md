@@ -63,5 +63,6 @@ AppStore: [MyNFTTracker Link](https://apps.apple.com/us/app/weather-island/id647
 
 ### 데모 영상
 ----
-https://github.com/happyduck-git/MyNFTTracker/assets/82161055/e9e029ac-1f89-4616-a448-ebd0f35a3398
+https://github.com/happyduck-git/MyNFTTracker/assets/82161055/6589750f-3023-4f07-bfa5-cc178b69f78a
+
 
